@@ -1,0 +1,27 @@
+@use './variables' as *;
+
+// 반응형
+@mixin pc {
+    @media (min-width: $width-md) {
+      @content;
+    }
+  }
+  
+  @mixin tablet {
+    @media (max-width: $width-md - 1px) and (min-width: $width-sm + 1px) {
+      @content;
+    }
+  }
+  
+  @mixin mobile {
+    @media (max-width: $width-sm) {
+      @content;
+    }
+  }
+  
+  // 테마
+  @mixin theme-vars($theme-map) {
+    @each $key, $val in $theme-map {
+      --#{$key}: #{$val};
+    }
+  }

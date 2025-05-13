@@ -1,0 +1,88 @@
+// 기본 변수 (SCSS 변수)
+$font-family: 'Arial', Helvetica, sans-serif;
+
+$dark-blue: #0a1930;
+$light-blue: #1f93ff;
+
+$light-gray: #e7e7e7;
+$dark-gray: #767676;
+$border-gray: #cccccc;
+$table-border-gray: #eeeeee;
+
+$color-white: #ffffff;
+$color-black: #111111;
+$color-red: #e52528;
+$color-primary: #0076e9;
+$color-secondary: #00b98d;
+
+$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+
+$width-xl: 1980px;
+$width-lg: 1536px;
+$width-md: 1024px;
+$width-sm: 768px;
+$width-sx: 480px;
+
+$container-pd-xl: 0 60px;
+$container-pd-lg: 0 40px;
+$container-pd-md: 0 20px;
+$container-pd-sm: 0 10px;
+$container-pd-sx: 0 5px;
+
+// Light Theme Colors
+$light-theme: (
+  background: #ffffff,
+  foreground: #0a0a0a,
+
+  main-color-01: #0f172a,
+  main-color-02: #393930,
+  main-color-03: #bc9b75,
+
+  point-color-01: #fff,
+  point-color-02: #000,
+  point-color-03: #000,
+
+  text-color-01: #fff,
+  text-color-02: #000,
+  text-color-03: #000,
+
+  btn-color-01: #252621,
+  btn-color-02: #393930,
+  btn-color-03: #bc9b75,
+
+  disabled-color-01: #767676,
+  disabled-color-02: #6b7280,
+  disabled-color-03: #bc9b75,
+
+  admin-color-01: #FDF6EC,
+  admin-color-02: #E1A956,
+  admin-color-03: #D72638
+);
+
+// Dark Theme Colors
+$dark-theme: (
+  background: #0a0a0a,
+  foreground: #ededed,
+
+  main-color-01: #1e1e1e,
+  main-color-02: #2d2d2d,
+  main-color-03: #3b3b3b,
+
+  point-color-01: #ffffff,
+  point-color-02: #8ecae6,
+  point-color-03: #219ebc,
+
+  btn-color-01: #333333,
+  btn-color-02: #444444,
+  btn-color-03: #555555,
+
+  disabled-color-01: #555555,
+  disabled-color-02: #666666,
+  disabled-color-03: #777777,
+
+  admin-color-01: #2e2e2e,
+  admin-color-02: #444444,
+  admin-color-03: #ff6b6b
+);
+
+

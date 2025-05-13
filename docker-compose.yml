@@ -1,0 +1,12 @@
+version: "3"
+services:
+    db:
+        image: postgres:latest
+        restart: always
+        ports:
+            - "49468:5432"
+        environment:
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "cb2ca4*G4bB*ffCGC*14E25dC6*D3g5c"
+        volumes:
+            - ./data:/var/lib/postgresql/data/

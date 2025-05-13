@@ -1,0 +1,242 @@
+// =========================
+// Home Page Styles (리팩토링)
+// =========================
+
+// 섹션 1: Hero
+.sec01 {
+  width: 100%;
+  background: none;
+  margin-bottom: 3.5rem;
+  padding: 4rem 0;
+  height: 100vh;
+}
+.sec01_inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4.5rem;
+  min-height: 320px;
+  height: 70%;
+}
+.textArea {
+  flex: 1 1 340px;
+}
+.textArea h1 {
+  font-size: 3.6rem;
+  font-weight: 700;
+  line-height: 1.18;
+  margin-bottom: 1.8rem;
+  color: #f5f6f8;
+}
+.textArea_title {
+  font-size: 1.62rem;
+  color: #bfc3c9;
+  margin-bottom: 3.3rem;
+}
+.textArea_btn {
+  background: #bfa46f;
+  color: #181c22;
+  font-size: 1.62rem;
+  font-weight: 700;
+  padding: 1.43rem 3.3rem;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(191,164,111,0.10);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.textArea_btn:hover,
+.textArea_btn:focus {
+  background: #d6b97a;
+  color: #101926;
+  box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
+}
+.imgArea {
+  flex: 1 1 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 450px;
+  max-width: 450px;
+  height: 450px;
+}
+.imgArea img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+// 섹션 2: Features
+.sec02 {
+  width: 100%;
+  margin-bottom: 3.5rem;
+  padding: 4rem 0;
+}
+.cardList {
+  display: flex;
+  justify-content: space-between;
+  gap: 3.5rem;
+}
+.card {
+  background: #18202b;
+  border-radius: 14px;
+  padding: 3.15rem 2.25rem 2.55rem 2.25rem;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+  min-width: 180px;
+}
+.cardIcon {
+  font-size: 3.15rem;
+  margin-bottom: 1.05rem;
+  color: #e5e6e8;
+}
+.card h2 {
+  font-size: 1.77rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #f5f6f8;
+}
+.card p {
+  font-size: 1.52rem;
+  color: #bfc3c9;
+  line-height: 1.6;
+}
+
+// 섹션 3: Steps
+.sec03 {
+  width: 100%;
+  margin-bottom: 2.8rem;
+  display: flex;
+  gap: 3.5rem;
+  justify-content: space-between;
+  padding: 4rem 0;
+}
+.stepList {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  flex: 1 1 0;
+  min-width: 160px;
+  margin-bottom: 0;
+  flex-direction: row;
+}
+.stepNum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.45rem;
+  height: 3.45rem;
+  background: #232b38;
+  color: #bfa46f;
+  font-size: 1.88rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-top: 0.3rem;
+}
+.stepList h3 {
+  font-size: 1.62rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+  color: #f5f6f8;
+}
+.stepList p {
+  font-size: 1.47rem;
+  color: #bfc3c9;
+  line-height: 1.6;
+}
+
+// 섹션 4: Guide
+.sec04 {
+  width: 100%;
+  padding: 4rem 0;
+}
+.guideText {
+  text-align: center;
+  color: #7c8592;
+  font-size: 1.47rem;
+  margin-bottom: 2.25rem;
+}
+
+// =========================
+// 반응형
+// =========================
+@media (max-width: 900px) {
+  .sec01_inner,
+  .cardList {
+    flex-direction: column;
+    gap: 2.2rem;
+  }
+  .imgArea {
+    margin-top: 2.2rem;
+  }
+  .sec03 {
+    flex-direction: column;
+    gap: 2.2rem;
+  }
+  .stepList {
+    flex-direction: row;
+    margin-bottom: 0;
+    gap: 2rem;
+  }
+}
+@media (max-width: 600px) {
+  .sec01_inner {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem 0 1.2rem 0;
+  }
+  .textArea h1 {
+    font-size: 2.1rem;
+  }
+  .textArea_title {
+    font-size: 1rem;
+  }
+  .textArea_btn {
+    font-size: 1.08rem;
+    padding: 0.95rem 2rem;
+  }
+  .card,
+  .stepList {
+    min-width: 0;
+    padding: 1.5rem 0.9rem;
+  }
+  .card h2 {
+    font-size: 1.08rem;
+  }
+  .card p {
+    font-size: 0.98rem;
+  }
+  .cardIcon {
+    font-size: 2.1rem;
+  }
+  .sec03 {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .stepList {
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+    gap: 1.2rem;
+  }
+  .stepNum {
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 1.25rem;
+  }
+  .stepList h3 {
+    font-size: 1.08rem;
+  }
+  .stepList p {
+    font-size: 0.98rem;
+  }
+  .guideText {
+    font-size: 0.98rem;
+  }
+  .sec01, .sec02, .sec03, .sec04 {
+    padding: 2rem 0;
+  }
+}

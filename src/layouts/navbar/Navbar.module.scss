@@ -1,0 +1,64 @@
+@use '../../styles/helpers' as *;
+.nav {
+    position: relative;
+    width: 100%;
+    background-color: var(--main-color-01);
+    color: var(--text-color-01);
+    z-index: 10;
+}
+  
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+  
+.logo {
+    font-size: 1.5rem;
+    height: 3.5rem;
+}
+  
+.menu-btn {
+    font-size: 1.5rem;
+}
+
+.nav-items,
+.nav-items-sm {  
+    ul {
+        display: flex;
+        li {
+            padding: 0 0.7rem;
+            list-style: none;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.nav-items-sm {  
+    ul {        
+        flex-direction: column;
+        li {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+@include pc {
+    .nav-container {padding: $container-pd-lg;}
+    .menu-btn {display: none;}
+    .nav-items { display: block; &-sm {display: none;}}
+}
+
+@include tablet {
+    .nav-container {padding: $container-pd-md;}
+    .menu-btn {display: none;}
+    .nav-items { display: block; &-sm {display: none;}}
+}
+
+@include mobile {
+    .nav-container {padding: $container-pd-sm;}
+    .menu-btn {display: block;}
+    .nav-items { display: none; &-sm {display: block;}}
+}

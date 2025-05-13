@@ -1,0 +1,22 @@
+@use '../../styles/helpers' as *;
+
+.container {    
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--main-color-01);
+  
+    @include pc {
+        max-width: $width-xl;
+        padding: $container-pd-xl;
+    }
+
+    @include tablet {
+        max-width: $width-lg;
+        padding: $container-pd-lg;
+    }
+
+    @include mobile {
+        max-width: $width-md;
+        padding: $container-pd-md;
+    }
+  }
