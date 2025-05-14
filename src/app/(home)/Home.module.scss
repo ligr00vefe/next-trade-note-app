@@ -1,3 +1,5 @@
+@use '../../styles/mixins' as *;
+
 // =========================
 // Home Page Styles (리팩토링)
 // =========================
@@ -164,7 +166,7 @@
 // =========================
 // 반응형
 // =========================
-@media (max-width: 900px) {
+@include tablet {
   .sec01_inner,
   .cardList {
     flex-direction: column;
@@ -183,7 +185,7 @@
     gap: 2rem;
   }
 }
-@media (max-width: 600px) {
+@include mobile {
   .sec01_inner {
     flex-direction: column;
     gap: 1.5rem;
