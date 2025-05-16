@@ -1,6 +1,5 @@
 'use client';
 
-import styles from './List.module.scss';
 import { useEffect, useState } from 'react';
 import Buy from '@/components/popup/Buy';
 
@@ -31,9 +30,9 @@ export default function ListClient() {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>매매 리스트</h1>
-      <table className={styles.table}>
+    <div style={{ padding: '40px' }}>
+      <h1 style={{ fontSize: '2rem', marginBottom: '24px' }}>매매 리스트</h1>
+      <table>
         <thead>
           <tr>
             <th>종목명</th>
@@ -51,7 +50,6 @@ export default function ListClient() {
             <td>500.000 원</td>
             <td>
               <button
-                className={styles.buyButton}
                 onClick={() => handleBuyClick({ stockName: 'ABC 사', price: '50.000', quantity: '10', reason: '매수' })}
                 tabIndex={0}
                 aria-label="ABC 사 매수"
@@ -68,7 +66,6 @@ export default function ListClient() {
             <td>362.500 원</td>
             <td>
               <button
-                className={styles.buyButton}
                 onClick={() => handleBuyClick({ stockName: 'DEF 주식', price: '72.500', quantity: '5', reason: '상장 가능성' })}
                 tabIndex={0}
                 aria-label="DEF 주식 매수"
@@ -85,7 +82,6 @@ export default function ListClient() {
             <td>800.000 원</td>
             <td>
               <button
-                className={styles.buyButton}
                 onClick={() => handleBuyClick({ stockName: 'GHI Co.', price: '40.000', quantity: '20', reason: '매수' })}
                 tabIndex={0}
                 aria-label="GHI Co. 매수"
@@ -102,7 +98,6 @@ export default function ListClient() {
             <td>680.000 원</td>
             <td>
               <button
-                className={styles.buyButton}
                 onClick={() => handleBuyClick({ stockName: 'JKL Electronics', price: '85.000', quantity: '8', reason: '재약하고 싶은 브랜드' })}
                 tabIndex={0}
                 aria-label="JKL Electronics 매수"
