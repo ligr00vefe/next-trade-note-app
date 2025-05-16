@@ -21,7 +21,12 @@ export default function HomeClient() {
   };
 
   return (
-    <Container>      
+    <Container
+      backgroundImage="/assets/images/main_bg_img.png"
+      backgroundSize="100% auto"
+      backgroundPosition="top center"
+      backgroundRepeat="no-repeat"
+    >      
       <section className={styles.sec01}>
         <div className={styles.sec01_inner}>
           <Fade direction="left" triggerOnce>
