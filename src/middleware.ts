@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
   
 
   // 로그인된 유저만 접근 가능
-  if ((pathname.startsWith("/list") || pathname.startsWith("/users")) && !session) {
+  if ((pathname.startsWith("/list") || pathname.startsWith("/mypage")) && !session) {
     return NextResponse.redirect(new URL("/api/auth/signin", req.url));
   }
 

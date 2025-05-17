@@ -1,0 +1,261 @@
+@use '../../styles/mixins' as *;
+
+// =========================
+// Mypage Styles (Home 톤앤매너 적용)
+// =========================
+
+.mypage-root {
+  display: grid;
+  grid-template-columns: 220px 1fr 320px;
+  grid-template-rows: auto 180px;
+  gap: 2.5rem;
+  padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+  background: #181c22;
+  min-height: 100vh;
+}
+
+.mypage-sidebar {
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  .sidebar-card {
+    background: #18202b;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+    padding: 2.1rem 1.5rem;
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: #f5f6f8;
+  }
+  .sidebar-btn {
+    margin-top: auto;
+    background: #bfa46f;
+    color: #181c22;
+    border: none;
+    border-radius: 8px;
+    padding: 1.1rem 2.1rem;
+    font-size: 1.08rem;
+    font-weight: 700;
+    box-shadow: 0 2px 12px 0 rgba(191,164,111,0.10);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    &:hover,
+    &:focus {
+      background: #d6b97a;
+      color: #101926;
+      box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
+    }
+  }
+}
+
+.mypage-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  .portfolio-section {
+    background: #18202b;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+    padding: 2.5rem 2.2rem 2rem 2.2rem;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: #f5f6f8;
+    }
+    .chart-placeholder {
+      background: #232b38;
+      border-radius: 10px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bfc3c9;
+      font-size: 1.1rem;
+    }
+  }
+  .overview-section {
+    display: flex;
+    gap: 2.5rem;
+    .overview-card {
+      flex: 1;
+      background: #232b38;
+      color: #f5f6f8;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+      padding: 1.7rem 1.5rem;
+      h3 {
+        font-size: 1.13rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #f5f6f8;
+      }
+      .chart-placeholder {
+        background: #181c22;
+        border-radius: 8px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #bfc3c9;
+        font-size: 1rem;
+      }
+      .asset-value {
+        font-size: 2.1rem;
+        font-weight: 700;
+        margin-top: 1.2rem;
+        color: #bfa46f;
+      }
+    }
+  }
+}
+
+.mypage-info {
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  .info-card {
+    background: #18202b;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+    padding: 2.1rem 1.5rem;
+    color: #f5f6f8;
+    h4 {
+      font-size: 1.13rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: #f5f6f8;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        font-size: 1rem;
+        margin-bottom: 0.4rem;
+        color: #bfc3c9;
+      }
+    }
+    button {
+      margin-top: 0.7rem;
+      background: #bfa46f;
+      color: #181c22;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.98rem;
+      font-weight: 700;
+      box-shadow: 0 2px 12px 0 rgba(191,164,111,0.10);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      &:hover,
+      &:focus {
+        background: #d6b97a;
+        color: #101926;
+        box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
+      }
+    }
+  }
+}
+
+.mypage-bottom-cards {
+  grid-column: 1 / span 3;
+  display: flex;
+  gap: 1.7rem;
+  margin-top: 1.7rem;
+  .bottom-card {
+    flex: 1;
+    background: #18202b;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+    padding: 1.5rem 1.2rem;
+    font-size: 1.13rem;
+    font-weight: 700;
+    color: #f5f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+  }
+}
+
+// =========================
+// 반응형
+// =========================
+@include tablet {
+  .mypage-root {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 1.5rem;
+    padding: 2rem 0.7rem 1.5rem 0.7rem;
+  }
+  .mypage-sidebar,
+  .mypage-info {
+    grid-row: unset;
+    flex-direction: row;
+    gap: 1.2rem;
+    .sidebar-card,
+    .info-card {
+      flex: 1;
+      padding: 1.2rem 0.7rem;
+    }
+  }
+  .mypage-main {
+    gap: 1.2rem;
+    .portfolio-section,
+    .overview-section .overview-card {
+      padding: 1.2rem 0.7rem;
+    }
+    .overview-section {
+      gap: 1.2rem;
+    }
+  }
+  .mypage-bottom-cards {
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+    .bottom-card {
+      padding: 1.2rem 0.7rem;
+    }
+  }
+}
+@include mobile {
+  .mypage-root {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 1rem;
+    padding: 1.2rem 0.3rem 0.7rem 0.3rem;
+  }
+  .mypage-sidebar,
+  .mypage-info {
+    flex-direction: column;
+    gap: 0.7rem;
+    .sidebar-card,
+    .info-card {
+      padding: 0.7rem 0.3rem;
+      font-size: 0.98rem;
+    }
+  }
+  .mypage-main {
+    gap: 0.7rem;
+    .portfolio-section,
+    .overview-section .overview-card {
+      padding: 0.7rem 0.3rem;
+    }
+    .portfolio-section h2 {
+      font-size: 1.08rem;
+    }
+    .overview-section {
+      gap: 0.7rem;
+    }
+  }
+  .mypage-bottom-cards {
+    gap: 0.7rem;
+    margin-top: 0.7rem;
+    .bottom-card {
+      padding: 0.7rem 0.3rem;
+      font-size: 0.98rem;
+    }
+  }
+}

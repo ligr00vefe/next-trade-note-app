@@ -23,13 +23,21 @@ const NavItem = ({ mobile, currentUser }: NavItemProps) => {
   // console.log('NavItem_currentUser', currentUser);      
 
   return (
-    <ul className={`text-md justify-center flex gap-4 w-full items-center ${mobile && "flex-col h-full pt-2 pb-5"}`}>
-      <li className='py-1 text-center cursor-pointer border-b-4 border-transparent hover:border-white'><Link href="/list">매매리스트</Link></li>
-      <li className='py-1 text-center cursor-pointer border-b-4 border-transparent hover:border-white'><Link href="/users">마이페이지</Link></li>
-      {currentUser ?      
-        <li className='py-1 text-center cursor-pointer border-b-4 border-transparent hover:border-white'><button onClick={() => signOut()}>로그아웃</button></li>
+    <ul className={`nav-items-list ${mobile ? 'nav-items-list-sm' : ''}`}> 
+      <li tabIndex={0} aria-label="매매리스트" onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && (window.location.href = '/list')}>
+        <Link href="/list">매매리스트</Link>
+      </li>
+      <li tabIndex={0} aria-label="마이페이지" onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && (window.location.href = '/mypage')}>
+        <Link href="/mypage">마이페이지</Link>
+      </li>
+      {currentUser ?
+        <li tabIndex={0} aria-label="로그아웃" onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && signOut()}>
+          <button type="button" onClick={() => signOut()}>로그아웃</button>
+        </li>
         :
-        <li className='py-1 text-center cursor-pointer border-b-4 border-transparent hover:border-white'><button onClick={() => signIn()}>로그인</button></li>
+        <li tabIndex={0} aria-label="로그인" onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && signIn()}>
+          <button type="button" onClick={() => signIn()}>로그인</button>
+        </li>
       }
     </ul>
   )
