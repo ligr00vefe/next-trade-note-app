@@ -20,6 +20,40 @@
   flex-direction: column;
   gap: 1.7rem;
 
+  .sidebar-tab-btn {
+    background: #232b38;
+    color: #bfc3c9;
+    border: none;
+    border-radius: 8px;
+    padding: 1.1rem 2.1rem;
+    font-size: 1.08rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+      color: #f5f6f8;
+      background: #2a3444;
+    }
+
+    &.active {
+      background: #bfa46f;
+      color: #181c22;
+      box-shadow: 0 2px 12px 0 rgba(191,164,111,0.10);
+
+      &:hover,
+      &:focus {
+        background: #d6b97a;
+        color: #101926;
+        box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
+      }
+    }
+  }
+
   .sidebar-btn {
     background: #bfa46f;
     color: #181c22;
@@ -44,6 +78,18 @@
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+
+  .account-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.7rem;
+  }
+
+  .portfolio-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
 
   .portfolio-section {
     background: #18202b;
@@ -218,13 +264,22 @@
   }
 
   .mypage-sidebar {
-    .sidebar-btn {
-      background: #bfa46f;
-      color: #181c22;
+    .sidebar-tab-btn {
+      background: #ffffff;
+      color: #666;
       &:hover,
       &:focus {
-        background: #d6b97a;
-        color: #101926;
+        color: #333;
+        background: #f5f5f5;
+      }
+      &.active {
+        background: #bfa46f;
+        color: #181c22;
+        &:hover,
+        &:focus {
+          background: #d6b97a;
+          color: #101926;
+        }
       }
     }
   }
@@ -309,7 +364,7 @@
   .mypage-sidebar {
     flex-direction: row;
     gap: 1.2rem;
-    .sidebar-btn {
+    .sidebar-tab-btn, .sidebar-btn {
       flex: 1;
       text-align: center;
       padding: 1.2rem 0.7rem;
@@ -356,7 +411,7 @@
   .mypage-sidebar {
     flex-direction: column;
     gap: 0.7rem;
-    .sidebar-btn {
+    .sidebar-tab-btn, .sidebar-btn {
       padding: 0.7rem 0.3rem;
       font-size: 0.98rem;
     }
