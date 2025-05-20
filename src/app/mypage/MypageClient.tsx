@@ -1,13 +1,28 @@
 "use client";
 
 import styles from './Mypage.module.scss';
+import { useState, useEffect } from 'react';
 
-const MypageClient = () => {
+export default function MypageClient() {
+  const [theme, setTheme] = useState('dark');
+
+  const handleThemeToggle = () => {
+    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  useEffect(() => {
+    const rootElement = document.querySelector(`.${styles['mypage-root']}`);
+    if (rootElement) {
+      rootElement.classList.remove(styles['light-theme'], styles['dark-theme']);
+      rootElement.classList.add(styles[theme === 'dark' ? 'dark-theme' : 'light-theme']);
+    }
+  }, [theme]);
+
   return (
     <div className={styles['mypage-root']}>
       <aside className={styles['mypage-sidebar']}>
-        <div className={styles['sidebar-card']}>포트폴리오</div>
-        <div className={styles['sidebar-card']}>계좌정보</div>
+        <button className={styles['sidebar-btn']}>Portfolio</button>
+        <button className={styles['sidebar-btn']}>Account</button>
         <button className={styles['sidebar-btn']}>Q&A</button>
       </aside>
       <main className={styles['mypage-main']}>
@@ -38,14 +53,33 @@ const MypageClient = () => {
           <h4>보안 설정</h4>
           <button>비밀번호 변경</button>
         </div>
+        <div className={styles['info-card']}>
+          <h4>테마 설정</h4>
+          <div className={styles['theme-toggle']}>
+            <input
+              type="checkbox"
+              id="theme-toggle-checkbox"
+              className={styles['theme-checkbox']}
+              checked={theme === 'light'}
+              onChange={handleThemeToggle}
+              aria-label="테마 전환"
+            />
+            <label htmlFor="theme-toggle-checkbox" className={styles['theme-label']}>
+              <span className={styles['theme-track']}>
+                <span className={styles['theme-thumb']}></span>
+              </span>
+              <span className={styles['theme-icons']}>
+                <span className={styles['icon-dark']}>🌙</span>
+                <span className={styles['icon-light']}>☀️</span>
+              </span>
+            </label>
+          </div>
+        </div>
       </aside>
-      <section className={styles['mypage-bottom-cards']}>
+      <div className={styles['mypage-bottom-cards']}>
         <div className={styles['bottom-card']}>Stock Overview</div>
-        <div className={styles['bottom-card']}>Portfolio</div>
         <div className={styles['bottom-card']}>거래내역</div>
-      </section>
+      </div>
     </div>
   );
-};
-
-export default MypageClient;
+}

@@ -1,52 +1,102 @@
-.container {
-    background-color: #0a0f14;
-    color: #f3f3f3;
-    font-family: 'Pretendard', sans-serif;
-    padding: 40px;
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.4rem;
+}
+
+.listTitle {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.addBuyBtn {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+  &:hover,
+  &:focus {
+    background: var(--color-secondary);
+    color: var(--color-black);
+    box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
   }
-  
-  .buyButton {
-    background: none;
-    border: 1px solid #f3f3f3;
-    color: #f3f3f3;
-    padding: 6px 12px;
-    cursor: pointer;
-    border-radius: 4px;
+}
+
+.listTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1.4rem;
+}
+
+.listThead {
+  border-top: 2px solid var(--light-blue);
+  border-bottom: 2px solid var(--light-blue);
+}
+
+.listTh {
+  border: 1px solid var(--table-border-gray);
+}
+
+.listTh,
+.listTd {
+  vertical-align: top;
+  text-align: left;
+  padding: 8px;
+}
+
+.listTd.icons > * {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.listTr {
+  border-bottom: 1px solid var(--border-gray);
+  cursor: pointer;
+}
+
+.listTr:nth-child(even) {
+  background-color: var(--table-border-gray);
+}
+
+.viewBtn {
+  background: var(--light-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+  &:hover,
+  &:focus {
+    background: var(--color-primary);
+    color: var(--color-white);
   }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 40px;
+}
+
+.actionBtn {
+  background: var(--color-secondary);
+  color: var(--color-black);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+  &:hover,
+  &:focus {
+    background: var(--color-primary);
+    color: var(--color-white);
   }
-  
-  .table th,
-  .table td {
-    padding: 12px 8px;
-    border-bottom: 1px solid #333;
-    text-align: left;
-  }
-  
-  .form {
-    background: #11151b;
-    padding: 20px;
-    border-radius: 8px;
-    display: grid;
-    gap: 12px;
-  }
-  
-  .form label {
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    gap: 4px;
-  }
-  
-  .form input {
-    padding: 8px;
-    background: #1c1f25;
-    border: 1px solid #333;
-    color: #fff;
-    border-radius: 4px;
-  }
-  
+}

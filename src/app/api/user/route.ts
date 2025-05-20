@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/helpers/prismadb";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/actions/getCurrentUser";
 
 // GET 요청 처리
 export async function GET() {

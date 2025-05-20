@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import EmptyState from '@/components/EmptyState';
 
 import StockTableRow from '@/components/stocks/StockTableRow';
-import getFavorites from '@/app/actions/getFavorites';
+import getFavorites from '@/actions/getFavorites';
 
 const FavoritesPage = async () => {
 

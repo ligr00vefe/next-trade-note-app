@@ -1,0 +1,104 @@
+.form-control {
+    display: flex;
+    flex-direction: column;
+    
+    .input-wrapper {
+      position: relative;
+      display: inline-flex;
+      min-width: 296px;
+      border: 1px solid var(--border-gray);
+      border-radius: 0.5rem;
+      overflow: hidden;
+
+      &-error {
+        border: 1px solid var(--color-red);
+      }
+    }
+    
+    .input {
+      width:1000px;
+      min-height: 0.4rem;
+      flex: 1;
+      padding: 0.875rem;
+      color: var(--color-black);
+      background: var(--color-white);
+      border: 0 !important;
+      margin-top: 0;
+  
+      &::placeholder {
+        color: var(--dark-gray);
+      }
+  
+      &:read-only {
+        color: var(--dark-gray);
+      }
+  
+      &[disabled] {
+        cursor: not-allowed;
+        color: var(--dark-gray);
+      }      
+      
+      &:focus {
+        outline: none;
+        border: 0;
+      }
+    }
+  
+    .format-price {
+        position: absolute;
+        color: #4b5563;
+        top: 1rem;
+        left: 0.5rem;
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 0.7rem;
+      color: #24292e;
+      font-size: 1.3rem;
+      font-weight: 500;
+  
+      // 접근성 감춤 설정
+      // display: none;
+      // 처리를 해버리면 화면상에 출력 X
+      // 검색 봇이 이 태그 요소를 인식하지 못함.
+      // 크롤링시 검색 봇이 읽을 수 있도록 display: none;은 쓰지않음.
+      &-hidden {
+        position: absolute;
+        clip-path: circle(0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+      }
+    }
+    
+    .button {
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+  
+      &[disabled] {
+        cursor: not-allowed;
+      }
+  
+      img {
+        vertical-align: bottom;
+      }
+    }
+  
+    .error {
+      color: var(--color-red);
+      font-size: 15px;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    .input-error {
+        border: 1px solid #f43f5e;        
+    }
+    .input-error:focus {
+        border: 2px solid #f43f5e;        
+    }
+  }

@@ -6,12 +6,10 @@ import { User } from '@prisma/client';
 import styles from '@/layouts/navbar/Navbar.module.scss';
 
 interface INavbarProps {
-  currentUser?: User | null; 
+  currentUser?: User | null;
 }
 
 const Navbar = ({ currentUser }: INavbarProps) => {
-  // console.log('currentUser: ', currentUser);
-
   const [menu, setMenu] = useState(false);
 
   const handleMenu = () => {

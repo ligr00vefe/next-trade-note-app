@@ -1,7 +1,7 @@
 'use client'
 
-import { IStocksParams } from '@/app/actions/getFavorites';
-import useFavorite from '@/app/hooks/useFavorite';
+import { IStocksParams } from '@/actions/getFavorites';
+import useFavorite from '@/hooks/useFavorite';
 import { Switch, styled } from "@mui/material";
 import { User } from "@prisma/client";
 

@@ -55,12 +55,14 @@ CREATE TABLE "VerificationToken" (
 -- CreateTable
 CREATE TABLE "Stock" (
     "id" TEXT NOT NULL,
-    "symbol" TEXT NOT NULL,
+    "symbol" TEXT,
     "company" TEXT NOT NULL,
-    "currency" TEXT NOT NULL,
+    "currency" TEXT,
     "price" DOUBLE PRECISION,
     "desired_selling_price" DOUBLE PRECISION,
     "userId" TEXT NOT NULL,
+    "theme1" TEXT,
+    "theme2" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

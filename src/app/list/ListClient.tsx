@@ -2,16 +2,28 @@
 
 import { useEffect, useState } from 'react';
 import Buy from '@/components/popup/Buy';
+import Container from '@/components/ui/Container';
+import styles from './List.module.scss';
+import { useRouter } from 'next/navigation';
+import { SafeStock } from '@/actions/getStocks';
 
-export default function ListClient() {
+interface IListClientProps {
+  stocks: SafeStock[];
+}
+
+export default function ListClient({ stocks }: IListClientProps) {
   const [mounted, setMounted] = useState(false);
   const [buyOpen, setBuyOpen] = useState(false);
   const [buyData, setBuyData] = useState({
-    stockName: '',
+    company: '',
     price: '',
     quantity: '',
     reason: '',
+    theme1: '',
+    theme2: '',
   });
+
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -19,105 +31,104 @@ export default function ListClient() {
 
   if (!mounted) return null;
 
-  // 매수 버튼 클릭 핸들러
-  const handleBuyClick = (row: { stockName: string; price: string; quantity: string; reason: string }) => {
-    setBuyData(row);
+  const handleBuyClick = (row: SafeStock) => {
+    setBuyData({
+      company: row.company,
+      price: String(row.price),
+      quantity: String(row.quantity),
+      reason: row.reason || '',
+      theme1: row.theme1 || '',
+      theme2: row.theme2 || '',
+    });
     setBuyOpen(true);
   };
 
   const handleBuyClose = () => {
     setBuyOpen(false);
+    router.refresh();
   };
 
   return (
-    <div style={{ padding: '40px' }}>
-      <h1 style={{ fontSize: '2rem', marginBottom: '24px' }}>매매 리스트</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>종목명</th>
-            <th>매수 금액</th>
-            <th>보유 수량</th>
-            <th>매수 종액</th>
-            <th>구매 사유</th>
+    <Container>
+      <div className={styles.listHeader}>
+        <h1 className={styles.listTitle}>매매 리스트</h1>
+        <button
+          className={styles.addBuyBtn}
+          tabIndex={0}
+          aria-label="매수추가"
+          onClick={() => setBuyOpen(true)}
+          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setBuyOpen(true)}
+        >
+          매수추가
+        </button>
+      </div>
+      <table className={styles.listTable}>
+        <thead className={styles.listThead}>
+          <tr className={styles.listTr}>
+            <th className={styles.listTh}>종목명</th>
+            <th className={styles.listTh}>매수 금액</th>
+            <th className={styles.listTh}>보유 수량</th>
+            <th className={styles.listTh}>총 매수 금액</th>
+            <th className={styles.listTh}>테마</th>
+            <th className={styles.listTh}>구매 사유</th>
+            <th className={styles.listTh}>행동</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ABC 사</td>
-            <td>50.000</td>
-            <td>10</td>
-            <td>500.000 원</td>
-            <td>
-              <button
-                onClick={() => handleBuyClick({ stockName: 'ABC 사', price: '50.000', quantity: '10', reason: '매수' })}
-                tabIndex={0}
-                aria-label="ABC 사 매수"
-                onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick({ stockName: 'ABC 사', price: '50.000', quantity: '10', reason: '매수' })}
-              >
-                매수
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>DEF 주식</td>
-            <td>72.500</td>
-            <td>5</td>
-            <td>362.500 원</td>
-            <td>
-              <button
-                onClick={() => handleBuyClick({ stockName: 'DEF 주식', price: '72.500', quantity: '5', reason: '상장 가능성' })}
-                tabIndex={0}
-                aria-label="DEF 주식 매수"
-                onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick({ stockName: 'DEF 주식', price: '72.500', quantity: '5', reason: '상장 가능성' })}
-              >
-                매수
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>GHI Co.</td>
-            <td>40.000</td>
-            <td>20</td>
-            <td>800.000 원</td>
-            <td>
-              <button
-                onClick={() => handleBuyClick({ stockName: 'GHI Co.', price: '40.000', quantity: '20', reason: '매수' })}
-                tabIndex={0}
-                aria-label="GHI Co. 매수"
-                onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick({ stockName: 'GHI Co.', price: '40.000', quantity: '20', reason: '매수' })}
-              >
-                매수
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>JKL Electronics</td>
-            <td>85.000</td>
-            <td>8</td>
-            <td>680.000 원</td>
-            <td>
-              <button
-                onClick={() => handleBuyClick({ stockName: 'JKL Electronics', price: '85.000', quantity: '8', reason: '재약하고 싶은 브랜드' })}
-                tabIndex={0}
-                aria-label="JKL Electronics 매수"
-                onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick({ stockName: 'JKL Electronics', price: '85.000', quantity: '8', reason: '재약하고 싶은 브랜드' })}
-              >
-                매수
-              </button>
-            </td>
-          </tr>
+          {stocks && stocks.map((stock) => (
+            <tr key={stock.id} className={styles.listTr}>
+              <td className={styles.listTd}>{stock.company}</td>
+              <td className={styles.listTd}>{stock.price}</td>
+              <td className={styles.listTd}>{stock.quantity}</td>
+              <td className={styles.listTd}>{stock.totalPrice} 원</td>
+              <td className={styles.listTd}>{(stock.theme1 || '') + (stock.theme2 ? ` - ${stock.theme2}` : '')}</td>
+              <td className={styles.listTd}>
+                <button
+                  className={styles.viewBtn}
+                  tabIndex={0}
+                  aria-label={`${stock.company} 구매 사유 보기`}
+                  onClick={() => handleBuyClick(stock)}
+                  onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick(stock)}
+                >
+                  보기
+                </button>
+              </td>
+              <td className={styles.listTd}>
+                <button
+                  className={styles.actionBtn}
+                  tabIndex={0}
+                  aria-label={`${stock.company} 추가매수`}
+                  onClick={() => handleBuyClick(stock)}
+                  onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick(stock)}
+                >
+                  추가매수
+                </button>
+                <button
+                  className={styles.actionBtn}
+                  tabIndex={0}
+                  aria-label={`${stock.company} 매도`}
+                >
+                  매도
+                </button>
+              </td>
+            </tr>
+          ))}
+          {stocks && stocks.length === 0 && (
+            <tr className={styles.listTr}><td className={styles.listTd} colSpan={7} style={{ textAlign: 'center' }}>등록된 매매 내역이 없습니다.</td></tr>
+          )}
         </tbody>
       </table>
 
       <Buy
         open={buyOpen}
         onClose={handleBuyClose}
-        stockName={buyData.stockName}
+        company={buyData.company}
         price={buyData.price}
         quantity={buyData.quantity}
         reason={buyData.reason}
+        theme1={buyData.theme1}
+        theme2={buyData.theme2}
       />
-    </div>
+    </Container>
   );
 }

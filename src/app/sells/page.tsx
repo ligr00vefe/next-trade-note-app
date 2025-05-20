@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import EmptyState from '@/components/EmptyState';
 import StockTableRow from '@/components/stocks/StockTableRow';
-import getSellStocks from '@/app/actions/getSellStocks';
-import { FavoritesData } from '@/app/actions/getFavorites';
+import getSellStocks from '@/actions/getSellStocks';
+import { FavoritesData } from '@/actions/getFavorites';
 
 const SellsPage = async () => {
 

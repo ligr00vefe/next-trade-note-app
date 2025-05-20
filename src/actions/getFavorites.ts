@@ -1,6 +1,6 @@
 import prisma from "@/helpers/prismadb";
 import { Favorite, User } from "@prisma/client";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/actions/getCurrentUser";
 
 export interface IStocksParams {
   symbol?: string;

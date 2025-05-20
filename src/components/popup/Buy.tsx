@@ -1,61 +1,115 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Buy.module.scss';
+import { KOREA_STOCK_THEMES } from '@/data/koreaStockThemes';
+import { createStock } from '@/actions/createStock';
+import { toast } from 'react-toastify';
 
 interface BuyProps {
   open: boolean;
   onClose: () => void;
-  stockName: string;
+  company: string;
   price: string;
   quantity: string;
   reason: string;
+  theme1?: string;
+  theme2?: string;
 }
 
-const Buy: React.FC<BuyProps> = ({ open, onClose, stockName, price, quantity, reason }) => {
+const Buy: React.FC<BuyProps> = ({ open, onClose, company, price, quantity, reason, theme1 = '', theme2 = '' }) => {
   const [form, setForm] = useState({
-    stockName: '',
+    company: '',
     price: '',
     quantity: '',
     reason: '',
+    theme1: '',
+    theme2: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (open) {
-      setForm({ stockName, price, quantity, reason });
+      setForm({ company, price, quantity, reason, theme1, theme2 });
     }
-  }, [open, stockName, price, quantity, reason]);
+  }, [open, company, price, quantity, reason, theme1, theme2]);
 
   if (!open) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleTheme1Change = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setForm((prev) => ({ ...prev, theme1: e.target.value, theme2: '' }));
+  };
+
+  const handleTheme2Change = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!form.theme1) {
+      setForm((prev) => ({ ...prev, theme2: '' }));
+      return;
+    }
+    setForm((prev) => ({ ...prev, theme2: e.target.value }));
   };
 
   const handleReasonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, reason: e.target.value }));
   };
 
-  const handleConfirm = () => {
-    // 실제 매수 처리 로직은 여기에 추가
-    onClose();
+  const handleConfirm = async () => {
+    setIsLoading(true);
+
+    const requiredFields = [
+      { name: 'company', value: form.company, label: '종목명' },
+      { name: 'price', value: form.price, label: '매수 금액' },
+      { name: 'quantity', value: form.quantity, label: '보유 수량' },
+    ];
+
+    const emptyFields = requiredFields.filter(field => !field.value);
+
+    if (emptyFields.length > 0) {
+      const missingLabels = emptyFields.map(field => field.label).join(', ');
+      alert(`다음 필드를 채워주세요: ${missingLabels}`);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await createStock(form);
+      toast.success('매수 정보가 등록되었습니다.');
+      onClose();
+    } catch (error: any) {
+      console.error('매수 정보 등록 오류:', error);
+      if (error.message === '이미 등록된 종목입니다.') {
+        toast.error('이미 등록된 종목입니다.');
+      } else {
+        toast.error(`매수 정보 등록 중 오류가 발생했습니다: ${error.message || '알 수 없는 오류'}`);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCancel = () => {
     onClose();
   };
 
+  const theme1Options = Object.keys(KOREA_STOCK_THEMES);
+  const theme2Options = form.theme1 ? KOREA_STOCK_THEMES[form.theme1 as keyof typeof KOREA_STOCK_THEMES] : [];
+
   return (
     <div className={styles.popup} role="dialog" aria-modal="true" aria-label="매수 팝업">
+      {isLoading && <div className={styles.loadingOverlay}>등록 중...</div>}
       <h2 className={styles.title}>매수 등록</h2>
       <label className={styles.label}>
         종목명
         <input
-          name="stockName"
+          name="company"
           type="text"
-          value={form.stockName}
+          value={form.company}
           onChange={handleChange}
           className={styles.input}
           aria-label="종목명"
+          disabled={isLoading}
         />
       </label>
       <div className={styles.inlineInputs}>
@@ -68,6 +122,7 @@ const Buy: React.FC<BuyProps> = ({ open, onClose, stockName, price, quantity, re
             onChange={handleChange}
             className={styles.input}
             aria-label="매수 금액"
+            disabled={isLoading}
           />
         </label>
         <label className={styles.label}>
@@ -79,7 +134,42 @@ const Buy: React.FC<BuyProps> = ({ open, onClose, stockName, price, quantity, re
             onChange={handleChange}
             className={styles.input}
             aria-label="보유 수량"
+            disabled={isLoading}
           />
+        </label>
+      </div>
+      <div className={styles.inlineInputs}>
+        <label className={styles.label}>
+          테마(1차 분류)
+          <select
+            name="theme1"
+            value={form.theme1}
+            onChange={handleTheme1Change}
+            className={styles.input}
+            aria-label="1차 분류"
+            disabled={isLoading}
+          >
+            <option value="" disabled>1차 분류</option>
+            {theme1Options.map((theme: string) => (
+              <option key={theme} value={theme}>{theme}</option>
+            ))}
+          </select>
+        </label>
+        <label className={styles.label}>
+          테마(2차 분류)
+          <select
+            name="theme2"
+            value={form.theme2}
+            onChange={handleTheme2Change}
+            disabled={!form.theme1 || isLoading}
+            className={styles.input}
+            aria-label="2차 분류"
+          >
+            <option value="" disabled>2차 분류</option>
+            {theme2Options.map((theme: string) => (
+              <option key={theme} value={theme}>{theme}</option>
+            ))}
+          </select>
         </label>
       </div>
       <label className={styles.label}>
@@ -91,11 +181,12 @@ const Buy: React.FC<BuyProps> = ({ open, onClose, stockName, price, quantity, re
           onChange={handleReasonChange}
           className={styles.input}
           aria-label="구매 사유"
+          disabled={isLoading}
         />
       </label>
       <div className={styles.buttonRow}>
-        <button type="button" className={styles.confirmButton} onClick={handleConfirm} tabIndex={0} aria-label="확인">확인</button>
-        <button type="button" className={styles.cancelButton} onClick={handleCancel} tabIndex={0} aria-label="취소">취소</button>
+        <button type="button" className={styles.confirmButton} onClick={handleConfirm} tabIndex={0} aria-label="확인" disabled={isLoading}>확인</button>
+        <button type="button" className={styles.cancelButton} onClick={handleCancel} tabIndex={0} aria-label="취소" disabled={isLoading}>취소</button>
       </div>
     </div>
   );

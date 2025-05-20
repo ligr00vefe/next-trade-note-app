@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useMemo } from "react";
 import { toast } from 'react-toastify'
-import { IStocksParams } from "@/app/actions/getFavorites";
+import { IStocksParams } from "@/actions/getFavorites";
 
 interface IUseFavoriteProps {
   stockId: string;

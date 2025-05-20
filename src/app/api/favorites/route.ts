@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import getFavorites from "@/app/actions/getFavorites";
+import getFavorites from "@/actions/getFavorites";
 
 // 즐겨찾기 가져오기
 // GET 요청 처리

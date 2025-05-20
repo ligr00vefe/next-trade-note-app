@@ -1,6 +1,6 @@
 import prisma from "@/helpers/prismadb";
-import { FavoritesData } from "@/app/actions/getFavorites";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import { FavoritesData } from "@/actions/getFavorites";
+import getCurrentUser from "@/actions/getCurrentUser";
 
 export default async function getSellStocks(): Promise<FavoritesData> {
 

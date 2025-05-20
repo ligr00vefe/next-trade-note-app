@@ -19,17 +19,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.7rem;
-  .sidebar-card {
-    background: #18202b;
-    border-radius: 14px;
-    box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
-    padding: 2.1rem 1.5rem;
-    font-size: 1.18rem;
-    font-weight: 600;
-    color: #f5f6f8;
-  }
+
   .sidebar-btn {
-    margin-top: auto;
     background: #bfa46f;
     color: #181c22;
     border: none;
@@ -53,6 +44,7 @@
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+
   .portfolio-section {
     background: #18202b;
     border-radius: 14px;
@@ -116,6 +108,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.7rem;
+
   .info-card {
     background: #18202b;
     border-radius: 14px;
@@ -157,14 +150,46 @@
         box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
       }
     }
+
+    .theme-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+      height: 28px;
+    }
+    .theme-checkbox {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      &:checked + .theme-label {
+        .theme-track { background: #d6b97a; }
+        .theme-thumb { transform: translateX(24px); background: #181c22; }
+        ~ .theme-icons {
+          .icon-dark { display: none; }
+          .icon-light { display: inline-block; }
+        }
+      }
+    }
+    .theme-label { display: flex; align-items: center; cursor: pointer; }
+    .theme-track { display: block; width: 52px; height: 28px; background: #232b38; border-radius: 14px; position: relative; transition: background 0.2s; }
+    .theme-thumb { display: block; width: 24px; height: 24px; background: #bfa46f; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: transform 0.2s, background 0.2s; }
+    .theme-icons {
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: space-around;
+      pointer-events: none; font-size: 1rem;
+      .icon-dark { display: inline-block; }
+      .icon-light { display: none; }
+    }
   }
 }
 
 .mypage-bottom-cards {
-  grid-column: 1 / span 3;
+  grid-column: 1 / -1;
   display: flex;
-  gap: 1.7rem;
-  margin-top: 1.7rem;
+  gap: 2.5rem;
+
   .bottom-card {
     flex: 1;
     background: #18202b;
@@ -182,6 +207,91 @@
 }
 
 // =========================
+// 라이트 모드 스타일
+// =========================
+.mypage-root.light-theme {
+  background: #f0f2f5;
+  color: #333;
+
+  .mypage-sidebar, .mypage-main, .mypage-info, .mypage-bottom-cards {
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.08);
+  }
+
+  .mypage-sidebar {
+    .sidebar-btn {
+      background: #bfa46f;
+      color: #181c22;
+      &:hover,
+      &:focus {
+        background: #d6b97a;
+        color: #101926;
+      }
+    }
+  }
+
+  .mypage-main {
+    .portfolio-section {
+      background: #ffffff;
+      h2 { color: #1f2937; }
+      .chart-placeholder {
+        background: #f0f0f0;
+        color: #666;
+      }
+    }
+    .overview-section {
+      .overview-card {
+        background: #ffffff;
+        color: #1f2937;
+        h3 { color: #1f2937; }
+        .chart-placeholder {
+          background: #f0f0f0;
+          color: #666;
+        }
+        .asset-value { color: #bfa46f; }
+      }
+    }
+  }
+
+  .mypage-info {
+    .info-card {
+      background: #ffffff;
+      color: #1f2937;
+      h4 { color: #1f2937; }
+      ul li { color: #666; }
+      button {
+        background: #bfa46f;
+        color: #181c22;
+        &:hover,
+        &:focus {
+          background: #d6b97a;
+          color: #101926;
+        }
+      }
+      .theme-toggle {
+        .theme-track {
+          background: #ccc;
+        }
+        .theme-thumb {
+          background: #fff;
+        }
+        .theme-icons {
+          .icon-dark, .icon-light {
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+
+  .mypage-bottom-cards {
+    .bottom-card {
+      background: #ffffff;
+      color: #1f2937;
+    }
+  }
+}
+
+// =========================
 // 반응형
 // =========================
 @include tablet {
@@ -191,71 +301,93 @@
     gap: 1.5rem;
     padding: 2rem 0.7rem 1.5rem 0.7rem;
   }
-  .mypage-sidebar,
-  .mypage-info {
+  .mypage-sidebar, .mypage-main, .mypage-info {
     grid-row: unset;
+    grid-column: unset;
+  }
+
+  .mypage-sidebar {
     flex-direction: row;
     gap: 1.2rem;
-    .sidebar-card,
-    .info-card {
+    .sidebar-btn {
       flex: 1;
+      text-align: center;
       padding: 1.2rem 0.7rem;
     }
   }
+
   .mypage-main {
     gap: 1.2rem;
-    .portfolio-section,
-    .overview-section .overview-card {
+    .portfolio-section, .overview-section .overview-card {
       padding: 1.2rem 0.7rem;
     }
     .overview-section {
       gap: 1.2rem;
     }
   }
-  .mypage-bottom-cards {
+
+  .mypage-info {
+    flex-direction: row;
     gap: 1.2rem;
-    margin-top: 1.2rem;
+    .info-card {
+      flex: 1;
+      padding: 1.2rem 0.7rem;
+      h4 { text-align: center; }
+      ul { text-align: left; }
+    }
+  }
+
+  .mypage-bottom-cards {
+    flex-direction: row;
+    gap: 1.2rem;
     .bottom-card {
       padding: 1.2rem 0.7rem;
+      text-align: center;
     }
   }
 }
+
 @include mobile {
   .mypage-root {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
     gap: 1rem;
     padding: 1.2rem 0.3rem 0.7rem 0.3rem;
   }
-  .mypage-sidebar,
+
+  .mypage-sidebar {
+    flex-direction: column;
+    gap: 0.7rem;
+    .sidebar-btn {
+      padding: 0.7rem 0.3rem;
+      font-size: 0.98rem;
+    }
+  }
+
+  .mypage-main {
+    gap: 0.7rem;
+    .portfolio-section, .overview-section .overview-card {
+      padding: 0.7rem 0.3rem;
+    }
+    .portfolio-section h2 { font-size: 1.08rem; }
+    .overview-section { gap: 0.7rem; }
+  }
+
   .mypage-info {
     flex-direction: column;
     gap: 0.7rem;
-    .sidebar-card,
     .info-card {
       padding: 0.7rem 0.3rem;
       font-size: 0.98rem;
+      h4, ul { text-align: left; }
     }
   }
-  .mypage-main {
-    gap: 0.7rem;
-    .portfolio-section,
-    .overview-section .overview-card {
-      padding: 0.7rem 0.3rem;
-    }
-    .portfolio-section h2 {
-      font-size: 1.08rem;
-    }
-    .overview-section {
-      gap: 0.7rem;
-    }
-  }
+
   .mypage-bottom-cards {
+    flex-direction: column;
     gap: 0.7rem;
-    margin-top: 0.7rem;
     .bottom-card {
       padding: 0.7rem 0.3rem;
       font-size: 0.98rem;
+      text-align: left;
     }
   }
 }
