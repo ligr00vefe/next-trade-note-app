@@ -1,9 +1,10 @@
 @use '../../styles/helpers' as *;
 
 .container {    
+    min-height: 100vh;
+    background: var(--background);
     margin-left: auto;
     margin-right: auto;
-    background-color: var(--main-color-01);
   
     @include pc {
         max-width: $width-xl;

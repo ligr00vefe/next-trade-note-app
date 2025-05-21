@@ -95,10 +95,10 @@ const RegisterClient = () => {
               <Button
                 label="Register"
               />
-              <div className={styles['footer-text']}>
+              <div className={styles['register-chk']}>
                 <p>
                   이미 회원가입 하셨나요?{" "}
-                  <Link href="/login" className={styles['footer-link']}>로그인</Link>
+                  <Link href="/login" className={styles['login-link']}>로그인</Link>
                 </p>
               </div>
             </div>

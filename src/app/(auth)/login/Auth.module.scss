@@ -1,100 +1,116 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/variables' as *;
+
 .auth-wrapper {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--background);
 
   .container {
-      width: 33rem;
+    width: 33rem;
 
-      .logo {
-          text-align: center;
-          margin-bottom: 2.5rem;
+    .logo {
+      text-align: center;
+      margin-bottom: 2.5rem;
 
-          h1 {
-              font-size: 2rem;
-              font-weight: 700;
-              margin-top: 3rem;
-              color: #1f2937;
-          }
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 3rem;
+        color: var(--text-color-01);
       }
+    }
 
-      .form {
-          display: flex;
-          flex-flow: column;
+    .form {
+      display: flex;
+      flex-flow: column;
+      width: 100%;
+      max-width: 33rem;
+
+      .input-box {
+        margin-top: 1rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+          line-height: 1.25;
+          color: var(--text-color-01);
+        }
+
+        input {
+          display: block;
           width: 100%;
-          max-width: 33rem;
-
-          .input-box {
-              margin-top: 1rem;
-
-              // label {
-              //     display: block;
-              //     margin-bottom: 0.5rem;
-              //     font-size: 1rem;
-              //     line-height: 1.25;
-              // }
-
-              // input {
-              //     display: block;
-              //     width: 100%;
-              //     font-size: 1.2rem;
-              //     line-height: 1.2;
-              //     border-radius: 0.375rem;
-              //     padding: 0.825rem;
-              // }
-          }
-
-          .btn-area {
-              margin: 2.5rem 0;
-
-              button {
-                  width: 100%;
-                  padding: 0.5rem 1.5rem;
-                  color: var(--btn-color-01);
-                  background: var(--color-white);
-                  border: 1px solid var(--btn-color-01);
-                  border-radius: 1.5rem;
-                  margin-top: 1rem;
-                  transition-duration: 0.2s;
-                  cursor: pointer;
-
-                  &:hover {
-                      color: var(--color-white);
-                      background: var(--btn-color-01);
-                  }
-
-                  &.colored-btn {
-                      color: var(--color-white);
-                      background: var(--btn-color-01);
-
-                      &:hover {
-                          color: var(--btn-color-01);
-                          background: var(--color-white);
-                      }
-                  }
-              }
-
-              .canceled-btn {
-                  color: var(--dark-gray);
-                  margin-top: 10px;                    
-                  a {color: var(--color-black);font-weight: 500;margin-left: 7px;}
-              }
-          }
+          font-size: 1.2rem;
+          line-height: 1.2;
+          border-radius: 0.375rem;
+          padding: 0.825rem;
+        }
       }
+
+      .btn-area {
+        margin: 2.5rem 0;
+
+        button {
+          width: 100%;
+          padding: 0.5rem 1.5rem;
+          color: var(--btn-color-01);
+          background: var(--btn-text-color-01);
+          border: 1px solid var(--btn-color-01);
+          border-radius: 1.5rem;
+          margin-top: 1rem;
+          transition-duration: 0.2s;
+          cursor: pointer;
+
+          &:hover {
+            color: var(--btn-text-color-01);
+            background: var(--btn-color-01);
+          }
+
+          &.colored-btn {
+            color: var(--btn-text-color-01);
+            background: var(--btn-color-01);
+
+            &:hover {
+              color: var(--btn-color-01);
+              background: var(--btn-text-color-01);
+            }
+          }
+        }
+
+        .canceled-btn {
+          color: var(--text-color-03);
+          margin-top: 10px;                    
+          a {
+            color: var(--text-color-01);
+            font-weight: 500;
+            margin-left: 7px;
+          }
+        }
+      }
+    }
   }
 }
 
-.footer-text {
-    text-align: center;
-    p {
-        color: #9ca3af;
-    }
+.register-chk {
+  margin-top: 5rem;
+  font-size: 1.2rem;
+  text-align: center;
+  
+  p {
+    color: var(--text-color-03);
+  }
 
-    .footer-link {
-        color: #000;
-        &:hover {
-            text-decoration: underline;
-        }
+  .login-link {
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--point-color-04);
+    
+    &:hover {
+      text-decoration: underline;
+      color: var(--point-color-05);
     }
+  }
 }

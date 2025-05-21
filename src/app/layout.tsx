@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.scss'
 
 import dynamic from 'next/dynamic'
+import { ThemeProvider } from 'next-themes'
 
 import Providers from '@/providers';
 import ToastProvider from '@/components/ToastProvider'
@@ -23,13 +24,20 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body className={inter.className}>
-        <Providers>
-          <Navbar currentUser={currentUser} />
-          <ToastProvider />
-          {children}
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <Providers>
+            <Navbar currentUser={currentUser} />
+            <ToastProvider />
+            {children}
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   )

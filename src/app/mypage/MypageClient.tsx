@@ -1,32 +1,16 @@
 "use client";
 
 import styles from './Mypage.module.scss';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useTheme } from 'next-themes';
 
 export default function MypageClient() {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return sessionStorage.getItem('theme') || 'dark';
-    }
-    return 'dark';
-  });
+  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('account');
 
   const handleThemeToggle = () => {
-    setTheme(prevTheme => {
-      const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
-      sessionStorage.setItem('theme', newTheme);
-      return newTheme;
-    });
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   };
-
-  useEffect(() => {
-    const rootElement = document.querySelector(`.${styles['mypage-root']}`);
-    if (rootElement) {
-      rootElement.classList.remove(styles['light-theme'], styles['dark-theme']);
-      rootElement.classList.add(styles[theme === 'dark' ? 'dark-theme' : 'light-theme']);
-    }
-  }, [theme]);
 
   const renderTabContent = () => {
     if (activeTab === 'account') {

@@ -2,8 +2,8 @@
 
 :root {
   --font-family: #{$font-family};
-  --background: #ffffff;
-  --foreground: #0a0a0a;
+  --background: #($background);
+  --foreground: #($foreground);
 
   --dark-blue: #{$dark-blue};
   --light-blue: #{$light-blue};
@@ -22,20 +22,19 @@
   --box-shadow: #{$box-shadow};
 }
 
-// 테마
-:root {
+// 라이트 테마
+:root.light {
   @each $key, $val in $light-theme {
     --#{$key}: #{$val};
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    @each $key, $val in $dark-theme {
-      --#{$key}: #{$val};
-    }
-    color-scheme: dark;
+// 다크 테마
+:root.dark {
+  @each $key, $val in $dark-theme {
+    --#{$key}: #{$val};
   }
+  color-scheme: dark;
 }
 
 html {
@@ -50,8 +49,6 @@ body {
 body {
   overflow-x: hidden;
   font-size: clamp(1rem, 1rem + 1vw, 1.7rem);
-  color: var(--foreground);
-  background: var(--main-color-03);
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -67,43 +64,4 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 1.4rem;
-
-  thead {
-    border-top: 2px solid var(--light-blue);
-    border-bottom: 2px solid var(--light-blue);
-  }
-
-  th {
-    border: 1px solid var(--table-border-gray);
-  }
-
-  th,
-  td {
-    vertical-align: top;
-    text-align: left;
-    padding: 8px;
-
-    &.icons {
-      > * {
-        margin-right: 5px;
-        cursor: pointer;
-      }
-    }
-  }
-
-  tr {
-    border-bottom: 1px solid var(--border-gray);
-    cursor: pointer;
-  }
-
-  tr:nth-child(even) {
-    background-color: var(--table-border-gray);
-  }
 }

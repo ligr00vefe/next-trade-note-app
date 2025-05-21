@@ -1,4 +1,5 @@
 @use '../../styles/mixins' as *;
+@use '../../styles/variables' as *;
 
 // =========================
 // Home Page Styles (리팩토링)
@@ -29,16 +30,16 @@
   font-weight: 700;
   line-height: 1.18;
   margin-bottom: 1.8rem;
-  color: #f5f6f8;
+  color: var(--text-color-01);
 }
 .text-area-title {
   font-size: 1.62rem;
-  color: #bfc3c9;
+  color: var(--text-color-03);
   margin-bottom: 3.3rem;
 }
 .text-area-btn {
-  background: #bfa46f;
-  color: #181c22;
+  background: var(--point-color-04);
+  color: var(--background);
   font-size: 1.62rem;
   font-weight: 700;
   padding: 1.43rem 3.3rem;
@@ -50,8 +51,8 @@
 }
 .text-area-btn:hover,
 .text-area-btn:focus {
-  background: #d6b97a;
-  color: #101926;
+  background: var(--point-color-05);
+  color: var(--background);
   box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
 }
 .img-area {
@@ -81,7 +82,7 @@
   gap: 3.5rem;
 }
 .card {
-  background: #18202b;
+  background: var(--main-color-04);
   border-radius: 14px;
   padding: 3.15rem 2.25rem 2.55rem 2.25rem;
   flex: 1 1 0;
@@ -94,17 +95,17 @@
 .card-icon {
   font-size: 3.15rem;
   margin-bottom: 1.05rem;
-  color: #e5e6e8;
+  color: var(--text-color-03);
 }
 .card h2 {
   font-size: 1.77rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
-  color: #f5f6f8;
+  color: var(--text-color-01);
 }
 .card p {
   font-size: 1.52rem;
-  color: #bfc3c9;
+  color: var(--text-color-03);
   line-height: 1.6;
 }
 
@@ -132,8 +133,8 @@
   justify-content: center;
   width: 3.45rem;
   height: 3.45rem;
-  background: #232b38;
-  color: #bfa46f;
+  background: var(--main-color-05);
+  color: var(--point-color-04);
   font-size: 1.88rem;
   font-weight: 700;
   border-radius: 50%;
@@ -143,11 +144,11 @@
   font-size: 1.62rem;
   font-weight: 700;
   margin-bottom: 0.45rem;
-  color: #f5f6f8;
+  color: var(--text-color-01);
 }
 .step-list p {
   font-size: 1.47rem;
-  color: #bfc3c9;
+  color: var(--text-color-03);
   line-height: 1.6;
 }
 
@@ -158,7 +159,7 @@
 }
 .guide-text {
   text-align: center;
-  color: #7c8592;
+  color: var(--text-color-03);
   font-size: 1.47rem;
   margin-bottom: 2.25rem;
 }

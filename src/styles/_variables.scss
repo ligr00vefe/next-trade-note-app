@@ -31,58 +31,126 @@ $container-pd-sx: 0 5px;
 
 // Light Theme Colors
 $light-theme: (
+  // 배경색
   background: #ffffff,
-  foreground: #0a0a0a,
+  foreground: #f8fafc,
 
-  main-color-01: #0f172a,
-  main-color-02: #393930,
-  main-color-03: #bc9b75,
+  // 메인 색상 (배경, 테두리 등)
+  main-color-01: #e2e8f0,  // 테이블 테두리, 헤더 배경
+  main-color-02: #f1f5f9,  // 테이블 짝수 행 배경
+  main-color-03: #f8fafc,  // 차트 배경
+  main-color-04: #ffffff,  // 카드 배경
+  main-color-05: #f1f5f9,  // 사이드바 버튼 배경
+  main-color-06: #f8fafc,  // 차트 배경
+  main-color-07: #e2e8f0,  // 차트 플레이스홀더
 
-  point-color-01: #fff,
-  point-color-02: #000,
-  point-color-03: #000,
+  // 포인트 색상 (강조)
+  point-color-01: #0f172a,  // 주요 텍스트
+  point-color-02: #1e293b,  // 부가 텍스트
+  point-color-03: #334155,  // 보조 텍스트
+  point-color-04: #bfa46f,  // 골드 포인트
+  point-color-05: #d6b97a,  // 골드 포인트 호버
+  point-color-06: #0f172a,  // 사이드바 버튼 텍스트
+  point-color-07: #1e293b,  // 사이드바 버튼 호버 배경
+  point-color-08: #334155,  // 사이드바 버튼 호버 텍스트
 
-  text-color-01: #fff,
-  text-color-02: #000,
-  text-color-03: #000,
+  // 텍스트 색상
+  text-color-01: #0f172a,  // 주요 텍스트
+  text-color-02: #1e293b,  // 부가 텍스트
+  text-color-03: #334155,  // 보조 텍스트
 
-  btn-color-01: #252621,
-  btn-color-02: #393930,
-  btn-color-03: #bc9b75,
+  // 버튼 색상
+  btn-color-01: #0f172a,    // 기본 버튼
+  btn-color-02: #1e293b,    // 보조 버튼
+  btn-color-03: #334155,    // 보조 버튼
+  btn-color-04: #dc2626,    // 매수 버튼
+  btn-color-05: #2563eb,    // 매도 버튼
 
-  disabled-color-01: #767676,
-  disabled-color-02: #6b7280,
-  disabled-color-03: #bc9b75,
+  // 버튼 텍스트 색상
+  btn-text-color-01: #f8fafc,
+  btn-text-color-02: #f1f5f9,
+  btn-text-color-03: #e2e8f0,
+  btn-text-color-04: #ffffff,
+  btn-text-color-05: #ffffff,
 
-  admin-color-01: #FDF6EC,
-  admin-color-02: #E1A956,
-  admin-color-03: #D72638
+  // 버튼 호버 색상
+  btn-point-color-01: #1e293b,
+  btn-point-color-02: #334155,
+  btn-point-color-03: #c2410c,
+  btn-point-color-04: #b91c1c,
+  btn-point-color-05: #1d4ed8,
+
+  // 비활성화 색상
+  disabled-color-01: #64748b,
+  disabled-color-02: #94a3b8,
+  disabled-color-03: #cbd5e1,
+
+  // 관리자 색상
+  admin-color-01: #f8fafc,
+  admin-color-02: #f1f5f9,
+  admin-color-03: #ef4444
 );
 
 // Dark Theme Colors
 $dark-theme: (
-  background: #0a0a0a,
-  foreground: #ededed,
+  // 배경색
+  background: #0f172a,
+  foreground: #1e293b,
 
-  main-color-01: #1e1e1e,
-  main-color-02: #2d2d2d,
-  main-color-03: #3b3b3b,
+  // 메인 색상 (배경, 테두리 등)
+  main-color-01: #1e293b,  // 테이블 테두리, 헤더 배경
+  main-color-02: #334155,  // 테이블 짝수 행 배경
+  main-color-03: #475569,  // 차트 배경
+  main-color-04: #18202b,  // 카드 배경
+  main-color-05: #232b38,  // 사이드바 버튼 배경
+  main-color-06: #232b38,  // 차트 배경
+  main-color-07: #181c22,  // 차트 플레이스홀더
 
-  point-color-01: #ffffff,
-  point-color-02: #8ecae6,
-  point-color-03: #219ebc,
+  // 포인트 색상 (강조)
+  point-color-01: #f8fafc,  // 주요 텍스트
+  point-color-02: #f1f5f9,  // 부가 텍스트
+  point-color-03: #e2e8f0,  // 보조 텍스트
+  point-color-04: #bfa46f,  // 골드 포인트
+  point-color-05: #d6b97a,  // 골드 포인트 호버
+  point-color-06: #bfc3c9,  // 사이드바 버튼 텍스트
+  point-color-07: #2a3444,  // 사이드바 버튼 호버 배경
+  point-color-08: #f5f6f8,  // 사이드바 버튼 호버 텍스트
 
-  btn-color-01: #333333,
-  btn-color-02: #444444,
-  btn-color-03: #555555,
+  // 텍스트 색상
+  text-color-01: #f8fafc,  // 주요 텍스트
+  text-color-02: #f1f5f9,  // 부가 텍스트
+  text-color-03: #e2e8f0,  // 보조 텍스트
 
-  disabled-color-01: #555555,
-  disabled-color-02: #666666,
-  disabled-color-03: #777777,
+  // 버튼 색상
+  btn-color-01: #f8fafc,    // 기본 버튼
+  btn-color-02: #e2e8f0,    // 보조 버튼
+  btn-color-03: #cbd5e1,    // 보조 버튼
+  btn-color-04: #ef4444,    // 매수 버튼
+  btn-color-05: #3b82f6,    // 매도 버튼
 
-  admin-color-01: #2e2e2e,
-  admin-color-02: #444444,
-  admin-color-03: #ff6b6b
+  // 버튼 텍스트 색상
+  btn-text-color-01: #0f172a,
+  btn-text-color-02: #1e293b,
+  btn-text-color-03: #334155,
+  btn-text-color-04: #ffffff,
+  btn-text-color-05: #ffffff,
+
+  // 버튼 호버 색상
+  btn-point-color-01: #e2e8f0,
+  btn-point-color-02: #cbd5e1,
+  btn-point-color-03: #f97316,
+  btn-point-color-04: #dc2626,
+  btn-point-color-05: #2563eb,
+
+  // 비활성화 색상
+  disabled-color-01: #475569,
+  disabled-color-02: #64748b,
+  disabled-color-03: #94a3b8,
+
+  // 관리자 색상
+  admin-color-01: #1e293b,
+  admin-color-02: #334155,
+  admin-color-03: #f87171
 );
 
 

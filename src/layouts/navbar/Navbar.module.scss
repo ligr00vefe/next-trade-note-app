@@ -34,20 +34,37 @@
 }
   
 .menu-btn {
-    font-size: 1.5rem;
+    display: none;
+    font-size: 1.7rem;
+    font-family: 'Poppins', 'Montserrat', 'Inter', Arial, sans-serif;
+    font-weight: 500;
+    background: none;
+    border: none;
+    color: var(--text-color-01);
+    cursor: pointer;
+    padding: 0 1.2rem;
+    margin-right: 1.5rem;
+    height: 3.6rem;
+    min-height: 3.6rem;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 4px solid transparent;
+    transition: border 0.2s, color 0.2s;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
-.nav-items,
-.nav-items-sm {  
+.nav-items {  
     ul {
         display: flex;
         align-items: center;
-        gap: 2.2rem;
         li {
             padding: 0 1.2rem;
             list-style: none;
             text-decoration: none;
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             font-family: 'Poppins', 'Montserrat', 'Inter', Arial, sans-serif;
             font-weight: 500;
             line-height: 2.8rem;
@@ -55,13 +72,8 @@
             display: flex;
             align-items: center;
             cursor: pointer;
-            border-bottom: 4px solid transparent;
             transition: border 0.2s, color 0.2s;
-            &:hover,
-            &:focus {
-                border-bottom: 4px solid #fff;
-                color: #fff;
-            }
+
             button {
                 background: none;
                 border: none;
@@ -80,82 +92,81 @@
 }
 
 .nav-items-sm {  
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--main-color-01);
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,0.1);
+    transform: translateY(0);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+    max-height: 0;
+    overflow: hidden;
+    border-top: 1px solid var(--border-gray);
+
+    &.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        max-height: 500px;
+    }
+
     ul {        
         flex-direction: column;
-        gap: 1.2rem;
+        gap: 0;
         li {
+            width: 100%;
+            padding: 0 1.2rem;
             font-size: 1.3rem;
-            min-height: 2.8rem;
+            font-family: 'Poppins', 'Montserrat', 'Inter', Arial, sans-serif;
+            font-weight: 500;
+            line-height: 2.8rem;
+            min-height: 3.6rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 0.1rem solid var(--text-color-01);
+            transition: border 0.2s, color 0.2s;
+
+            button {
+                background: none;
+                border: none;
+                outline: none;
+                font: inherit;
+                color: inherit;
+                cursor: pointer;
+                padding: 0;
+                min-width: 0;
+                min-height: 0;
+                display: flex;
+                align-items: center;
+            }
+
+            &:hover {
+                background-color: var(--main-color-02);
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
         }
     }
 }
 
-// NavItem 메뉴 스타일 (NavItem.tsx에서 사용)
-.nav-items-list {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2.2rem;
-  width: 100%;
-  li {
-    padding: 0 1.2rem;
-    list-style: none;
-    text-decoration: none;
-    font-size: 1.7rem;
-    font-family: 'Poppins', 'Montserrat', 'Inter', Arial, sans-serif;
-    font-weight: 500;
-    line-height: 2.8rem;
-    min-height: 3.6rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border-bottom: 4px solid transparent;
-    transition: border 0.2s, color 0.2s;
-    background: none;
-    &:hover,
-    &:focus {
-      border-bottom: 4px solid #fff;
-      color: #fff;
-    }
-    button {
-      background: none;
-      border: none;
-      outline: none;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      padding: 0;
-      min-width: 0;
-      min-height: 0;
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-
-.nav-items-list-sm {
-  flex-direction: column;
-  gap: 1.2rem;
-  li {
-    font-size: 1.3rem;
-    min-height: 2.8rem;
-  }
-}
-
 @include pc {
     .nav-container {padding: $container-pd-lg;}
-    .menu-btn {display: none;}
     .nav-items { display: block; &-sm {display: none;}}
 }
 
 @include tablet {
     .nav-container {padding: $container-pd-md;}
-    .menu-btn {display: none;}
     .nav-items { display: block; &-sm {display: none;}}
 }
 
 @include mobile {
     .nav-container {padding: $container-pd-sm;}
-    .menu-btn {display: block;}
+    .menu-btn {display: flex;}
     .nav-items { display: none; &-sm {display: block;}}
 }

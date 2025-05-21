@@ -28,12 +28,14 @@ const Navbar = ({ currentUser }: INavbarProps) => {
           <NavItem currentUser={currentUser} />
         </div>
 
+        {/* 햄버거 버튼 */}
+        <button className={styles['menu-btn']} onClick={handleMenu}>
+          {menu ? '−' : '+'}
+        </button>
+
         {/* 반응형 메뉴 */}
-        <div className={styles['nav-items-sm']}>
-          <div className={styles['menu-btn']}>
-            {(menu === false) ? <button onClick={handleMenu}>+</button> : <button onClick={handleMenu}>-</button>}
-          </div>
-          {menu === false ? null : <NavItem mobile currentUser={currentUser} />}
+        <div className={`${styles['nav-items-sm']} ${menu ? styles['active'] : ''}`}>
+          <NavItem mobile currentUser={currentUser} />
         </div>
       </div>     
     </nav>    

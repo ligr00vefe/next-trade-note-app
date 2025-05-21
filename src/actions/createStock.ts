@@ -34,12 +34,20 @@ export async function createStock(data: ICreateStockParams) {
     throw new Error('이미 등록된 종목입니다.'); // 중복 시 에러 발생
   }
 
+  // 가격과 수량을 숫자로 변환
+  const price = parseFloat(data.price);
+  const quantity = parseInt(data.quantity, 10);
+  
+  // 총 매수 금액 계산
+  const totalPrice = price * quantity;
+
   // 2. 새로운 주식 정보 생성 (중복이 없을 경우)
   const createdStock = await prisma.stock.create({
     data: {
       company: data.company,
-      price: parseFloat(data.price), // string을 number로 변환
-      quantity: parseInt(data.quantity, 10), // string을 number로 변환
+      price: price,
+      quantity: quantity,
+      totalPrice: totalPrice,
       theme1: data.theme1,
       theme2: data.theme2,
       reason: data.reason,

@@ -51,7 +51,7 @@ const Buy: React.FC<BuyProps> = ({ open, onClose, company, price, quantity, reas
     setForm((prev) => ({ ...prev, theme2: e.target.value }));
   };
 
-  const handleReasonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleReasonChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, reason: e.target.value }));
   };
 
@@ -174,14 +174,14 @@ const Buy: React.FC<BuyProps> = ({ open, onClose, company, price, quantity, reas
       </div>
       <label className={styles.label}>
         구매 사유
-        <input
+        <textarea
           name="reason"
-          type="text"
           value={form.reason}
           onChange={handleReasonChange}
-          className={styles.input}
+          className={styles.textarea}
           aria-label="구매 사유"
           disabled={isLoading}
+          rows={4}
         />
       </label>
       <div className={styles.buttonRow}>

@@ -1,3 +1,8 @@
+.list-root {
+  width: 100%;
+  padding: 2rem;
+}
+
 .list-header {
   display: flex;
   align-items: center;
@@ -8,24 +13,24 @@
 .list-title {
   font-size: 2rem;
   font-weight: 700;
+  color: var(--text-color-01);
 }
 
 .add-buy-btn {
-  background: var(--color-primary);
-  color: var(--color-white);
+  background: var(--btn-color-04);
+  color: var(--btn-text-color-04);
   border: none;
   border-radius: 8px;
   padding: 0.8rem 2rem;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
   box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
   &:hover,
   &:focus {
-    background: var(--color-secondary);
-    color: var(--color-black);
-    box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
+    background: var(--btn-point-color-04);
+    transform: translateY(-1px);
   }
 }
 
@@ -33,22 +38,49 @@
   border-collapse: collapse;
   width: 100%;
   font-size: 1.4rem;
+  color: var(--text-color-01);
 }
 
 .list-thead {
-  border-top: 2px solid var(--light-blue);
-  border-bottom: 2px solid var(--light-blue);
+  border-top: 2px solid var(--main-color-01);
+  border-bottom: 2px solid var(--main-color-01);
 }
 
 .list-th {
-  border: 1px solid var(--table-border-gray);
+  color: var(--text-color-01);
+  font-weight: 600;
+  
+}
+
+.list-td {
+  border: 1px solid var(--main-color-01);
 }
 
 .list-th,
 .list-td {
+  text-align: center;
   vertical-align: top;
+  padding: .7rem 1.5rem;
+}
+
+.list-th:first-child,
+.list-td:first-child {
+  border-left: none;
+}
+
+.list-th:last-child,
+.list-td:last-child {
+  border-right: none;
+}
+
+.list-td:first-child {
   text-align: left;
-  padding: 8px;
+}
+// 숫자 값만 오른쪽 정렬
+.list-td:nth-child(2),
+.list-td:nth-child(3),
+.list-td:nth-child(4) {
+  text-align: right;
 }
 
 .list-td.icons > * {
@@ -57,17 +89,16 @@
 }
 
 .list-tr {
-  border-bottom: 1px solid var(--border-gray);
-  cursor: pointer;
+  border-bottom: none;
 }
 
 .list-tr:nth-child(even) {
-  background-color: var(--table-border-gray);
+  background-color: var(--main-color-02);
 }
 
 .view-btn {
-  background: var(--light-blue);
-  color: var(--color-white);
+  background: var(--btn-color-05);
+  color: var(--btn-text-color-05);
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1.2rem;
@@ -75,17 +106,17 @@
   font-weight: 600;
   cursor: pointer;
   margin-right: 0.5rem;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.2s ease;
   &:hover,
   &:focus {
-    background: var(--color-primary);
-    color: var(--color-white);
+    background: var(--btn-point-color-05);
+    transform: translateY(-1px);
   }
 }
 
-.action-btn {
-  background: var(--color-secondary);
-  color: var(--color-black);
+.buy-btn {
+  background: var(--btn-color-04);
+  color: var(--btn-text-color-04);
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1.2rem;
@@ -93,10 +124,28 @@
   font-weight: 600;
   cursor: pointer;
   margin-right: 0.5rem;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.2s ease;
   &:hover,
   &:focus {
-    background: var(--color-primary);
-    color: var(--color-white);
+    background: var(--btn-point-color-04);
+    transform: translateY(-1px);
+  }
+}
+
+.sell-btn {
+  background: var(--btn-color-05);
+  color: var(--btn-text-color-05);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: all 0.2s ease;
+  &:hover,
+  &:focus {
+    background: var(--btn-point-color-05);
+    transform: translateY(-1px);
   }
 }
