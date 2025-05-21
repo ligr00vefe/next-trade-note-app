@@ -27,8 +27,8 @@ export default function HomeClient() {
       backgroundPosition="top center"
       backgroundRepeat="no-repeat"
     >      
-      <section className={styles['sec-01']}>
-        <div className={styles['sec-01-inner']}>
+      <section className={styles['sec01']}>
+        <div className={styles['sec01-inner']}>
           <Fade direction="left" triggerOnce>
             <div className={styles['text-area']}>
               <h1>
@@ -62,7 +62,7 @@ export default function HomeClient() {
       </section>
 
       <Fade direction="up" triggerOnce>
-        <section className={styles['sec-02']}>
+        <section className={styles['sec02']}>
           <div className={styles['card-list']}>
             <div className={styles['card']}>
               <span className={styles['card-icon']} aria-hidden="true">📄</span>
@@ -84,7 +84,7 @@ export default function HomeClient() {
       </Fade>
 
       <Fade direction="up" triggerOnce>
-        <section className={styles['sec-03']}>
+        <section className={styles['sec03']}>
           <div className={styles['step-list']}>
             <span className={styles['step-num']}>1</span>
             <div>
@@ -110,7 +110,7 @@ export default function HomeClient() {
       </Fade>
 
       <Fade direction="up" triggerOnce>
-        <section className={styles['sec-04']}>
+        <section className={styles['sec04']}>
           <p className={styles['guide-text']}>
             초보자 중심으로 시작, 장투 지원, 리밸런스, 알림 기능 추가 예정
           </p>

@@ -5,14 +5,14 @@
 // =========================
 
 // 섹션 1: Hero
-.sec-01 {
+.sec01 {
   width: 100%;
   background: none;
   margin-bottom: 3.5rem;
   padding: 4rem 0;
   height: 100vh;  
 }
-.sec-01-inner {
+.sec01-inner {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -70,7 +70,7 @@
 }
 
 // 섹션 2: Features
-.sec-02 {
+.sec02 {
   width: 100%;
   margin-bottom: 3.5rem;
   padding: 4rem 0;
@@ -109,7 +109,7 @@
 }
 
 // 섹션 3: Steps
-.sec-03 {
+.sec03 {
   width: 100%;
   margin-bottom: 2.8rem;
   display: flex;
@@ -152,7 +152,7 @@
 }
 
 // 섹션 4: Guide
-.sec-04 {
+.sec04 {
   width: 100%;
   padding: 4rem 0;
 }
@@ -167,7 +167,7 @@
 // 반응형
 // =========================
 @include tablet {
-  .sec-01-inner,
+  .sec01-inner,
   .card-list {
     flex-direction: column;
     gap: 2.2rem;
@@ -175,7 +175,7 @@
   .img-area {
     margin-top: 2.2rem;
   }
-  .sec-03 {
+  .sec03 {
     flex-direction: column;
     gap: 2.2rem;
   }
@@ -186,7 +186,7 @@
   }
 }
 @include mobile {
-  .sec-01-inner {
+  .sec01-inner {
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem 0 1.2rem 0;
@@ -215,7 +215,7 @@
   .card-icon {
     font-size: 2.1rem;
   }
-  .sec-03 {
+  .sec03 {
     flex-direction: column;
     gap: 1.2rem;
   }
@@ -238,7 +238,7 @@
   .guide-text {
     font-size: 0.98rem;
   }
-  .sec-01, .sec-02, .sec-03, .sec-04 {
+  .sec01, .sec02, .sec03, .sec04 {
     padding: 2rem 0;
   }
 }
