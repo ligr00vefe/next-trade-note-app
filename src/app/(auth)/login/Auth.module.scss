@@ -31,31 +31,15 @@
 
       .input-box {
         margin-top: 1rem;
-
-        label {
-          display: block;
-          margin-bottom: 0.5rem;
-          font-size: 1rem;
-          line-height: 1.25;
-          color: var(--text-color-01);
-        }
-
-        input {
-          display: block;
-          width: 100%;
-          font-size: 1.2rem;
-          line-height: 1.2;
-          border-radius: 0.375rem;
-          padding: 0.825rem;
-        }
       }
 
       .btn-area {
-        margin: 2.5rem 0;
+        margin: 2rem 0;
 
         button {
           width: 100%;
           padding: 0.5rem 1.5rem;
+          font-size: 1.35rem;
           color: var(--btn-color-01);
           background: var(--btn-text-color-01);
           border: 1px solid var(--btn-color-01);

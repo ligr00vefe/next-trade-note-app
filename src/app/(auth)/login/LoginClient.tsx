@@ -86,10 +86,6 @@ const LoginClient = () => {
                                 로그인
                             </button>
 
-                            <Link href={'/register'}>
-                                <button>회원가입</button>
-                            </Link>
-
                             <button onClick={() => signIn('google')}>
                                 Google 계정으로 로그인
                             </button>
@@ -99,6 +95,13 @@ const LoginClient = () => {
                             <button onClick={() => signIn('kakao')}>
                                 Kakao 계정으로 로그인
                             </button>
+
+                            <div className={styles['register-chk']}>
+                                <p>
+                                아이디가 없으신가요?{" "}
+                                <Link href="/register" className={styles['login-link']}>회원가입</Link>
+                                </p>
+                            </div>
                         </div>
                     </form>
                 </div>

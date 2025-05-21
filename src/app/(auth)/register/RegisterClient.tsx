@@ -92,9 +92,12 @@ const RegisterClient = () => {
             </div>
 
             <div className={styles['btn-area']}>
-              <Button
-                label="Register"
-              />
+              <button
+                type="submit"
+                style={{ width: '100%' }}
+              >
+                가입하기
+              </button>
               <div className={styles['register-chk']}>
                 <p>
                   이미 회원가입 하셨나요?{" "}
