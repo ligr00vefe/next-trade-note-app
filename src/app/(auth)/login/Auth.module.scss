@@ -1,4 +1,4 @@
-.authWrapper {
+.auth-wrapper {
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -25,7 +25,7 @@
           width: 100%;
           max-width: 33rem;
 
-          .inputBox {
+          .input-box {
               margin-top: 1rem;
 
               // label {
@@ -45,7 +45,7 @@
               // }
           }
 
-          .btnArea {
+          .btn-area {
               margin: 2.5rem 0;
 
               button {
@@ -64,7 +64,7 @@
                       background: var(--btn-color-01);
                   }
 
-                  &.coloredBtn {
+                  &.colored-btn {
                       color: var(--color-white);
                       background: var(--btn-color-01);
 
@@ -75,7 +75,7 @@
                   }
               }
 
-              .cancledBtn {
+              .canceled-btn {
                   color: var(--dark-gray);
                   margin-top: 10px;                    
                   a {color: var(--color-black);font-weight: 500;margin-left: 7px;}
@@ -85,13 +85,13 @@
   }
 }
 
-.footerText {
+.footer-text {
     text-align: center;
     p {
         color: #9ca3af;
     }
 
-    .footerLink {
+    .footer-link {
         color: #000;
         &:hover {
             text-decoration: underline;

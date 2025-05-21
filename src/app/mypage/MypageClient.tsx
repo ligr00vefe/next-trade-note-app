@@ -4,11 +4,20 @@ import styles from './Mypage.module.scss';
 import { useState, useEffect } from 'react';
 
 export default function MypageClient() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('theme') || 'dark';
+    }
+    return 'dark';
+  });
   const [activeTab, setActiveTab] = useState('account');
 
   const handleThemeToggle = () => {
-    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+    setTheme(prevTheme => {
+      const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
+      sessionStorage.setItem('theme', newTheme);
+      return newTheme;
+    });
   };
 
   useEffect(() => {

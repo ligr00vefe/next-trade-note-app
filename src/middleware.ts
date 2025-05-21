@@ -28,7 +28,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // 로그인된 유저는 로그인, 회원가입 페이지에 접근 X
-  if (pathname.startsWith("/auth-경로") && session) {
+  if (pathname.startsWith("/auth") && session) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 

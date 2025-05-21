@@ -50,10 +50,10 @@ export default function ListClient({ stocks }: IListClientProps) {
 
   return (
     <Container>
-      <div className={styles.listHeader}>
-        <h1 className={styles.listTitle}>매매 리스트</h1>
+      <div className={styles['list-header']}>
+        <h1 className={styles['list-title']}>매매 리스트</h1>
         <button
-          className={styles.addBuyBtn}
+          className={styles['add-buy-btn']}
           tabIndex={0}
           aria-label="매수추가"
           onClick={() => setBuyOpen(true)}
@@ -62,29 +62,29 @@ export default function ListClient({ stocks }: IListClientProps) {
           매수추가
         </button>
       </div>
-      <table className={styles.listTable}>
-        <thead className={styles.listThead}>
-          <tr className={styles.listTr}>
-            <th className={styles.listTh}>종목명</th>
-            <th className={styles.listTh}>매수 금액</th>
-            <th className={styles.listTh}>보유 수량</th>
-            <th className={styles.listTh}>총 매수 금액</th>
-            <th className={styles.listTh}>테마</th>
-            <th className={styles.listTh}>구매 사유</th>
-            <th className={styles.listTh}>행동</th>
+      <table className={styles['list-table']}>
+        <thead className={styles['list-thead']}>
+          <tr className={styles['list-tr']}>
+            <th className={styles['list-th']}>종목명</th>
+            <th className={styles['list-th']}>매수 금액</th>
+            <th className={styles['list-th']}>보유 수량</th>
+            <th className={styles['list-th']}>총 매수 금액</th>
+            <th className={styles['list-th']}>테마</th>
+            <th className={styles['list-th']}>구매 사유</th>
+            <th className={styles['list-th']}>행동</th>
           </tr>
         </thead>
         <tbody>
           {stocks && stocks.map((stock) => (
-            <tr key={stock.id} className={styles.listTr}>
-              <td className={styles.listTd}>{stock.company}</td>
-              <td className={styles.listTd}>{stock.price}</td>
-              <td className={styles.listTd}>{stock.quantity}</td>
-              <td className={styles.listTd}>{stock.totalPrice} 원</td>
-              <td className={styles.listTd}>{(stock.theme1 || '') + (stock.theme2 ? ` - ${stock.theme2}` : '')}</td>
-              <td className={styles.listTd}>
+            <tr key={stock.id} className={styles['list-tr']}>
+              <td className={styles['list-td']}>{stock.company}</td>
+              <td className={styles['list-td']}>{stock.price}</td>
+              <td className={styles['list-td']}>{stock.quantity}</td>
+              <td className={styles['list-td']}>{stock.totalPrice} 원</td>
+              <td className={styles['list-td']}>{(stock.theme1 || '') + (stock.theme2 ? ` - ${stock.theme2}` : '')}</td>
+              <td className={styles['list-td']}>
                 <button
-                  className={styles.viewBtn}
+                  className={styles['view-btn']}
                   tabIndex={0}
                   aria-label={`${stock.company} 구매 사유 보기`}
                   onClick={() => handleBuyClick(stock)}
@@ -93,9 +93,9 @@ export default function ListClient({ stocks }: IListClientProps) {
                   보기
                 </button>
               </td>
-              <td className={styles.listTd}>
+              <td className={styles['list-td']}>
                 <button
-                  className={styles.actionBtn}
+                  className={styles['action-btn']}
                   tabIndex={0}
                   aria-label={`${stock.company} 추가매수`}
                   onClick={() => handleBuyClick(stock)}
@@ -104,7 +104,7 @@ export default function ListClient({ stocks }: IListClientProps) {
                   추가매수
                 </button>
                 <button
-                  className={styles.actionBtn}
+                  className={styles['action-btn']}
                   tabIndex={0}
                   aria-label={`${stock.company} 매도`}
                 >
@@ -114,7 +114,7 @@ export default function ListClient({ stocks }: IListClientProps) {
             </tr>
           ))}
           {stocks && stocks.length === 0 && (
-            <tr className={styles.listTr}><td className={styles.listTd} colSpan={7} style={{ textAlign: 'center' }}>등록된 매매 내역이 없습니다.</td></tr>
+            <tr className={styles['list-tr']}><td className={styles['list-td']} colSpan={7} style={{ textAlign: 'center' }}>등록된 매매 내역이 없습니다.</td></tr>
           )}
         </tbody>
       </table>

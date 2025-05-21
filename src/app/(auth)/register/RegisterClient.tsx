@@ -46,17 +46,17 @@ const RegisterClient = () => {
 
   return (
     <>
-      <section className={styles.authWrapper}>
-        <div className={styles.container}>
-          <div className={styles.logo}>
+      <section className={styles['auth-wrapper']}>
+        <div className={styles['container']}>
+          <div className={styles['logo']}>
             <h1>회원가입</h1>
           </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className={styles.form}
+            className={styles['form']}
           >
-            <div className={styles.inputBox}>
+            <div className={styles['input-box']}>
               <Input
                 id="email"
                 label="Email"
@@ -68,7 +68,7 @@ const RegisterClient = () => {
               />
             </div>
 
-            <div className={styles.inputBox}>
+            <div className={styles['input-box']}>
               <Input
                 id="name"
                 label="Name"
@@ -79,7 +79,7 @@ const RegisterClient = () => {
               />
             </div>
 
-            <div className={styles.inputBox}>
+            <div className={styles['input-box']}>
               <Input
                 id="password"
                 label="Password"
@@ -91,14 +91,14 @@ const RegisterClient = () => {
               />
             </div>
 
-            <div className={styles.btnArea}>
+            <div className={styles['btn-area']}>
               <Button
                 label="Register"
               />
-              <div className={styles.footerText}>
+              <div className={styles['footer-text']}>
                 <p>
                   이미 회원가입 하셨나요?{" "}
-                  <Link href="/login" className={styles.footerLink}>로그인</Link>
+                  <Link href="/login" className={styles['footer-link']}>로그인</Link>
                 </p>
               </div>
             </div>

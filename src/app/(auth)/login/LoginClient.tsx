@@ -44,7 +44,7 @@ const LoginClient = () => {
     return (
         <>
             {isLoading && <Loader />}
-            <section className={styles['authWrapper']}>
+            <section className={styles['auth-wrapper']}>
                 <div className={styles['container']}>
                     <div className={styles['logo']}>
                         <h1>TRADENOTE</h1>
@@ -52,7 +52,7 @@ const LoginClient = () => {
                     </div>
 
                     <form className={styles['form']} onSubmit={handleSubmit(onSubmit)}>
-                        <div className={styles['inputBox']}>
+                        <div className={styles['input-box']}>
                             <Input
                                 id="email"
                                 label="이메일"
@@ -64,7 +64,7 @@ const LoginClient = () => {
                                 required
                             />
                         </div>
-                        <div className={styles['inputBox']}>                            
+                        <div className={styles['input-box']}>                            
                             <Input
                                 id="password"
                                 label="비밀번호"
@@ -77,9 +77,9 @@ const LoginClient = () => {
                             />
                         </div>
 
-                        <div className={styles['btnArea']}>
+                        <div className={styles['btn-area']}>
                             <button
-                                className={styles['coloredBtn']}
+                                className={styles['colored-btn']}
                                 type="submit"
                                 style={{ width: '100%' }}
                             >
