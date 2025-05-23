@@ -59,7 +59,7 @@ model User {
 
   favoriteIds      String[]
 
-  stocks           Stock[]
+  products         Product[]
   favorites        Favorite[]
 }
 
@@ -71,8 +71,9 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Stock {
+model Product {
   id                    String   @id @default(cuid())
+  category              String
   symbol                String?
   company               String
   currency              String?
@@ -98,10 +99,10 @@ model Favorite {
   price                 Int?
   desired_selling_price Int?
   userId                String
-  stockId               String
+  productId             String
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  stock       Stock    @relation(fields: [stockId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }

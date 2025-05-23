@@ -1,6 +1,6 @@
 import prisma from "@/helpers/prismadb";
 import getCurrentUser from "@/actions/getCurrentUser";
-import getStocks from '@/actions/getStocks';
+import getStocks from '@/actions/getProducts';
 import { NextResponse } from 'next/server';
 
 // GET 요청 처리

@@ -3,7 +3,8 @@
 import prisma from "@/helpers/prismadb";
 import getCurrentUser from "@/actions/getCurrentUser";
 
-interface ICreateStockParams {
+interface ICreateProductParams {
+  category: string;
   company: string;
   price: string;
   quantity: string;
@@ -13,7 +14,7 @@ interface ICreateStockParams {
   userId?: string;
 }
 
-export async function createStock(data: ICreateStockParams) {
+export async function createProduct(data: ICreateProductParams) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -23,14 +24,15 @@ export async function createStock(data: ICreateStockParams) {
   // TODO: 데이터 유효성 검사 추가 (클라이언트에서 일부 처리됨)
 
   // 1. 동일 종목 등록 여부 확인
-  const existingStock = await prisma.stock.findFirst({
+  const existingProduct = await prisma.product.findFirst({
     where: {
       userId: currentUser.id,
+      category: data.category,
       company: data.company,
     },
   });
 
-  if (existingStock) {
+  if (existingProduct) {
     throw new Error('이미 등록된 종목입니다.'); // 중복 시 에러 발생
   }
 
@@ -42,8 +44,9 @@ export async function createStock(data: ICreateStockParams) {
   const totalPrice = price * quantity;
 
   // 2. 새로운 주식 정보 생성 (중복이 없을 경우)
-  const createdStock = await prisma.stock.create({
+  const createdProduct = await prisma.product.create({
     data: {
+      category: data.category,
       company: data.company,
       price: price,
       quantity: quantity,
@@ -55,5 +58,5 @@ export async function createStock(data: ICreateStockParams) {
     },
   });
 
-  return createdStock;
+  return createdProduct;
 } 

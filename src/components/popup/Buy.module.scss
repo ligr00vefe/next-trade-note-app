@@ -3,8 +3,8 @@
   left: 50%;
   bottom: 40px;
   transform: translateX(-50%);
-  background: var(--main-color-02);
-  color: #f3f3f3;
+  background: var(--main-color-07);
+  color: var(--text-color-01);
   border-radius: 12px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   padding: 32px 28px 24px 28px;
@@ -31,25 +31,25 @@
 
 .input {
   padding: 8px 10px;
-  background: #1c1f25;
-  border: 1px solid #333;
-  color: #fff;
+  background: var(--main-color-06);
+  border: 1px solid var(--point-color-07);
+  color: var(--text-color-01);
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .textarea {
   padding: 8px 10px;
-  background: #1c1f25;
-  border: 1px solid #333;
-  color: #fff;
+  background: var(--main-color-06);
+  border: 1px solid var(--point-color-07);
+  color:  var(--text-color-01);
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   height: 80px;
   resize: none;
 }
 
-.inlineInputs {
+.inline-inputs {
   display: flex;
   gap: 16px;
 
@@ -58,16 +58,16 @@
   }
 }
 
-.buttonRow {
+.btn-row {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 8px;
 }
 
-.confirmButton {
+.confirm-btn {
   background: #bfa46f;
-  color: #181c22;
+  color: var(--main-color-04);
   border: none;
   border-radius: 4px;
   padding: 8px 20px;
@@ -76,28 +76,28 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-.confirmButton:hover,
-.confirmButton:focus {
-  background: #d6b97a;
+.confirm-btn:hover,
+.confirm-btn:focus {
+  background: var(--point-color-05);
 }
 
-.cancelButton {
+.cancel-btn {
   background: none;
-  color: #f3f3f3;
-  border: 1px solid #bfa46f;
+  color: var(--text-color-01);
+  border: 1px solid var(--point-color-04);
   border-radius: 4px;
   padding: 8px 20px;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
-.cancelButton:hover,
-.cancelButton:focus {
-  background: #232b38;
-  color: #bfa46f;
+.cancel-btn:hover,
+.cancel-btn:focus {
+  background: var(--main-color-05);
+  color: var(--point-color-05);
 }
 
-.loadingOverlay {
+.loading-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -105,7 +105,7 @@
   height: 100%;
   z-index: 10;
   background-color: rgba(17, 21, 27, 0.8);
-  color: #f3f3f3;
+  color: var(--text-color-01);
   display: flex;
   justify-content: center;
   align-items: center;

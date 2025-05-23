@@ -1,3 +1,21 @@
+export const TRADING_CATEGORIES = [
+  '주식',
+  'ETF',
+  'ETN',
+  '선물',
+  '옵션',
+  '리츠',
+  '채권',
+  '펀드',
+  'ELS/DLS',
+  '해외주식',
+  '해외ETF',
+  '해외선물',
+  '해외채권',
+  '금/원유/은 등 원자재',
+  '외환',
+];
+
 export const KOREA_STOCK_THEMES = {
   "산업/기술": [
     "AI(인공지능)",
@@ -65,3 +83,4 @@ export const KOREA_STOCK_THEMES = {
     "폐기물 처리",
   ],
 };
+
