@@ -79,7 +79,19 @@ export default function ListClient({ products }: IListClientProps) {
             className={styles['add-buy-btn']}
             tabIndex={0}
             aria-label="매수 종목 추가"
-            onClick={() => setBuyOpen(true)}
+            onClick={() => {
+              setBuyData({
+                category: '',
+                company: '',
+                price: '',
+                quantity: '',
+                reason: '',
+                theme1: '',
+                theme2: '',
+              });
+              setReasonOpen(false);
+              setBuyOpen(true);
+            }}
             onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setBuyOpen(true)}
           >
             매수 종목 추가
@@ -158,6 +170,7 @@ export default function ListClient({ products }: IListClientProps) {
           reason={buyData.reason}
           theme1={buyData.theme1}
           theme2={buyData.theme2}
+          mode={buyData.category ? 'add' : 'new'}
         />
 
         {selectedProduct && (

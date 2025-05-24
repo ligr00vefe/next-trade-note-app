@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import styles from './Buy.module.scss';
 import { KOREA_STOCK_THEMES, TRADING_CATEGORIES } from '@/data/koreaStockThemes';
@@ -14,9 +16,21 @@ interface IBuyProps {
   reason: string;
   theme1?: string;
   theme2?: string;
+  mode: 'new' | 'add';
 }
 
-const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, quantity, reason, theme1 = '', theme2 = '' }) => {
+const Buy: React.FC<IBuyProps> = ({ 
+  open, 
+  onClose, 
+  category, 
+  company, 
+  price, 
+  quantity, 
+  reason, 
+  theme1 = '', 
+  theme2 = '',
+  mode 
+}) => {
   const [form, setForm] = useState({
     category: '',
     company: '',
@@ -25,12 +39,24 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
     reason: '',
     theme1: '',
     theme2: '',
+    addPrice: '',
+    addQuantity: '',
   });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (open) {
-      setForm({ category, company, price, quantity, reason, theme1, theme2 });
+      setForm({ 
+        category, 
+        company, 
+        price, 
+        quantity, 
+        reason, 
+        theme1, 
+        theme2,
+        addPrice: '',
+        addQuantity: '',
+      });
     }
   }, [open, category, company, price, quantity, reason, theme1, theme2]);
 
@@ -60,25 +86,33 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
   const handleConfirm = async () => {
     setIsLoading(true);
 
-    const requiredFields = [
-      { name: 'category', value: form.category, label: '상품 종류' },
-      { name: 'company', value: form.company, label: '종목명' },
-      { name: 'price', value: form.price, label: '매수 금액' },
-      { name: 'quantity', value: form.quantity, label: '보유 수량' },
-    ];
+    if (mode === 'new') {
+      const requiredFields = [
+        { name: 'category', value: form.category, label: '상품 종류' },
+        { name: 'company', value: form.company, label: '종목명' },
+        { name: 'price', value: form.price, label: '매수 금액' },
+        { name: 'quantity', value: form.quantity, label: '보유 수량' },
+      ];
 
-    const emptyFields = requiredFields.filter(field => !field.value);
+      const emptyFields = requiredFields.filter(field => !field.value);
 
-    if (emptyFields.length > 0) {
-      const missingLabels = emptyFields.map(field => field.label).join(', ');
-      alert(`다음 필드를 채워주세요: ${missingLabels}`);
-      setIsLoading(false);
-      return;
+      if (emptyFields.length > 0) {
+        const missingLabels = emptyFields.map(field => field.label).join(', ');
+        toast.error(`다음 필드를 채워주세요: ${missingLabels}`);
+        setIsLoading(false);
+        return;
+      }
+    } else {
+      if (!form.addPrice || !form.addQuantity) {
+        toast.error('추가 매수 금액과 수량을 입력해주세요.');
+        setIsLoading(false);
+        return;
+      }
     }
 
     try {
       await createProduct(form);
-      toast.success('매수 정보가 등록되었습니다.');
+      toast.success(mode === 'new' ? '매수 정보가 등록되었습니다.' : '추가 매수가 등록되었습니다.');
       onClose();
     } catch (error: any) {
       console.error('매수 정보 등록 오류:', error);
@@ -109,7 +143,7 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
     <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매수 팝업" onClick={handleBackdropClick}>
       <div className={styles['popup-content']}>
         {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
-        <h2 className={styles['title']}>매수 등록</h2>
+        <h2 className={styles['title']}>{mode === 'new' ? '매수 등록' : '추가 매수'}</h2>
         <div className={styles['inline-inputs']}>
           <label className={styles['label']}>
             상품 종류
@@ -119,7 +153,7 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
               onChange={handleChange}
               className={styles['input']}
               aria-label="상품 종류"
-              disabled={isLoading}
+              disabled={isLoading || mode === 'add'}
             >
               <option value="" disabled>상품 종류</option>
               {TRADING_CATEGORIES.map((category: string) => (
@@ -137,7 +171,7 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
             onChange={handleChange}
             className={styles['input']}
             aria-label="종목명"
-            disabled={isLoading}
+            disabled={isLoading || mode === 'add'}
           />
         </label>
         <div className={styles['inline-inputs']}>
@@ -150,7 +184,7 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
               onChange={handleChange}
               className={styles['input']}
               aria-label="매수 금액"
-              disabled={isLoading}
+              disabled={isLoading || mode === 'add'}
             />
           </label>
           <label className={styles['label']}>
@@ -162,10 +196,38 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
               onChange={handleChange}
               className={styles['input']}
               aria-label="보유 수량"
-              disabled={isLoading}
+              disabled={isLoading || mode === 'add'}
             />
           </label>
         </div>
+        {mode === 'add' && (
+          <div className={styles['inline-inputs']}>
+            <label className={styles['label']}>
+              추가 매수 금액
+              <input
+                name="addPrice"
+                type="text"
+                value={form.addPrice}
+                onChange={handleChange}
+                className={styles['input']}
+                aria-label="추가 매수 금액"
+                disabled={isLoading}
+              />
+            </label>
+            <label className={styles['label']}>
+              추가 매수 수량
+              <input
+                name="addQuantity"
+                type="text"
+                value={form.addQuantity}
+                onChange={handleChange}
+                className={styles['input']}
+                aria-label="추가 매수 수량"
+                disabled={isLoading}
+              />
+            </label>
+          </div>
+        )}
         <div className={styles['inline-inputs']}>
           <label className={styles['label']}>
             테마(1차 분류)
@@ -175,7 +237,7 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
               onChange={handleTheme1Change}
               className={styles['input']}
               aria-label="1차 분류"
-              disabled={isLoading}
+              disabled={isLoading || mode === 'add'}
             >
               <option value="" disabled>1차 분류</option>
               {theme1Options.map((theme: string) => (
@@ -189,7 +251,7 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
               name="theme2"
               value={form.theme2}
               onChange={handleTheme2Change}
-              disabled={!form.theme1 || isLoading}
+              disabled={!form.theme1 || isLoading || mode === 'add'}
               className={styles['input']}
               aria-label="2차 분류"
             >

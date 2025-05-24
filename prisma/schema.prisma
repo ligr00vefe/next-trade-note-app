@@ -60,6 +60,7 @@ model User {
   favoriteIds      String[]
 
   products         Product[]
+  tradeLists       TradeList[]
   favorites        Favorite[]
 }
 
@@ -80,14 +81,32 @@ model Product {
   quantity              Float
   price                 Float
   totalPrice            Float?
-  desired_selling_price Float?
+  desiredSellingPrice   Float?
   userId                String
   theme1                String?
   theme2                String?
   reason                String?
+  orderType             String
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   Favorites             Favorite[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TradeList {
+  id                    String   @id @default(cuid())
+  category              String
+  symbol                String?
+  company               String
+  currency              String?
+  quantity              Float
+  price                 Float
+  desiredSellingPrice   Float?
+  userId                String
+  theme1                String?
+  theme2                String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -97,7 +116,7 @@ model Favorite {
   company               String
   currency              String
   price                 Int?
-  desired_selling_price Int?
+  desiredSellingPrice   Int?
   userId                String
   productId             String
   createdAt             DateTime @default(now())
