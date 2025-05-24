@@ -99,115 +99,123 @@ const Buy: React.FC<IBuyProps> = ({ open, onClose, category, company, price, qua
   const theme1Options = Object.keys(KOREA_STOCK_THEMES);
   const theme2Options = form.theme1 ? KOREA_STOCK_THEMES[form.theme1 as keyof typeof KOREA_STOCK_THEMES] : [];
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매수 팝업">
-      {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
-      <h2 className={styles['title']}>매수 등록</h2>
-      <div className={styles['inline-inputs']}>
+    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매수 팝업" onClick={handleBackdropClick}>
+      <div className={styles['popup-content']}>
+        {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
+        <h2 className={styles['title']}>매수 등록</h2>
+        <div className={styles['inline-inputs']}>
+          <label className={styles['label']}>
+            상품 종류
+            <select
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              className={styles['input']}
+              aria-label="상품 종류"
+              disabled={isLoading}
+            >
+              <option value="" disabled>상품 종류</option>
+              {TRADING_CATEGORIES.map((category: string) => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </label>        
+        </div>
         <label className={styles['label']}>
-          상품 종류
-          <select
-            name="category"
-            value={form.category}
-            onChange={handleChange}
-            className={styles['input']}
-            aria-label="상품 종류"
-            disabled={isLoading}
-          >
-            <option value="" disabled>상품 종류</option>
-            {TRADING_CATEGORIES.map((category: string) => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-        </label>        
-      </div>
-      <label className={styles['label']}>
-        종목명
-        <input
-          name="company"
-          type="text"
-          value={form.company}
-          onChange={handleChange}
-          className={styles['input']}
-          aria-label="종목명"
-          disabled={isLoading}
-        />
-      </label>
-      <div className={styles['inline-inputs']}>
-        <label className={styles['label']}>
-          매수 금액
+          종목명
           <input
-            name="price"
+            name="company"
             type="text"
-            value={form.price}
+            value={form.company}
             onChange={handleChange}
             className={styles['input']}
-            aria-label="매수 금액"
+            aria-label="종목명"
             disabled={isLoading}
           />
         </label>
+        <div className={styles['inline-inputs']}>
+          <label className={styles['label']}>
+            매수 금액
+            <input
+              name="price"
+              type="text"
+              value={form.price}
+              onChange={handleChange}
+              className={styles['input']}
+              aria-label="매수 금액"
+              disabled={isLoading}
+            />
+          </label>
+          <label className={styles['label']}>
+            보유 수량
+            <input
+              name="quantity"
+              type="text"
+              value={form.quantity}
+              onChange={handleChange}
+              className={styles['input']}
+              aria-label="보유 수량"
+              disabled={isLoading}
+            />
+          </label>
+        </div>
+        <div className={styles['inline-inputs']}>
+          <label className={styles['label']}>
+            테마(1차 분류)
+            <select
+              name="theme1"
+              value={form.theme1}
+              onChange={handleTheme1Change}
+              className={styles['input']}
+              aria-label="1차 분류"
+              disabled={isLoading}
+            >
+              <option value="" disabled>1차 분류</option>
+              {theme1Options.map((theme: string) => (
+                <option key={theme} value={theme}>{theme}</option>
+              ))}
+            </select>
+          </label>
+          <label className={styles['label']}>
+            테마(2차 분류)
+            <select
+              name="theme2"
+              value={form.theme2}
+              onChange={handleTheme2Change}
+              disabled={!form.theme1 || isLoading}
+              className={styles['input']}
+              aria-label="2차 분류"
+            >
+              <option value="" disabled>2차 분류</option>
+              {theme2Options.map((theme: string) => (
+                <option key={theme} value={theme}>{theme}</option>
+              ))}
+            </select>
+          </label>
+        </div>
         <label className={styles['label']}>
-          보유 수량
-          <input
-            name="quantity"
-            type="text"
-            value={form.quantity}
-            onChange={handleChange}
-            className={styles['input']}
-            aria-label="보유 수량"
+          구매 사유
+          <textarea
+            name="reason"
+            value={form.reason}
+            onChange={handleReasonChange}
+            className={styles['textarea']}
+            aria-label="구매 사유"
             disabled={isLoading}
+            rows={4}
           />
         </label>
-      </div>
-      <div className={styles['inline-inputs']}>
-        <label className={styles['label']}>
-          테마(1차 분류)
-          <select
-            name="theme1"
-            value={form.theme1}
-            onChange={handleTheme1Change}
-            className={styles['input']}
-            aria-label="1차 분류"
-            disabled={isLoading}
-          >
-            <option value="" disabled>1차 분류</option>
-            {theme1Options.map((theme: string) => (
-              <option key={theme} value={theme}>{theme}</option>
-            ))}
-          </select>
-        </label>
-        <label className={styles['label']}>
-          테마(2차 분류)
-          <select
-            name="theme2"
-            value={form.theme2}
-            onChange={handleTheme2Change}
-            disabled={!form.theme1 || isLoading}
-            className={styles['input']}
-            aria-label="2차 분류"
-          >
-            <option value="" disabled>2차 분류</option>
-            {theme2Options.map((theme: string) => (
-              <option key={theme} value={theme}>{theme}</option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <label className={styles['label']}>
-        구매 사유
-        <textarea
-          name="reason"
-          value={form.reason}
-          onChange={handleReasonChange}
-          className={styles['textarea']}
-          aria-label="구매 사유"
-          disabled={isLoading}
-          rows={4}
-        />
-      </label>
-      <div className={styles['btn-row']}>
-        <button type="button" className={styles['confirm-btn']} onClick={handleConfirm} tabIndex={0} aria-label="확인" disabled={isLoading}>확인</button>
-        <button type="button" className={styles['cancel-btn']} onClick={handleCancel} tabIndex={0} aria-label="취소" disabled={isLoading}>취소</button>
+        <div className={styles['btn-row']}>
+          <button type="button" className={styles['confirm-btn']} onClick={handleConfirm} tabIndex={0} aria-label="확인" disabled={isLoading}>확인</button>
+          <button type="button" className={styles['cancel-btn']} onClick={handleCancel} tabIndex={0} aria-label="취소" disabled={isLoading}>취소</button>
+        </div>
       </div>
     </div>
   );

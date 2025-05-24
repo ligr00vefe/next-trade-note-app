@@ -73,13 +73,13 @@
   border-right: none;
 }
 
-.list-td:first-child {
+.list-td-company {
   text-align: left;
 }
 // 숫자 값만 오른쪽 정렬
-.list-td:nth-child(2),
-.list-td:nth-child(3),
-.list-td:nth-child(4) {
+.list-td-price,
+.list-td-quantity,
+.list-td-total-price {
   text-align: right;
 }
 

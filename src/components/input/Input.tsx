@@ -91,7 +91,7 @@ const Input = ({
                 {type === 'password' ? (
                     <button
                         type="button"
-                        className={styles['button']}
+                        className={styles['password-btn']}
                         onClick={() => setIsPasswordVisible((prev) => !prev)}
                         disabled={disabled}
                     >

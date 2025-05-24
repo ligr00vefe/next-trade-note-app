@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 import getCurrentUser from "@/actions/getCurrentUser";
 
 // 직렬화된 주식 데이터를 위한 인터페이스 정의
-export interface ISafeProduct {
+export interface IProductProps {
   id: string;
   category: string;
   company: string;
@@ -25,7 +25,7 @@ export interface ISafeProduct {
 }
 
 export interface ProductsData {
-  data: ISafeProduct[] | null; // ISafeProduct 배열 사용
+  data: IProductProps[] | null; // ISafeProduct 배열 사용
   currentUser: User | null;
   totalItems: number;
 }
@@ -54,7 +54,7 @@ export default async function getProducts(): Promise<ProductsData> {
     });
 
     // 날짜 필드를 포함하여 모든 필드를 ISafeProduct 타입에 맞게 직렬화
-    const safeProducts: ISafeProduct[] = products.map(product => ({
+    const filteredProducts: IProductProps[] = products.map(product => ({
       ...product,
       createdAt: product.createdAt.toISOString(),
       updatedAt: product.updatedAt.toISOString(),
@@ -78,7 +78,7 @@ export default async function getProducts(): Promise<ProductsData> {
     });
 
     return {
-      data: safeProducts,
+      data: filteredProducts,
       currentUser,
       totalItems
     };

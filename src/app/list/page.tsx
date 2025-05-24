@@ -1,8 +1,8 @@
 import ListClient from './ListClient';
-import getStocks from '@/actions/getProducts';
+import getProducts from '@/actions/getProducts';
 
 export default async function ListPage() {
-  const stocksData = await getStocks();
+  const productsData = await getProducts();
 
-  return <ListClient stocks={stocksData.data || []} />;
+  return <ListClient products={productsData.data || []} />;
 }
