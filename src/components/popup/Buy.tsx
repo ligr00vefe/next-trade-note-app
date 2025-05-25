@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { handleTrade } from '@/actions/updateTradeList';
 import styles from './BuySell.module.scss';
-import { KOREA_STOCK_THEMES, TRADING_CATEGORIES } from '@/data/koreaStockThemes';
+import { KOREA_STOCK_THEMES, TRADING_CATEGORY_DETAILS } from '@/data/koreaStockThemes';
 
 interface IBuyProps {
   open: boolean;
@@ -120,7 +120,7 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
               disabled={isLoading || isAdditionalBuy}
             >
               <option value="" disabled>상품 종류</option>
-              {TRADING_CATEGORIES.map((category: string) => (
+              {Object.keys(TRADING_CATEGORY_DETAILS).map((category: string) => (
                 <option key={category} value={category}>{category}</option>
               ))}
             </select>
