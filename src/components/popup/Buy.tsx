@@ -47,7 +47,8 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
   if (!open) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
+    const target = e.target as HTMLElement;
+    if (!target.closest(`.${styles['popup-content']}`)) {
       onClose();
     }
   };

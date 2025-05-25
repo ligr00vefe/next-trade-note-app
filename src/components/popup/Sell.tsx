@@ -34,7 +34,9 @@ export default function Sell({ open, onClose, category = '', company = '', theme
   if (!open) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
+    console.log('e.target', e.target);
+    console.log('e.currentTarget', e.currentTarget);
+    if (e.target !== e.currentTarget) {
       onClose();
     }
   };
