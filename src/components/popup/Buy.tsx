@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { handleTrade } from '@/actions/updateTradeList';
 import getTotalList, { ITradeListProps } from '@/actions/getTradeList';
@@ -29,6 +29,20 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
   });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (open) {
+      setForm({
+        category: category,
+        company: company,
+        price: '',
+        quantity: '',
+        theme1: theme1,
+        theme2: theme2,
+        reason: '',
+      });
+    }
+  }, [open, category, company, theme1, theme2]);
 
   if (!open) return null;
 

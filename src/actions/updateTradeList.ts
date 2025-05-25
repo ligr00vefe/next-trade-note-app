@@ -12,6 +12,7 @@ interface TradeData {
   theme2: string;
   reason: string;
   orderType: '매수' | '매도';
+  isAdditionalBuy?: boolean;
 }
 
 export async function handleTrade(data: TradeData) {
@@ -23,6 +24,24 @@ export async function handleTrade(data: TradeData) {
 
   try {
     const result = await prisma.$transaction(async (tx) => {
+      // 신규 매수인 경우 중복 체크
+      if (data.orderType === '매수' && !data.isAdditionalBuy) {
+        const existingTrade = await tx.tradeList.findFirst({
+          where: {
+            userId: currentUser.id,
+            category: data.category,
+            company: data.company,
+            totalQuantity: {
+              gt: 0
+            }
+          },
+        });
+
+        if (existingTrade) {
+          throw new Error('이미 등록된 종목입니다.');
+        }
+      }
+
       // 1. Product 테이블에 거래 기록 추가
       const product = await tx.product.create({
         data: {
@@ -73,16 +92,18 @@ export async function handleTrade(data: TradeData) {
         throw new Error('보유 수량을 초과했습니다.');
       }
 
-      const newTotalPrice = data.orderType === '매수'
-        ? existingTrade.totalPrice + (data.price * data.quantity)
-        : existingTrade.totalPrice - (data.price * data.quantity);
+      const newTotalPrice = newQuantity === 0 
+        ? 0 
+        : data.orderType === '매수'
+          ? existingTrade.totalPrice + (data.price * data.quantity)
+          : existingTrade.totalPrice - (data.price * data.quantity);
 
       const updatedTrade = await tx.tradeList.update({
         where: { id: existingTrade.id },
         data: {
           totalQuantity: newQuantity,
           totalPrice: newTotalPrice,
-          avgPrice: newTotalPrice / newQuantity,
+          avgPrice: newQuantity === 0 ? 0 : newTotalPrice / newQuantity,
         },
       });
 
