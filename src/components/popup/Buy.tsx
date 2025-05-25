@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { handleTrade } from '@/actions/updateTradeList';
+import getTotalList, { ITradeListProps } from '@/actions/getTradeList';
 import styles from './BuySell.module.scss';
 import { KOREA_STOCK_THEMES, TRADING_CATEGORY_DETAILS } from '@/data/koreaStockThemes';
 
@@ -24,8 +25,8 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
     quantity: '',
     theme1: theme1,
     theme2: theme2,
+    reason: '',
   });
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -37,7 +38,7 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm(prev => ({
       ...prev,
@@ -64,14 +65,49 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setIsLoading(true);
 
-    const priceNum = Number(form.price);
-    const quantityNum = Number(form.quantity);
+    if (!form.category) {
+      alert('상품 종류를 선택해주세요.');
+      setIsLoading(false);
+      return;
+    }
 
-    if (priceNum <= 0 || quantityNum <= 0) {
-      setError('가격과 수량은 0보다 커야 합니다.');
+    if (!form.company) {
+      alert('종목명을 입력해주세요.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!form.price) {
+      alert('매수 금액을 입력해주세요.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!form.quantity) {
+      alert('매수 수량을 입력해주세요.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!form.theme1) {
+      alert('1차 분류 테마를 선택해주세요.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!form.theme2) {
+      alert('2차 분류 테마를 선택해주세요.');
+      setIsLoading(false);
+      return;
+    }
+
+    const quantityNum = Number(form.quantity);
+    const priceNum = Number(form.price);
+
+    if (quantityNum <= 0 || priceNum <= 0) {
+      alert('수량과 가격은 0보다 커야 합니다.');
       setIsLoading(false);
       return;
     }
@@ -84,6 +120,7 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
         price: priceNum,
         theme1: form.theme1,
         theme2: form.theme2,
+        reason: form.reason,
         orderType: '매수',
       });
 
@@ -91,9 +128,9 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
       router.refresh();
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
+        alert(err.message);
       } else {
-        setError('매수 처리 중 오류가 발생했습니다.');
+        alert('매수 처리 중 오류가 발생했습니다.');
       }
     } finally {
       setIsLoading(false);
@@ -107,7 +144,7 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
     <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매수 팝업" onClick={handleBackdropClick}>
       <div className={styles['popup-content']}>
         {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
-        <h2 className={styles['title']}>매수 등록</h2>
+        <h2 className={styles['title']}>{isAdditionalBuy ? '추가 매수' : '신규 매수'}</h2>
         <div className={styles['inline-inputs']}>
           <label className={styles['label']}>
             상품 종류
@@ -198,7 +235,19 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
             </select>
           </label>
         </div>
-        {error && <div className={styles['error']}>{error}</div>}
+        <label className={styles['label']}>
+          매수 사유
+          <textarea
+            name="reason"
+            value={form.reason}
+            onChange={handleChange}
+            className={styles['textarea']}
+            aria-label="매수 사유"
+            disabled={isLoading}
+            placeholder="매수 사유를 입력해주세요"
+          />
+        </label>
+        
         <div className={styles['btn-row']}>
           <button type="button" className={styles['confirm-btn']} onClick={handleSubmit} tabIndex={0} aria-label="확인" disabled={isLoading}>확인</button>
           <button type="button" className={styles['cancel-btn']} onClick={onClose} tabIndex={0} aria-label="취소" disabled={isLoading}>취소</button>

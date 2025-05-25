@@ -18,7 +18,6 @@ interface IListClientProps {
 export default function ListClient({ allTradeList }: IListClientProps) {
   const [mounted, setMounted] = useState(false);
   const [buyOpen, setBuyOpen] = useState(false);
-  const [reasonOpen, setReasonOpen] = useState(false);
   const [sellOpen, setSellOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<ITradeListProps | null>(null);
   const [buyData, setBuyData] = useState({
@@ -42,7 +41,13 @@ export default function ListClient({ allTradeList }: IListClientProps) {
   if (!mounted) return null;
 
   const handleBuyClick = (row: ITradeListProps) => {
+    if (sellOpen) {
+      setSellOpen(false);
+      setSelectedProduct(null);
+    }
+
     setBuyData({
+      ...row,
       category: row.category,
       company: row.company,
       totalQuantity: String(row.totalQuantity),
@@ -50,17 +55,9 @@ export default function ListClient({ allTradeList }: IListClientProps) {
       avgPrice: String(row.avgPrice),
       theme1: row.theme1 || '',
       theme2: row.theme2 || '',
-      // 추가 매수일 경우에는 isAdditionalBuy를 true로 설정
       isAdditionalBuy: true,
     });
-    setReasonOpen(false);
     setBuyOpen(true);
-  };
-
-  const handleReasonClick = (product: ITradeListProps) => {
-    setSelectedProduct(product);
-    setBuyOpen(false);
-    setReasonOpen(true);
   };
 
   const handleBuyClose = () => {
@@ -68,13 +65,12 @@ export default function ListClient({ allTradeList }: IListClientProps) {
     router.refresh();
   };
 
-  const handleReasonClose = () => {
-    setReasonOpen(false);
-    setSelectedProduct(null);
-    router.refresh();
-  };
-
   const handleAddNewBuy = () => {
+    if (sellOpen) {
+      setSellOpen(false);
+      setSelectedProduct(null);
+    }
+
     setBuyData({
       category: '',
       company: '',
@@ -83,16 +79,21 @@ export default function ListClient({ allTradeList }: IListClientProps) {
       avgPrice: '',
       theme1: '',
       theme2: '',
-      // 신규 등록일 경우에는 isAdditionalBuy를 false로 설정
       isAdditionalBuy: false,
     });
-    setReasonOpen(false);
     setBuyOpen(true);
   };
 
   const handleSellClick = (product: ITradeListProps) => {
-    setSelectedProduct(product);
-    setSellOpen(true);
+    if (buyOpen) {
+      setBuyOpen(false);
+    }
+
+    const currentProduct = allTradeList.find(item => item.id === product.id);
+    if (currentProduct) {
+      setSelectedProduct(currentProduct);
+      setSellOpen(true);
+    }
   };
 
   const handleSellClose = () => {
@@ -109,11 +110,11 @@ export default function ListClient({ allTradeList }: IListClientProps) {
           <button
             className={styles['add-buy-btn']}
             tabIndex={0}
-            aria-label="신규 종목 매수"
+            aria-label="신규 매수"
             onClick={handleAddNewBuy}
-            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setBuyOpen(true)}
+            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleAddNewBuy()}
           >
-            신규 종목 매수
+            신규 매수
           </button>
         </div>
         <table className={styles['list-table']}>
@@ -170,6 +171,7 @@ export default function ListClient({ allTradeList }: IListClientProps) {
         </table>
 
         <Buy
+          key={buyData.company}
           open={buyOpen}
           onClose={handleBuyClose}
           category={buyData.category}
@@ -181,6 +183,7 @@ export default function ListClient({ allTradeList }: IListClientProps) {
 
         {selectedProduct && (
           <Sell
+            key={selectedProduct.id}
             open={sellOpen}
             onClose={handleSellClose}
             category={selectedProduct.category}
@@ -188,7 +191,7 @@ export default function ListClient({ allTradeList }: IListClientProps) {
             theme1={selectedProduct.theme1 || ''}
             theme2={selectedProduct.theme2 || ''}
             totalQuantity={selectedProduct.totalQuantity}
-            totalPrice={selectedProduct.totalPrice}
+            totalPrice={selectedProduct.avgPrice}
           />
         )}
       </div>

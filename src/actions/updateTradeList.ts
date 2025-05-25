@@ -1,15 +1,16 @@
 'use server';
 
-import { prisma } from '@/lib/prisma';
 import getCurrentUser from '@/actions/getCurrentUser';
+import { prisma } from '@/lib/prisma';
 
 interface TradeData {
   category: string;
   company: string;
   quantity: number;
   price: number;
-  theme1?: string;
-  theme2?: string;
+  theme1: string;
+  theme2: string;
+  reason: string;
   orderType: '매수' | '매도';
 }
 
@@ -31,6 +32,7 @@ export async function handleTrade(data: TradeData) {
           price: data.price,
           theme1: data.theme1,
           theme2: data.theme2,
+          reason: data.reason,
           orderType: data.orderType,
           createdAt: new Date(),
           userId: currentUser.id,
@@ -75,24 +77,50 @@ export async function handleTrade(data: TradeData) {
         ? existingTrade.totalPrice + (data.price * data.quantity)
         : existingTrade.totalPrice - (data.price * data.quantity);
 
-      const newAvgPrice = newQuantity > 0 
-        ? newTotalPrice / newQuantity 
-        : 0;
-
       const updatedTrade = await tx.tradeList.update({
         where: { id: existingTrade.id },
         data: {
           totalQuantity: newQuantity,
           totalPrice: newTotalPrice,
-          avgPrice: newAvgPrice,
+          avgPrice: newTotalPrice / newQuantity,
         },
       });
+
+      // 3. 매도 시 InvestmentAccount 업데이트
+      if (data.orderType === '매도') {
+        const profitAmount = (data.price - existingTrade.avgPrice) * data.quantity;
+        const profitRate = (data.price / existingTrade.avgPrice - 1) * 100;
+
+        const existingAccount = await tx.investmentAccount.findFirst({
+          where: { userId: currentUser.id },
+        });
+
+        if (existingAccount) {
+          await tx.investmentAccount.update({
+            where: { id: existingAccount.id },
+            data: {
+              totalProfitAmount: existingAccount.totalProfitAmount + profitAmount,
+              totalProfitRate: existingAccount.totalProfitRate + profitRate,
+            },
+          });
+        } else {
+          await tx.investmentAccount.create({
+            data: {
+              userId: currentUser.id,
+              totalProfitAmount: profitAmount,
+              totalProfitRate: profitRate,
+              riskTolerance: '중립',
+            },
+          });
+        }
+      }
 
       return { product, updatedTrade };
     });
 
     return result;
   } catch (error) {
+    console.error('Trade error:', error);
     throw error;
   }
 } 
