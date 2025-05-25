@@ -46,6 +46,9 @@ export default async function getTotalList(): Promise<ITradeListData> {
     const allTradeList = await prisma.tradeList.findMany({
       where: {
         userId: currentUser.id,
+        totalQuantity: {
+          gt: 0 // totalQuantity가 0보다 큰 데이터만 가져오기
+        }
       },
       orderBy: {
         createdAt: 'desc', // 최신 순으로 정렬 예시
@@ -71,6 +74,9 @@ export default async function getTotalList(): Promise<ITradeListData> {
     const totalItems = await prisma.tradeList.count({
       where: {
         userId: currentUser.id,
+        totalQuantity: {
+          gt: 0 // totalQuantity가 0보다 큰 데이터만 카운트
+        }
       }
     });
 

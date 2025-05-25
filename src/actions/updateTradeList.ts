@@ -1,0 +1,98 @@
+'use server';
+
+import { prisma } from '@/lib/prisma';
+import getCurrentUser from '@/actions/getCurrentUser';
+
+interface TradeData {
+  category: string;
+  company: string;
+  quantity: number;
+  price: number;
+  theme1?: string;
+  theme2?: string;
+  orderType: '매수' | '매도';
+}
+
+export async function handleTrade(data: TradeData) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    throw new Error('로그인이 필요합니다.');
+  }
+
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Product 테이블에 거래 기록 추가
+      const product = await tx.product.create({
+        data: {
+          category: data.category,
+          company: data.company,
+          quantity: data.quantity,
+          price: data.price,
+          theme1: data.theme1,
+          theme2: data.theme2,
+          orderType: data.orderType,
+          createdAt: new Date(),
+          userId: currentUser.id,
+        },
+      });
+
+      // 2. TradeList 테이블 업데이트
+      const existingTrade = await tx.tradeList.findFirst({
+        where: {
+          userId: currentUser.id,
+          category: data.category,
+          company: data.company,
+        },
+      });
+
+      if (!existingTrade) {
+        // 새로운 거래 정보 생성
+        const newTrade = await tx.tradeList.create({
+          data: {
+            userId: currentUser.id,
+            category: data.category,
+            company: data.company,
+            totalQuantity: data.quantity,
+            totalPrice: data.price * data.quantity,
+            avgPrice: data.price,
+            theme1: data.theme1,
+            theme2: data.theme2,
+          },
+        });
+        return { product, updatedTrade: newTrade };
+      }
+
+      const newQuantity = data.orderType === '매수' 
+        ? existingTrade.totalQuantity + data.quantity
+        : existingTrade.totalQuantity - data.quantity;
+
+      if (newQuantity < 0) {
+        throw new Error('보유 수량을 초과했습니다.');
+      }
+
+      const newTotalPrice = data.orderType === '매수'
+        ? existingTrade.totalPrice + (data.price * data.quantity)
+        : existingTrade.totalPrice - (data.price * data.quantity);
+
+      const newAvgPrice = newQuantity > 0 
+        ? newTotalPrice / newQuantity 
+        : 0;
+
+      const updatedTrade = await tx.tradeList.update({
+        where: { id: existingTrade.id },
+        data: {
+          totalQuantity: newQuantity,
+          totalPrice: newTotalPrice,
+          avgPrice: newAvgPrice,
+        },
+      });
+
+      return { product, updatedTrade };
+    });
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+} 

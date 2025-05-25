@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Buy from '@/components/popup/Buy';
-import BuyReason from '@/components/popup/BuyReason';
+import Sell from '@/components/popup/Sell';
 import Container from '@/components/ui/Container';
 import styles from './List.module.scss';
 import { useRouter } from 'next/navigation';
@@ -19,6 +19,7 @@ export default function ListClient({ allTradeList }: IListClientProps) {
   const [mounted, setMounted] = useState(false);
   const [buyOpen, setBuyOpen] = useState(false);
   const [reasonOpen, setReasonOpen] = useState(false);
+  const [sellOpen, setSellOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<ITradeListProps | null>(null);
   const [buyData, setBuyData] = useState({
     category: '',
@@ -89,6 +90,17 @@ export default function ListClient({ allTradeList }: IListClientProps) {
     setBuyOpen(true);
   };
 
+  const handleSellClick = (product: ITradeListProps) => {
+    setSelectedProduct(product);
+    setSellOpen(true);
+  };
+
+  const handleSellClose = () => {
+    setSellOpen(false);
+    setSelectedProduct(null);
+    router.refresh();
+  };
+
   return (
     <Container>
       <div className={styles['list-root']}>
@@ -130,36 +142,8 @@ export default function ListClient({ allTradeList }: IListClientProps) {
                     className={styles['add-buy-btn']}
                     tabIndex={0}
                     aria-label={`${product.company} 추가 매수`}
-                    onClick={() => {
-                      setBuyData({
-                        category: product.category,
-                        company: product.company,
-                        totalQuantity: String(product.totalQuantity),
-                        totalPrice: String(product.totalPrice),
-                        avgPrice: String(product.avgPrice),
-                        theme1: product.theme1 || '',
-                        theme2: product.theme2 || '',
-                        isAdditionalBuy: true,
-                      });
-                      setReasonOpen(false);
-                      setBuyOpen(true);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        setBuyData({
-                          category: product.category,
-                          company: product.company,
-                          totalQuantity: String(product.totalQuantity),
-                          totalPrice: String(product.totalPrice),
-                          avgPrice: String(product.avgPrice),
-                          theme1: product.theme1 || '',
-                          theme2: product.theme2 || '',
-                          isAdditionalBuy: true,
-                        });
-                        setReasonOpen(false);
-                        setBuyOpen(true);
-                      }
-                    }}
+                    onClick={() => handleBuyClick(product)}
+                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick(product)}
                   >
                     추가 매수
                   </button>
@@ -167,6 +151,8 @@ export default function ListClient({ allTradeList }: IListClientProps) {
                     className={styles['sell-btn']}
                     tabIndex={0}
                     aria-label={`${product.company} 매도`}
+                    onClick={() => handleSellClick(product)}
+                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSellClick(product)}
                   >
                     매도
                   </button>
@@ -191,7 +177,20 @@ export default function ListClient({ allTradeList }: IListClientProps) {
           theme1={buyData.theme1}
           theme2={buyData.theme2}
           isAdditionalBuy={buyData.isAdditionalBuy}
-        />        
+        />
+
+        {selectedProduct && (
+          <Sell
+            open={sellOpen}
+            onClose={handleSellClose}
+            category={selectedProduct.category}
+            company={selectedProduct.company}
+            theme1={selectedProduct.theme1 || ''}
+            theme2={selectedProduct.theme2 || ''}
+            totalQuantity={selectedProduct.totalQuantity}
+            totalPrice={selectedProduct.totalPrice}
+          />
+        )}
       </div>
     </Container>
   );
