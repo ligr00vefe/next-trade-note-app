@@ -46,13 +46,6 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
 
   if (!open) return null;
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (!target.closest(`.${styles['popup-content']}`)) {
-      onClose();
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm(prev => ({
@@ -156,7 +149,7 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
   const theme2Options = form.theme1 ? KOREA_STOCK_THEMES[form.theme1 as keyof typeof KOREA_STOCK_THEMES] : [];
 
   return (
-    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매수 팝업" onClick={handleBackdropClick}>
+    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매수 팝업">
       <div className={styles['popup-content']}>
         {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
         <h2 className={styles['title']}>{isAdditionalBuy ? '추가 매수' : '신규 매수'}</h2>

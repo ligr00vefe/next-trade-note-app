@@ -16,10 +16,15 @@ interface IListClientProps {
 }
 
 export default function ListClient({ allTradeList }: IListClientProps) {
+  // 컴포넌트가 마운트되었는지 확인하는 state
   const [mounted, setMounted] = useState(false);
+  // 매수 팝업 표시 여부
   const [buyOpen, setBuyOpen] = useState(false);
+  // 매도 팝업 표시 여부
   const [sellOpen, setSellOpen] = useState(false);
+  // 매도할 상품 정보
   const [selectedProduct, setSelectedProduct] = useState<ITradeListProps | null>(null);
+  // 매수 팝업에 표시할 데이터
   const [buyData, setBuyData] = useState({
     category: '',
     company: '',
@@ -34,18 +39,22 @@ export default function ListClient({ allTradeList }: IListClientProps) {
   const router = useRouter();
   const { theme } = useTheme();
 
+  // 컴포넌트 마운트 시 mounted state를 true로 설정
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) return null;
 
+  // 추가 매수 버튼 클릭 시 실행되는 함수
   const handleBuyClick = (row: ITradeListProps) => {
+    // 매도 팝업이 열려있으면 닫고 선택된 상품 정보 초기화
     if (sellOpen) {
       setSellOpen(false);
       setSelectedProduct(null);
     }
 
+    // 선택된 상품의 정보를 buyData state에 저장
     setBuyData({
       ...row,
       category: row.category,
@@ -57,20 +66,25 @@ export default function ListClient({ allTradeList }: IListClientProps) {
       theme2: row.theme2 || '',
       isAdditionalBuy: true,
     });
+    // 매수 팝업 열기
     setBuyOpen(true);
   };
 
+  // 매수 팝업 닫기
   const handleBuyClose = () => {
     setBuyOpen(false);
     router.refresh();
   };
 
+  // 신규 매수 버튼 클릭 시 실행되는 함수
   const handleAddNewBuy = () => {
+    // 매도 팝업이 열려있으면 닫고 선택된 상품 정보 초기화
     if (sellOpen) {
       setSellOpen(false);
       setSelectedProduct(null);
     }
 
+    // buyData state 초기화
     setBuyData({
       category: '',
       company: '',
@@ -81,14 +95,18 @@ export default function ListClient({ allTradeList }: IListClientProps) {
       theme2: '',
       isAdditionalBuy: false,
     });
+    // 매수 팝업 열기
     setBuyOpen(true);
   };
 
+  // 매도 버튼 클릭 시 실행되는 함수
   const handleSellClick = (product: ITradeListProps) => {
+    // 매수 팝업이 열려있으면 닫기
     if (buyOpen) {
       setBuyOpen(false);
     }
 
+    // 선택된 상품 정보 저장
     const currentProduct = allTradeList.find(item => item.id === product.id);
     if (currentProduct) {
       setSelectedProduct(currentProduct);
@@ -96,10 +114,25 @@ export default function ListClient({ allTradeList }: IListClientProps) {
     }
   };
 
+  // 매도 팝업 닫기
   const handleSellClose = () => {
     setSellOpen(false);
     setSelectedProduct(null);
     router.refresh();
+  };
+
+  // 팝업 외부 클릭 시 실행되는 함수
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    console.log('target', target);
+    if (!target.closest(`.${styles['popup']}`)) {
+      if (buyOpen) {
+        handleBuyClose();
+      }
+      if (sellOpen) {
+        handleSellClose();
+      }
+    }
   };
 
   return (
@@ -169,6 +202,14 @@ export default function ListClient({ allTradeList }: IListClientProps) {
             )}
           </tbody>
         </table>
+
+        {(buyOpen || sellOpen) && (
+          <div 
+            className={styles['popup-overlay']} 
+            onClick={handleBackdropClick}
+            role="presentation"
+          />
+        )}
 
         <Buy
           key={buyData.company}

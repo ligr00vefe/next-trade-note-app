@@ -33,14 +33,6 @@ export default function Sell({ open, onClose, category = '', company = '', theme
 
   if (!open) return null;
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    console.log('e.target', e.target);
-    console.log('e.currentTarget', e.currentTarget);
-    if (e.target !== e.currentTarget) {
-      onClose();
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm(prev => ({
@@ -151,7 +143,7 @@ export default function Sell({ open, onClose, category = '', company = '', theme
   const theme2Options = form.theme1 ? KOREA_STOCK_THEMES[form.theme1 as keyof typeof KOREA_STOCK_THEMES] : [];
 
   return (
-    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매도 팝업" onClick={handleBackdropClick}>
+    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매도 팝업">
       <div className={styles['popup-content']}>
         {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
         <h2 className={styles['title']}>매도 등록</h2>
