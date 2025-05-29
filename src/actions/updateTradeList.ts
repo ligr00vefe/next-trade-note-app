@@ -26,7 +26,7 @@ export async function handleTrade(data: TradeData) {
     const result = await prisma.$transaction(async (tx) => {
       // 신규 매수인 경우 중복 체크
       if (data.orderType === '매수' && !data.isAdditionalBuy) {
-        const existingTrade = await tx.tradeList.findFirst({
+        const existingTradeList = await tx.tradeList.findFirst({
           where: {
             userId: currentUser.id,
             category: data.category,
@@ -37,7 +37,7 @@ export async function handleTrade(data: TradeData) {
           },
         });
 
-        if (existingTrade) {
+        if (existingTradeList) {
           throw new Error('이미 등록된 종목입니다.');
         }
       }
@@ -59,7 +59,7 @@ export async function handleTrade(data: TradeData) {
       });
 
       // 2. TradeList 테이블 업데이트
-      const existingTrade = await tx.tradeList.findFirst({
+      const existingTradeList = await tx.tradeList.findFirst({
         where: {
           userId: currentUser.id,
           category: data.category,
@@ -67,7 +67,7 @@ export async function handleTrade(data: TradeData) {
         },
       });
 
-      if (!existingTrade) {
+      if (!existingTradeList) {
         // 새로운 거래 정보 생성
         const newTrade = await tx.tradeList.create({
           data: {
@@ -85,8 +85,8 @@ export async function handleTrade(data: TradeData) {
       }
 
       const newQuantity = data.orderType === '매수' 
-        ? existingTrade.totalQuantity + data.quantity
-        : existingTrade.totalQuantity - data.quantity;
+        ? existingTradeList.totalQuantity + data.quantity
+        : existingTradeList.totalQuantity - data.quantity;
 
       if (newQuantity < 0) {
         throw new Error('보유 수량을 초과했습니다.');
@@ -95,11 +95,11 @@ export async function handleTrade(data: TradeData) {
       const newTotalPrice = newQuantity === 0 
         ? 0 
         : data.orderType === '매수'
-          ? existingTrade.totalPrice + (data.price * data.quantity)
-          : existingTrade.totalPrice - (data.price * data.quantity);
+          ? existingTradeList.totalPrice + (data.price * data.quantity)
+          : existingTradeList.totalPrice - (data.price * data.quantity);
 
       const updatedTrade = await tx.tradeList.update({
-        where: { id: existingTrade.id },
+        where: { id: existingTradeList.id },
         data: {
           totalQuantity: newQuantity,
           totalPrice: newTotalPrice,
@@ -109,8 +109,18 @@ export async function handleTrade(data: TradeData) {
 
       // 3. 매도 시 InvestmentAccount 업데이트
       if (data.orderType === '매도') {
-        const profitAmount = (data.price - existingTrade.avgPrice) * data.quantity;
-        const profitRate = (data.price / existingTrade.avgPrice - 1) * 100;
+        const profitAmount = (data.price - existingTradeList.avgPrice) * data.quantity;
+        const profitRate = (data.price / existingTradeList.avgPrice - 1) * 100;
+
+        // Profit 테이블에 수익 데이터 저장
+        await tx.profit.create({
+          data: {
+            userId: currentUser.id,
+            company: data.company,
+            category: data.category,
+            profitAmount,
+          },
+        });
 
         const existingAccount = await tx.investmentAccount.findFirst({
           where: { userId: currentUser.id },
