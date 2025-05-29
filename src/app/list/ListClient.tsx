@@ -7,7 +7,7 @@ import Container from '@/components/ui/Container';
 import styles from './List.module.scss';
 import { useRouter } from 'next/navigation';
 import { ITradeListProps } from '@/actions/getTradeList';
-import { formatNumber } from '@/helpers/formatNumber';
+import { formatKRW } from '@/helpers/formatKRW';
 import { useTheme } from '@/contexts/ThemeContext';
 import clsx from 'clsx';
 
@@ -167,9 +167,9 @@ export default function ListClient({ allTradeList }: IListClientProps) {
               <tr key={product.id} className={styles['list-tr']}>
                 <td className={styles['list-td']}>{product.category}</td>
                 <td className={clsx(styles['list-td'], styles['list-td-company'])}>{product.company}</td>
-                <td className={clsx(styles['list-td'], styles['list-td-price'])}>{formatNumber(product.avgPrice)}</td>
+                <td className={clsx(styles['list-td'], styles['list-td-price'])}>{formatKRW(product.avgPrice)}</td>
                 <td className={clsx(styles['list-td'], styles['list-td-quantity'])}>{product.totalQuantity}</td>
-                <td className={clsx(styles['list-td'], styles['list-td-total-price'])}>{formatNumber(product.totalPrice)}</td>
+                <td className={clsx(styles['list-td'], styles['list-td-total-price'])}>{formatKRW(product.totalPrice)}</td>
                 <td className={styles['list-td']}>{(product.theme1 || '') + (product.theme2 ? ` - ${product.theme2}` : '')}</td>
                 <td className={styles['list-td']}>
                   <button
