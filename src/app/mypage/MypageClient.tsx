@@ -2,80 +2,26 @@
 
 import styles from './Mypage.module.scss';
 import { useState } from 'react';
-import { useTheme } from 'next-themes';
+import AccountTab from '@/components/mypage/AccountTab';
+import PortfolioTab from '@/components/mypage/PortfolioTab';
+import SidebarInfo from '@/components/mypage/SidebarInfo';
 
 export default function MypageClient() {
-  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('account');
 
-  const handleThemeToggle = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
-
   const renderTabContent = () => {
-    if (activeTab === 'account') {
-      return (
-        <div className={styles['account-info-content']}>
-          <div className={styles['info-card']}>
-            <h4>계정 정보</h4>
-            <ul>
-              <li>이메일: user@email.com</li>
-              <li>가입일: 2023-01-01</li>
-            </ul>
-          </div>
-          <div className={styles['info-card']}>
-            <h4>보안 설정</h4>
-            <button>비밀번호 변경</button>
-          </div>
-          <div className={styles['info-card']}>
-            <h4>테마 설정</h4>
-            <div className={styles['theme-toggle']}>
-              <input
-                type="checkbox"
-                id="theme-toggle-checkbox"
-                className={styles['theme-checkbox']}
-                checked={theme === 'light'}
-                onChange={handleThemeToggle}
-                aria-label="테마 전환"
-              />
-              <label htmlFor="theme-toggle-checkbox" className={styles['theme-label']}>
-                <span className={styles['theme-track']}>
-                  <span className={styles['theme-thumb']}></span>
-                </span>
-                <span className={styles['theme-icons']}>
-                  <span className={styles['icon-dark']}>🌙</span>
-                  <span className={styles['icon-light']}>☀️</span>
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (activeTab === 'portfolio') {
-      return (
-        <div className={styles['portfolio-content']}>
-          <section className={styles['portfolio-section']}>
-            <h2>Portfolio</h2>
-            <div className={styles['chart-placeholder']}>[캔들차트]</div>
-          </section>
-          <section className={styles['overview-section']}>
-            <div className={styles['overview-card']}>
-              <h3>수익률</h3>
-              <div className={styles['chart-placeholder']}>[수익률 차트]</div>
-            </div>
-            <div className={styles['overview-card']}>
-              <h3>총 자산</h3>
-              <div className={styles['asset-value']}>2,229만원</div>
-            </div>
-          </section>
-        </div>
-      );
+    switch (activeTab) {
+      case 'account':
+        return <AccountTab />;
+      case 'portfolio':
+        return <PortfolioTab />;
+      default:
+        return null;
     }
-    return null;
   };
 
   return (
-    <div className={styles['mypage-root']}>
+    <div className={styles['mypage-wrapper']}>
       <aside className={styles['mypage-sidebar']}>
         <button
           className={`${styles['sidebar-tab-btn']} ${activeTab === 'account' ? styles['active'] : ''}`}
@@ -101,39 +47,7 @@ export default function MypageClient() {
         {renderTabContent()}
       </main>
       <aside className={styles['mypage-info']}>
-        <div className={styles['info-card']}>
-          <h4>계정 정보</h4>
-          <ul>
-            <li>이메일: user@email.com</li>
-            <li>가입일: 2023-01-01</li>
-          </ul>
-        </div>
-        <div className={styles['info-card']}>
-          <h4>보안 설정</h4>
-          <button>비밀번호 변경</button>
-        </div>
-        <div className={styles['info-card']}>
-          <h4>테마 설정</h4>
-          <div className={styles['theme-toggle']}>
-            <input
-              type="checkbox"
-              id="theme-toggle-checkbox"
-              className={styles['theme-checkbox']}
-              checked={theme === 'light'}
-              onChange={handleThemeToggle}
-              aria-label="테마 전환"
-            />
-            <label htmlFor="theme-toggle-checkbox" className={styles['theme-label']}>
-              <span className={styles['theme-track']}>
-                <span className={styles['theme-thumb']}></span>
-              </span>
-              <span className={styles['theme-icons']}>
-                <span className={styles['icon-dark']}>🌙</span>
-                <span className={styles['icon-light']}>☀️</span>
-              </span>
-            </label>
-          </div>
-        </div>
+        <SidebarInfo />
       </aside>
       <div className={styles['mypage-bottom-cards']}>
         <div className={styles['bottom-card']}>Stock Overview</div>
