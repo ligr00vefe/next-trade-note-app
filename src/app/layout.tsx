@@ -2,13 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
 
-import dynamic from 'next/dynamic'
-import { ThemeProvider } from 'next-themes'
-
-import Providers from '@/providers';
-import ToastProvider from '@/components/ToastProvider'
-import Navbar from '@/layouts/navbar/Navbar';
-import getCurrentUser from '@/actions/getCurrentUser';
+import Providers from '@/providers'
+import Navbar from '@/layouts/navbar/Navbar'
+import getCurrentUser from '@/actions/getCurrentUser'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,22 +18,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser()
+  
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <Providers>
-            <Navbar currentUser={currentUser} />
-            <ToastProvider />
-            {children}
-          </Providers>
-        </ThemeProvider>
+        <Providers>
+          <Navbar currentUser={currentUser} />
+          {children}
+        </Providers>
       </body>
     </html>
   )

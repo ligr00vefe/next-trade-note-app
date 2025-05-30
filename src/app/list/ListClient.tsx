@@ -8,7 +8,7 @@ import styles from './List.module.scss';
 import { useRouter } from 'next/navigation';
 import { ITradeListProps } from '@/actions/getTradeList';
 import { formatKRW } from '@/helpers/formatKRW';
-import { useTheme } from '@/contexts/ThemeContext';
+import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 
 interface IListClientProps {
