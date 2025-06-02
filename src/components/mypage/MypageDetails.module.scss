@@ -1,0 +1,126 @@
+@import '@/styles/variables';
+
+.portfolio-content {
+  padding: 2rem;
+  
+  .portfolio-section {
+    margin-bottom: 2rem;
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: map-get($light-theme, 'text-color-01');
+
+      @media (prefers-color-scheme: dark) {
+        color: map-get($dark-theme, 'text-color-01');
+      }
+    }
+  }
+
+  .portfolio-weight {
+    display: flex;
+    gap: 2rem;
+    background-color: map-get($light-theme, 'main-color-04');
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: $box-shadow;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: map-get($dark-theme, 'main-color-04');
+    }
+
+    &-chart {
+      flex: 1;
+      min-height: 300px;
+    }
+
+    &-info {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: map-get($light-theme, 'text-color-02');
+
+        @media (prefers-color-scheme: dark) {
+          color: map-get($dark-theme, 'text-color-02');
+        }
+        
+        span {
+          color: map-get($light-theme, 'point-color-04');
+          font-weight: 600;
+
+          @media (prefers-color-scheme: dark) {
+            color: map-get($dark-theme, 'point-color-04');
+          }
+        }
+      }
+    }
+  }
+
+  .overview-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+
+    .overview-card {
+      background-color: map-get($light-theme, 'main-color-04');
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: $box-shadow;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: map-get($dark-theme, 'main-color-04');
+      }
+
+      h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: map-get($light-theme, 'text-color-01');
+
+        @media (prefers-color-scheme: dark) {
+          color: map-get($dark-theme, 'text-color-01');
+        }
+      }
+
+      .chart-placeholder {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: map-get($light-theme, 'main-color-03');
+        border-radius: 0.5rem;
+        color: map-get($light-theme, 'text-color-03');
+
+        @media (prefers-color-scheme: dark) {
+          background-color: map-get($dark-theme, 'main-color-03');
+          color: map-get($dark-theme, 'text-color-03');
+        }
+      }
+
+      .asset-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: map-get($light-theme, 'point-color-04');
+
+        @media (prefers-color-scheme: dark) {
+          color: map-get($dark-theme, 'point-color-04');
+        }
+      }
+    }
+  }
+}
+
+.error-message {
+  color: map-get($light-theme, 'admin-color-03');
+  text-align: center;
+  padding: 1rem;
+
+  @media (prefers-color-scheme: dark) {
+    color: map-get($dark-theme, 'admin-color-03');
+  }
+}

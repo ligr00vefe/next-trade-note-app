@@ -137,7 +137,7 @@ export default function ListClient({ allTradeList }: IListClientProps) {
 
   return (
     <Container>
-      <div className={styles['list-root']}>
+      <div className={styles['list-wrapper']}>
         <div className={styles['list-header']}>
           <h1 className={styles['list-title']}>매매 리스트</h1>
           <button
