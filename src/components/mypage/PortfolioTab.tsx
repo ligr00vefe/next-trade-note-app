@@ -99,8 +99,8 @@ const PortfolioTab = () => {
           </div>
           <div className={styles['portfolio-weight-info']}>
             <p>
-              {portfolioData?.accountName}님의 포트폴리오는 <span>{getHighestCategory()}</span>의 비중이 가장 높으며<br />
-              투자 성향은 <span>{portfolioData?.riskTolerance}</span>입니다.
+              <span>{portfolioData?.accountName}</span>님의 포트폴리오는 <span>{getHighestCategory()}</span>의 비중이 가장 높으며<br />
+              투자 성향은 <span>{portfolioData?.riskTolerance}형</span>입니다.
             </p>
           </div>
         </div>

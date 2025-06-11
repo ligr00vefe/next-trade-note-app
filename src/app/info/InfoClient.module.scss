@@ -1,0 +1,59 @@
+.info-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(16,25,38,0.10);
+}
+
+.info-content-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.bubble-chart-area, .line-chart-area {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #f8fafc;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px 0 rgba(16,25,38,0.08);
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bubble-chart-svg {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  max-height: 400px;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .info-content-row {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .bubble-chart-area, .line-chart-area {
+    padding: 1.2rem 0.7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .info-container {
+    padding: 0.7rem 0.2rem;
+  }
+  .bubble-chart-area, .line-chart-area {
+    padding: 0.7rem 0.2rem;
+  }
+  .bubble-chart-svg {
+    max-width: 100%;
+    max-height: 220px;
+  }
+} 
