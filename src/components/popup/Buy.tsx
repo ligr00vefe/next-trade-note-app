@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { handleTrade } from '@/actions/updateTradeList';
 import getTotalList, { ITradeListProps } from '@/actions/getTradeList';
 import styles from './BuySell.module.scss';
-import { KOREA_STOCK_THEMES, TRADING_CATEGORY_DETAILS } from '@/data/koreaStockThemes';
+import { KOREA_STOCK_THEMES, TRADING_CATEGORY_DETAILS } from '@/data/koreaStockData';
 
 interface IBuyProps {
   open: boolean;

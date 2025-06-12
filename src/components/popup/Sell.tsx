@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { handleTrade } from '@/actions/updateTradeList';
 import styles from './BuySell.module.scss';
-import { KOREA_STOCK_THEMES, TRADING_CATEGORY_DETAILS } from '@/data/koreaStockThemes';
+import { KOREA_STOCK_THEMES, TRADING_CATEGORY_DETAILS } from '@/data/koreaStockData';
 
 interface ISellProps {
   open: boolean;

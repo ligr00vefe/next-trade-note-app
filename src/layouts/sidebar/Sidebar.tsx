@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import sidebarStyles from "./Sidebar.module.scss";
-import { KOREA_STOCK_THEMES } from '@/data/koreaStockThemes';
+import { KOREA_STOCK_THEMES } from '@/data/koreaStockData';
 import Link from 'next/link';
 
 export function Sidebar() {
