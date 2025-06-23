@@ -15,6 +15,7 @@ const NavItem = ({ mobile, currentUser }: INavItemProps) => {
 
   return (
     <ul className={`${styles['nav-items-list']} ${mobile ? styles['nav-items-list-sm'] : ''}`}>
+      <li><Link href='/info'>테마정보</Link></li>
       <li><Link href='/list'>매매리스트</Link></li>
       <li><Link href='/mypage'>마이페이지</Link></li>
       {currentUser 
