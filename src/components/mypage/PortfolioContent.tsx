@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import styles from './MypageDetails.module.scss'
+import styles from './MypageContent.module.scss'
 import { getPortfolioData, type PortfolioData } from '@/actions/getPortfolioData'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const PortfolioTab = () => {
+const PortfolioContent = () => {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -85,8 +85,8 @@ const PortfolioTab = () => {
   return (
     <div className={styles['portfolio-content']}>
       <section className={styles['portfolio-section']}>
-        <h2>Portfolio</h2>
         <div className={styles['portfolio-weight']}>
+          <h2>Portfolio</h2>
           <div className={styles['portfolio-weight-chart']}>
             {portfolioData && (
               <Chart
@@ -121,4 +121,4 @@ const PortfolioTab = () => {
   )
 }
 
-export default PortfolioTab 
+export default PortfolioContent 

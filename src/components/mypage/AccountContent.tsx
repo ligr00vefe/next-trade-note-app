@@ -3,7 +3,7 @@
 import styles from '@/app/mypage/Mypage.module.scss'
 import ThemeToggle from './ThemeToggle'
 
-const AccountTab = () => {
+const AccountContent = () => {
   return (
     <div className={styles['account-info-content']}>
       <div className={styles['info-card']}>
@@ -25,4 +25,4 @@ const AccountTab = () => {
   )
 }
 
-export default AccountTab 
+export default AccountContent 

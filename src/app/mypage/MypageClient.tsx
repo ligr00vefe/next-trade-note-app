@@ -2,8 +2,8 @@
 
 import styles from './Mypage.module.scss';
 import { useState } from 'react';
-import AccountTab from '@/components/mypage/AccountTab';
-import PortfolioTab from '@/components/mypage/PortfolioTab';
+import AccountContent from '@/components/mypage/AccountContent';
+import PortfolioContent from '@/components/mypage/PortfolioContent';
 import SidebarInfo from '@/components/mypage/SidebarInfo';
 
 export default function MypageClient() {
@@ -12,9 +12,9 @@ export default function MypageClient() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'account':
-        return <AccountTab />;
+        return <AccountContent />;
       case 'portfolio':
-        return <PortfolioTab />;
+        return <PortfolioContent />;
       default:
         return null;
     }
