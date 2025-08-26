@@ -19,13 +19,13 @@
   .portfolio-weight {
     display: flex;
     gap: 2rem;
-    background-color: map-get($light-theme, 'main-color-04');
+    background-color: map-get($light-theme, 'main-color-01');
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: --box-shadow;
 
     @media (prefers-color-scheme: dark) {
-      background-color: map-get($dark-theme, 'main-color-04');
+      background-color: map-get($dark-theme, 'main-color-01');
     }
 
     &-chart {
@@ -65,13 +65,13 @@
     gap: 1.5rem;
 
     .overview-card {
-      background-color: map-get($light-theme, 'main-color-04');
+      background-color: map-get($light-theme, 'main-color-01');
       padding: 1.5rem;
       border-radius: 1rem;
       box-shadow: --box-shadow;
 
       @media (prefers-color-scheme: dark) {
-        background-color: map-get($dark-theme, 'main-color-04');
+        background-color: map-get($dark-theme, 'main-color-01');
       }
 
       h3 {

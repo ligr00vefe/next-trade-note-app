@@ -87,7 +87,7 @@
   gap: 3.5rem;
 }
 .card {
-  background: var(--main-color-04);
+  background: var(--main-color-02);
   border-radius: 14px;
   padding: 3.15rem 2.25rem 2.55rem 2.25rem;
   flex: 1 1 0;
@@ -138,7 +138,7 @@
   justify-content: center;
   width: 3.45rem;
   height: 3.45rem;
-  background: var(--main-color-05);
+  background: var(--main-color-01);
   color: var(--point-color-04);
   font-size: 1.88rem;
   font-weight: 700;
@@ -227,7 +227,7 @@
       content: '\2022';
       position: absolute;
       left: 0;
-      color: var(--main-color-05);
+      color: var(--text-color-01);
       font-size: 1.1em;
       top: 0.1em;
     }

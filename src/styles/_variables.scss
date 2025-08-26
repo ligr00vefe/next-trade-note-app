@@ -31,19 +31,14 @@ $light-theme: (
   table-border-gray: #eeeeee,
 
   white: #ffffff,
-  black: #111111,
-  
+  black: #111111,  
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25),
 
   // 메인 색상 (배경, 테두리 등)
-  main-color-01: #e2e8f0,  // 테이블 테두리, 헤더 배경
-  main-color-02: #f1f5f9,  // 테이블 짝수 행 배경
-  main-color-03: #f8fafc,  // 차트 배경
-  main-color-04: #ffffff,  // 카드 배경
-  main-color-05: #f1f5f9,  // 사이드바 버튼 배경
-  main-color-06: #f8fafc,  // 차트 배경
-  main-color-07: #e2e8f0,  // 차트 플레이스홀더
+  main-color-01: #e2e8f0,
+  main-color-02: #f1f5f9,
+  main-color-03: #f8fafc,
 
   // 포인트 색상 (강조)
   point-color-01: #0f172a,  // 주요 텍스트
@@ -98,27 +93,26 @@ $dark-theme: (
   background: #0f172a,
   foreground: #1e293b,
 
-  dark-blue: #0a1930,
+  light-red: #f43f5e,
+  dark-red: #e52528,
   light-blue: #1f93ff,
+  dark-blue: #0a1930,  
+  blue-gray: #4b5563,  
+  dark-blue-gray: #24292e,  
   light-gray: #e7e7e7,
   dark-gray: #767676,
   border-gray: #cccccc,
   table-border-gray: #eeeeee,
 
-  color-white: #ffffff,
-  color-black: #111111,
-  color-red: #e52528,
+  white: #ffffff,
+  black: #111111,
   
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25),
 
   // 메인 색상 (배경, 테두리 등)
-  main-color-01: #1e293b,  // 테이블 테두리, 헤더 배경
+  main-color-01: #18202b,  // 테이블 테두리, 헤더 배경
   main-color-02: #334155,  // 테이블 짝수 행 배경
-  main-color-03: #475569,  // 차트 배경
-  main-color-04: #181c22,  // 카드 배경
-  main-color-05: #232b38,  // 사이드바 버튼 배경
-  main-color-06: #1c1f25,  // 차트 배경
-  main-color-07: #18202b,  // 차트 플레이스홀더
+  main-color-03: #1c1f25,  // 차트 배경
 
   // 포인트 색상 (강조)
   point-color-01: #f8fafc,  // 주요 텍스트
