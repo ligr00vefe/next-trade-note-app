@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { useTheme } from 'next-themes'
 import styles from './MypageContent.module.scss'
 import { getPortfolioData, type PortfolioData } from '@/actions/getPortfolioData'
 
@@ -10,20 +11,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 const PortfolioContent = () => {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  useEffect(() => {
-    // 시스템 다크모드 감지
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    setIsDarkMode(darkModeMediaQuery.matches)
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches)
-    }
-
-    darkModeMediaQuery.addEventListener('change', handleChange)
-    return () => darkModeMediaQuery.removeEventListener('change', handleChange)
-  }, [])
+  const { theme } = useTheme()
 
   useEffect(() => {
     const fetchPortfolioData = async () => {
@@ -44,16 +32,16 @@ const PortfolioContent = () => {
     chart: {
       type: 'pie' as const,
       background: 'transparent',
-      foreColor: isDarkMode ? '#e2e8f0' : '#0f172a',
+      foreColor: theme === 'dark' ? '#e2e8f0' : '#0f172a',
     },
     labels: portfolioData?.categories.map((item: { category: string }) => item.category) || [],
-    colors: isDarkMode 
+    colors: theme === 'dark'
       ? ['#bfa46f', '#d6b97a', '#e2c88b', '#edd49c', '#f8e0ad'] // 다크모드 골드 계열
       : ['#0f172a', '#1e293b', '#334155', '#475569', '#64748b'], // 라이트모드 블루 계열
     legend: {
       position: 'bottom' as const,
       labels: {
-        colors: isDarkMode ? '#e2e8f0' : '#0f172a'
+        colors: theme === 'dark' ? '#e2e8f0' : '#0f172a'
       }
     },
     responsive: [{
