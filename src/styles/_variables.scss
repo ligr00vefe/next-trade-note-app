@@ -1,22 +1,6 @@
 // 기본 변수 (SCSS 변수)
 $font-family: 'Arial', Helvetica, sans-serif;
 
-$dark-blue: #0a1930;
-$light-blue: #1f93ff;
-
-$light-gray: #e7e7e7;
-$dark-gray: #767676;
-$border-gray: #cccccc;
-$table-border-gray: #eeeeee;
-
-$color-white: #ffffff;
-$color-black: #111111;
-$color-red: #e52528;
-$color-primary: #0076e9;
-$color-secondary: #00b98d;
-
-$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-
 $width-xl: 1980px;
 $width-lg: 1536px;
 $width-md: 1024px;
@@ -34,6 +18,23 @@ $light-theme: (
   // 배경색
   background: #ffffff,
   foreground: #f8fafc,
+
+  light-red: #f43f5e,
+  dark-red: #e52528,
+  light-blue: #1f93ff,
+  dark-blue: #0a1930,  
+  blue-gray: #4b5563,  
+  dark-blue-gray: #24292e,  
+  light-gray: #e7e7e7,
+  dark-gray: #767676,
+  border-gray: #cccccc,
+  table-border-gray: #eeeeee,
+
+  white: #ffffff,
+  black: #111111,
+  
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25),
 
   // 메인 색상 (배경, 테두리 등)
   main-color-01: #e2e8f0,  // 테이블 테두리, 헤더 배경
@@ -96,6 +97,19 @@ $dark-theme: (
   // 배경색
   background: #0f172a,
   foreground: #1e293b,
+
+  dark-blue: #0a1930,
+  light-blue: #1f93ff,
+  light-gray: #e7e7e7,
+  dark-gray: #767676,
+  border-gray: #cccccc,
+  table-border-gray: #eeeeee,
+
+  color-white: #ffffff,
+  color-black: #111111,
+  color-red: #e52528,
+  
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25),
 
   // 메인 색상 (배경, 테두리 등)
   main-color-01: #1e293b,  // 테이블 테두리, 헤더 배경

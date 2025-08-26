@@ -22,7 +22,7 @@
     background-color: map-get($light-theme, 'main-color-04');
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: $box-shadow;
+    box-shadow: --box-shadow;
 
     @media (prefers-color-scheme: dark) {
       background-color: map-get($dark-theme, 'main-color-04');
@@ -68,7 +68,7 @@
       background-color: map-get($light-theme, 'main-color-04');
       padding: 1.5rem;
       border-radius: 1rem;
-      box-shadow: $box-shadow;
+      box-shadow: --box-shadow;
 
       @media (prefers-color-scheme: dark) {
         background-color: map-get($dark-theme, 'main-color-04');

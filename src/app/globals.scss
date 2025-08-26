@@ -2,24 +2,6 @@
 
 :root {
   --font-family: #{$font-family};
-  --background: #($background);
-  --foreground: #($foreground);
-
-  --dark-blue: #{$dark-blue};
-  --light-blue: #{$light-blue};
-
-  --light-gray: #{$light-gray};
-  --dark-gray: #{$dark-gray};
-  --border-gray: #{$border-gray};
-  --table-border-gray: #{$table-border-gray};
-
-  --color-white: #{$color-white};
-  --color-black: #{$color-black};
-  --color-red: #{$color-red};
-  --color-primary: #{$color-primary};
-  --color-secondary: #{$color-secondary};
-
-  --box-shadow: #{$box-shadow};
 }
 
 // 라이트 테마

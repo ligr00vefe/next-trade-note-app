@@ -18,7 +18,7 @@
   .label {
     display: inline-block;
     margin-bottom: 0.7rem;
-    color: #24292e;
+    color: var(--dark-blue-gray);
     font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.25;
@@ -47,8 +47,8 @@
     padding: 0 0.875rem;
     font-size: 1.25rem;
     line-height: 1.2;
-    color: var(--color-black);
-    background: var(--color-white);
+    color: var(--black);
+    background: var(--white);
     border: 0 !important;
     margin: 0;
     box-sizing: border-box;
@@ -74,7 +74,7 @@
 
   .format-price {
       position: absolute;
-      color: #4b5563;
+      color: var(--blue-gray);
       top: 50%;
       transform: translateY(-50%);
       left: 0.5rem;
@@ -99,16 +99,16 @@
   }
 
   .error {
-    color: var(--color-red);
+    color: var(--red);
     font-size: 15px;
     margin-top: 10px;
     margin-left: 10px;
   }
 
   .input-error {
-      border: 1px solid #f43f5e;        
+      border: 1px solid var(--red);        
   }
   .input-error:focus {
-      border: 2px solid #f43f5e;        
+      border: 2px solid var(--dark-red);        
   }
 }
