@@ -17,8 +17,8 @@
 }
 
 .add-buy-btn {
-  background: var(--btn-color-04);
-  color: var(--btn-text-color-04);
+  background: var(--btn-color-01);
+  color: var(--btn-text-color-01);
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1.2rem;
@@ -30,7 +30,7 @@
 
   &:hover,
   &:focus {
-    background: var(--btn-point-color-04);
+    background: var(--btn-point-color-01);
     transform: translateY(-1px);
   }
 }
@@ -102,8 +102,8 @@
 }
 
 .view-btn {
-  background: var(--btn-color-05);
-  color: var(--btn-text-color-05);
+  background: var(--btn-color-02);
+  color: var(--btn-text-color-01);
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1.2rem;
@@ -114,14 +114,14 @@
   transition: all 0.2s ease;
   &:hover,
   &:focus {
-    background: var(--btn-point-color-05);
+    background: var(--btn-point-color-02);
     transform: translateY(-1px);
   }
 }
 
 .buy-btn {
-  background: var(--btn-color-04);
-  color: var(--btn-text-color-04);
+  background: var(--btn-color-01);
+  color: var(--btn-text-color-01);
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1.2rem;
@@ -132,14 +132,14 @@
   transition: all 0.2s ease;
   &:hover,
   &:focus {
-    background: var(--btn-point-color-04);
+    background: var(--btn-point-color-01);
     transform: translateY(-1px);
   }
 }
 
 .sell-btn {
-  background: var(--btn-color-05);
-  color: var(--btn-text-color-05);
+  background: var(--btn-color-02);
+  color: var(--btn-text-color-01);
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1.2rem;
@@ -150,7 +150,7 @@
 
   &:hover,
   &:focus {
-    background: var(--btn-point-color-05);
+    background: var(--btn-point-color-02);
     transform: translateY(-1px);
   }
 }

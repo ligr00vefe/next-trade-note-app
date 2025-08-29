@@ -40,46 +40,35 @@ $light-theme: (
   main-color-02: #f1f5f9,
   main-color-03: #f8fafc,
 
-  // 포인트 색상 (강조)
-  point-color-01: #0f172a,  // 주요 텍스트
-  point-color-02: #1e293b,  // 부가 텍스트
-  point-color-03: #334155,  // 보조 텍스트
-  point-color-04: #bfa46f,  // 골드 포인트
-  point-color-05: #d6b97a,  // 골드 포인트 호버
-  point-color-06: #0f172a,  // 사이드바 버튼 텍스트
-  point-color-07: #1e293b,  // 사이드바 버튼 호버 배경
-  point-color-08: #334155,  // 사이드바 버튼 호버 텍스트
+  // 포인트 색상 (강조)  
+  point-color-01: #bfa46f,  // 골드 포인트
+  point-color-02: #d6b97a,  // 골드 포인트 호버
+  point-color-03: #0f172a,  // 사이드바 버튼 텍스트
+  point-color-04: #1e293b,  // 사이드바 버튼 호버 배경
+  point-color-05: #334155,  // 사이드바 버튼 호버 텍스트
 
   // 텍스트 색상
-  text-color-01: #0f172a,  // 주요 텍스트
-  text-color-02: #1e293b,  // 부가 텍스트
-  text-color-03: #334155,  // 보조 텍스트
+  text-color-01: #0f172a,
 
-  // 버튼 색상
-  btn-color-01: #0f172a,    // 기본 버튼
-  btn-color-02: #1e293b,    // 보조 버튼
-  btn-color-03: #334155,    // 보조 버튼
-  btn-color-04: #dc2626,    // 매수 버튼
-  btn-color-05: #2563eb,    // 매도 버튼
+  // 버튼 색상  
+  btn-color-01: #dc2626,    // 매수 버튼
+  btn-color-02: #2563eb,    // 매도 버튼
+  btn-color-03: #bfa46f,    // 매수 팝업창 버튼
 
   // 버튼 텍스트 색상
-  btn-text-color-01: #f8fafc,
-  btn-text-color-02: #f1f5f9,
-  btn-text-color-03: #e2e8f0,
-  btn-text-color-04: #ffffff,
-  btn-text-color-05: #ffffff,
+  btn-text-color-01: #ffffff,
 
   // 버튼 호버 색상
-  btn-point-color-01: #1e293b,
-  btn-point-color-02: #334155,
-  btn-point-color-03: #c2410c,
-  btn-point-color-04: #b91c1c,
-  btn-point-color-05: #1d4ed8,
+  btn-point-color-01: #b91c1c,
+  btn-point-color-02: #1d4ed8,
+  btn-point-color-03: #d6b97a,
 
   // 비활성화 색상
   disabled-color-01: #64748b,
-  disabled-color-02: #94a3b8,
-  disabled-color-03: #cbd5e1,
+
+  // 회원가입 버튼 색상
+  auth-btn-color-01: #0f172a,
+  auth-btn-text-color-01: #f8fafc,
 
   // 관리자 색상
   admin-color-01: #f8fafc,
@@ -115,45 +104,34 @@ $dark-theme: (
   main-color-03: #1c1f25,  // 차트 배경
 
   // 포인트 색상 (강조)
-  point-color-01: #f8fafc,  // 주요 텍스트
-  point-color-02: #f1f5f9,  // 부가 텍스트
-  point-color-03: #e2e8f0,  // 보조 텍스트
-  point-color-04: #bfa46f,  // 골드 포인트
-  point-color-05: #d6b97a,  // 골드 포인트 호버
-  point-color-06: #bfc3c9,  // 사이드바 버튼 텍스트
-  point-color-07: #2a3444,  // 사이드바 버튼 호버 배경
-  point-color-08: #f5f6f8,  // 사이드바 버튼 호버 텍스트
+  point-color-01: #bfa46f,  // 골드 포인트
+  point-color-02: #d6b97a,  // 골드 포인트 호버
+  point-color-03: #bfc3c9,  // 사이드바 버튼 텍스트
+  point-color-04: #2a3444,  // 사이드바 버튼 호버 배경
+  point-color-05: #f5f6f8,  // 사이드바 버튼 호버 텍스트
 
   // 텍스트 색상
-  text-color-01: #f8fafc,  // 주요 텍스트
-  text-color-02: #f1f5f9,  // 부가 텍스트
-  text-color-03: #e2e8f0,  // 보조 텍스트
+  text-color-01: #f8fafc, 
 
   // 버튼 색상
-  btn-color-01: #f8fafc,    // 기본 버튼
-  btn-color-02: #e2e8f0,    // 보조 버튼
-  btn-color-03: #cbd5e1,    // 보조 버튼
-  btn-color-04: #ef4444,    // 매수 버튼
-  btn-color-05: #3b82f6,    // 매도 버튼
+  btn-color-01: #ef4444,    // 매수 버튼
+  btn-color-02: #3b82f6,    // 매도 버튼
+  btn-color-03: #bfa46f,    // 매수 팝업창 버튼
 
-  // 버튼 텍스트 색상
-  btn-text-color-01: #0f172a,
-  btn-text-color-02: #1e293b,
-  btn-text-color-03: #334155,
-  btn-text-color-04: #ffffff,
-  btn-text-color-05: #ffffff,
+  // 버튼 텍스트 색상  
+  btn-text-color-01: #ffffff,
 
   // 버튼 호버 색상
-  btn-point-color-01: #e2e8f0,
-  btn-point-color-02: #cbd5e1,
-  btn-point-color-03: #f97316,
-  btn-point-color-04: #dc2626,
-  btn-point-color-05: #2563eb,
+  btn-point-color-01: #dc2626,
+  btn-point-color-02: #2563eb,
+  btn-point-color-03: #d6b97a,
 
   // 비활성화 색상
   disabled-color-01: #475569,
-  disabled-color-02: #64748b,
-  disabled-color-03: #94a3b8,
+
+  // 회원가입 버튼 색상
+  auth-btn-color-01: #f8fafc,
+  auth-btn-text-color-01: #0f172a,
 
   // 관리자 색상
   admin-color-01: #1e293b,

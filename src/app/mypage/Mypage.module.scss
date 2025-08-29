@@ -22,7 +22,7 @@
 
   .sidebar-tab-btn {
     background: var(--main-color-01);
-    color: var(--point-color-06);
+    color: var(--point-color-03);
     border: none;
     border-radius: 8px;
     padding: 1.1rem 2.1rem;
@@ -36,18 +36,18 @@
 
     &:hover,
     &:focus {
-      color: var(--point-color-08);
-      background: var(--point-color-07);
+      color: var(--point-color-05);
+      background: var(--point-color-04);
     }
 
     &.active {
-      background: var(--point-color-04);
+      background: var(--point-color-01);
       color: var(--background);
       box-shadow: 0 2px 12px 0 var(--box-shadow);
 
       &:hover,
       &:focus {
-        background: var(--point-color-05);
+        background: var(--point-color-02);
         color: var(--background);
         box-shadow: 0 4px 18px 0 var(--box-shadow);
       }
@@ -55,7 +55,7 @@
   }
 
   .sidebar-btn {
-    background: var(--point-color-04);
+    background: var(--point-color-01);
     color: var(--background);
     border: none;
     border-radius: 8px;
@@ -67,7 +67,7 @@
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     &:hover,
     &:focus {
-      background: var(--point-color-05);
+      background: var(--point-color-02);
       color: var(--background);
       box-shadow: 0 4px 18px 0 var(--box-shadow);
     }
@@ -110,7 +110,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-color-03);
+    color: var(--text-color-01);
     font-size: 1.1rem;
   }
 }
@@ -137,14 +137,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-color-03);
+      color: var(--text-color-01);
       font-size: 1rem;
     }
     .asset-value {
       font-size: 2.1rem;
       font-weight: 700;
       margin-top: 1.2rem;
-      color: var(--point-color-04);
+      color: var(--point-color-01);
     }
   }
 }
@@ -174,12 +174,12 @@
     li {
       font-size: 1rem;
       margin-bottom: 0.4rem;
-      color: var(--text-color-03);
+      color: var(--text-color-01);
     }
   }
   button {
     margin-top: 0.7rem;
-    background: var(--point-color-04);
+    background: var(--point-color-01);
     color: var(--background);
     border: none;
     border-radius: 8px;
@@ -191,7 +191,7 @@
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     &:hover,
     &:focus {
-      background: var(--point-color-05);
+      background: var(--point-color-02);
       color: var(--background);
       box-shadow: 0 4px 18px 0 var(--box-shadow);
     }
@@ -210,7 +210,7 @@
     width: 0;
     height: 0;
     &:checked + .theme-label {
-      .theme-track { background: var(--point-color-05); }
+      .theme-track { background: var(--point-color-02); }
       .theme-thumb { transform: translateX(24px); background: var(--background); }
       ~ .theme-icons {
         .icon-dark { display: none; }
@@ -220,7 +220,7 @@
   }
   .theme-label { display: flex; align-items: center; cursor: pointer; }
   .theme-track { display: block; width: 52px; height: 28px; background: var(--main-color-02); border-radius: 14px; position: relative; transition: background 0.2s; }
-  .theme-thumb { display: block; width: 24px; height: 24px; background: var(--point-color-04); border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: transform 0.2s, background 0.2s; }
+  .theme-thumb { display: block; width: 24px; height: 24px; background: var(--point-color-01); border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: transform 0.2s, background 0.2s; }
   .theme-icons {
     position: absolute; left: 0; top: 0; width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: space-around;

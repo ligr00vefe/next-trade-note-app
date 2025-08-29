@@ -59,7 +59,7 @@
 .input {
   padding: 8px 10px;
   background: var(--main-color-03);
-  border: 1px solid var(--point-color-07);
+  border: 1px solid var(--point-color-04);
   color: var(--text-color-01);
   border-radius: 4px;
   font-size: 1.1rem;
@@ -68,7 +68,7 @@
 .textarea {
   padding: 8px 10px;
   background: var(--main-color-03);
-  border: 1px solid var(--point-color-07);
+  border: 1px solid var(--point-color-04);
   color:  var(--text-color-01);
   border-radius: 4px;
   font-size: 1.1rem;
@@ -93,7 +93,7 @@
 }
 
 .confirm-btn {
-  background: var(--point-color-04);
+  background: var(--point-color-01);
   color: var(--main-color-01);
   border: none;
   border-radius: 4px;
@@ -105,13 +105,13 @@
 }
 .confirm-btn:hover,
 .confirm-btn:focus {
-  background: var(--point-color-05);
+  background: var(--point-color-02);
 }
 
 .cancel-btn {
   background: none;
   color: var(--text-color-01);
-  border: 1px solid var(--point-color-04);
+  border: 1px solid var(--point-color-01);
   border-radius: 4px;
   padding: 8px 20px;
   font-size: 1rem;
@@ -120,7 +120,7 @@
 }
 .cancel-btn:hover,
 .cancel-btn:focus {
-  color: var(--point-color-05);
+  color: var(--point-color-02);
 }
 
 .loading-overlay {
