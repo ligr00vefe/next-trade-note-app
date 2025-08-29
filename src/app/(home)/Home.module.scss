@@ -44,21 +44,21 @@
 }
 .text-area-btn {
   background: var(--point-color-01);
-  color: var(--background);
+  color: var(--btn-text-color-01);
   font-size: 1.62rem;
   font-weight: 700;
   padding: 1.43rem 3.3rem;
   border: none;
   border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(191,164,111,0.10);
+  box-shadow: 0 2px 12px 0 var(--box-shadow);
   cursor: pointer;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 .text-area-btn:hover,
 .text-area-btn:focus {
   background: var(--point-color-02);
-  color: var(--background);
-  box-shadow: 0 4px 18px 0 rgba(191,164,111,0.18);
+  color: var(--btn-text-color-01);
+  box-shadow: 0 4px 18px 0 var(--box-shadow);
 }
 .img-area {
   flex: 1 1 320px;
@@ -94,7 +94,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  box-shadow: 0 2px 12px 0 rgba(16,25,38,0.10);
+  box-shadow: 0 2px 12px 0 var(--box-shadow);
   min-width: 180px;
 }
 .card-icon {
@@ -161,7 +161,6 @@
 .sec04 {
   width: 100%;
   padding: 6rem 0 5rem 0;
-  background: var(--background);
   display: flex;
   justify-content: center;
   align-items: center;

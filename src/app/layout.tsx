@@ -1,12 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.scss'
 
 import Providers from '@/providers'
 import Navbar from '@/layouts/navbar/Navbar'
 import getCurrentUser from '@/actions/getCurrentUser'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,7 +19,7 @@ export default async function RootLayout({
   
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body>
         <Providers>
           <Navbar currentUser={currentUser} />
           {children}
