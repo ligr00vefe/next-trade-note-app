@@ -89,11 +89,11 @@
   .login-link {
     font-weight: bold;
     text-decoration: underline;
-    color: var(--point-color-01);
+    color: var(--btn-color-03);
     
     &:hover {
       text-decoration: underline;
-      color: var(--point-color-02);
+      color: var(--btn-point-color-03);
     }
   }
 }

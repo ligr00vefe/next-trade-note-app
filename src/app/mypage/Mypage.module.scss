@@ -21,7 +21,7 @@
 
   .sidebar-tab-btn {
     background: var(--main-color-01);
-    color: var(--point-color-03);
+    color: var(--text-color-01);
     border: none;
     border-radius: 8px;
     padding: 1.1rem 2.1rem;
@@ -35,8 +35,8 @@
 
     &:hover,
     &:focus {
-      color: var(--point-color-05);
-      background: var(--point-color-04);
+      color: var(--btn-text-color-01);
+      background: var(--point-color-01);
     }
 
     &.active {
@@ -46,7 +46,7 @@
 
       &:hover,
       &:focus {
-        background: var(--point-color-02);
+        background: var(--btn-point-color-03);
         color: var(--btn-text-color-01);
         box-shadow: 0 4px 18px 0 var(--box-shadow);
       }
@@ -54,7 +54,7 @@
   }
 
   .sidebar-btn {
-    background: var(--point-color-01);
+    background: var(--btn-color-03);
     color: var(--btn-text-color-01);
     border: none;
     border-radius: 8px;
@@ -66,7 +66,7 @@
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     &:hover,
     &:focus {
-      background: var(--point-color-02);
+      background: var(--btn-point-color-03);
       color: var(--btn-text-color-01);
       box-shadow: 0 4px 18px 0 var(--box-shadow);
     }
@@ -178,7 +178,7 @@
   }
   button {
     margin-top: 0.7rem;
-    background: var(--point-color-01);
+    background: var(--btn-color-03);
     color: var(--btn-text-color-01);
     border: none;
     border-radius: 8px;
@@ -190,7 +190,7 @@
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     &:hover,
     &:focus {
-      background: var(--point-color-02);
+      background: var(--btn-point-color-03);
       color: var(--btn-text-color-01);
       box-shadow: 0 4px 18px 0 var(--box-shadow);
     }
@@ -209,7 +209,7 @@
     width: 0;
     height: 0;
     &:checked + .theme-label {
-      .theme-track { background: var(--point-color-02); }
+      .theme-track { background: var(--point-color-01); }
       .theme-thumb { transform: translateX(24px); background: var(--background); }
       ~ .theme-icons {
         .icon-dark { display: none; }

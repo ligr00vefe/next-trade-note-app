@@ -43,7 +43,7 @@
   margin-bottom: 3.3rem;
 }
 .text-area-btn {
-  background: var(--point-color-01);
+  background: var(--btn-color-03);
   color: var(--btn-text-color-01);
   font-size: 1.62rem;
   font-weight: 700;
@@ -56,7 +56,7 @@
 }
 .text-area-btn:hover,
 .text-area-btn:focus {
-  background: var(--point-color-02);
+  background: var(--btn-point-color-03);
   color: var(--btn-text-color-01);
   box-shadow: 0 4px 18px 0 var(--box-shadow);
 }
