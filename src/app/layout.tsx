@@ -3,6 +3,7 @@ import './globals.scss'
 
 import Providers from '@/providers'
 import Navbar from '@/layouts/navbar/Navbar'
+import FloatingNav from '@/layouts/footer/FloatingNav'
 import getCurrentUser from '@/actions/getCurrentUser'
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default async function RootLayout({
         <Providers>
           <Navbar currentUser={currentUser} />
           {children}
+          <FloatingNav currentUser={currentUser} />
         </Providers>
       </body>
     </html>

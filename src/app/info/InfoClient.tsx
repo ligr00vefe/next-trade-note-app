@@ -113,7 +113,7 @@ const InfoClient: React.FC<InfoClientProps> = ({ issues }) => {
   return (
     <Container>
       <h1>AI 이슈포착</h1>
-      <div className={styles["info-container"]}>
+      <div className={styles["info-wrapper"]}>
         <div className={styles["info-content-row"]}>
           {/* 왼쪽: d3 버블 차트 */}
           <div className={styles["bubble-chart-area"]}>

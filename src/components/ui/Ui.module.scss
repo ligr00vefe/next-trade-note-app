@@ -6,18 +6,22 @@
     margin-left: auto;
     margin-right: auto;
   
+    // 반응형
+    // 1980px 이상
     @include pc {
         max-width: $width-xl;
         padding: $container-pd-xl;
     }
 
+    // 1024px 이상 1536px 미만
     @include tablet {
         max-width: $width-lg;
         padding: $container-pd-lg;
     }
 
+    // 768px 이하
     @include mobile {
-        max-width: $width-md;
+        max-width: 100%;
         padding: $container-pd-md;
     }
   }

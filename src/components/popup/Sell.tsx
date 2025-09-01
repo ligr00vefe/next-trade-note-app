@@ -243,15 +243,15 @@ export default function Sell({ open, onClose, category = '', company = '', theme
           </label>
         </div>
         <label className={styles['label']}>
-          판매 사유
+          매도 사유
           <textarea
             name="reason"
             value={form.reason}
             onChange={handleChange}
             className={styles['textarea']}
-            aria-label="판매 사유"
+            aria-label="매도 사유"
             disabled={isLoading}
-            placeholder="판매 사유를 입력해주세요"
+            placeholder="매도 사유를 입력해주세요"
           />
         </label>
         

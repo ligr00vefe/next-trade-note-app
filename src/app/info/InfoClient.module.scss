@@ -1,10 +1,12 @@
-.info-container {
+@use '../../styles/mixins' as *;
+
+.info-wrapper {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2rem 0;
   border-radius: 18px;
-  box-shadow: 0 4px 24px 0 rgba(16,25,38,0.10);
+  box-shadow: 0 4px 24px 0 var(--box-shadow);
 }
 
 .info-content-row {
@@ -17,9 +19,9 @@
 .bubble-chart-area, .line-chart-area {
   flex: 1 1 0;
   min-width: 0;
-  background: #f8fafc;
+  background: var(--main-color-03);
   border-radius: 14px;
-  box-shadow: 0 2px 12px 0 rgba(16,25,38,0.08);
+  box-shadow: 0 2px 12px 0 var(--box-shadow);
   padding: 2rem 1.5rem;
   display: flex;
   align-items: center;
@@ -34,7 +36,7 @@
   display: block;
 }
 
-@media (max-width: 900px) {
+@include tablet {
   .info-content-row {
     flex-direction: column;
     gap: 1.2rem;
@@ -44,7 +46,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@include mobile {
   .info-container {
     padding: 0.7rem 0.2rem;
   }

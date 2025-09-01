@@ -1,6 +1,8 @@
+@use '../../styles/mixins' as *;
+
 .list-wrapper {
   width: 100%;
-  padding: 2rem;
+  padding: 2rem 0;
 }
 
 .list-header {
@@ -112,6 +114,7 @@
   cursor: pointer;
   margin-right: 0.5rem;
   transition: all 0.2s ease;
+
   &:hover,
   &:focus {
     background: var(--btn-point-color-02);
@@ -130,6 +133,7 @@
   cursor: pointer;
   margin-right: 0.5rem;
   transition: all 0.2s ease;
+
   &:hover,
   &:focus {
     background: var(--btn-point-color-01);
@@ -163,4 +167,148 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+}
+
+// 모바일 카드 스타일
+.mobile-cards {
+  display: none;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.mobile-card {
+  background: var(--background);
+  border: 1px solid var(--point-color-03);
+  border-radius: 12px;
+  padding: 1.6rem;
+  box-shadow: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--main-color-01);
+}
+
+.card-company {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-color-01);
+}
+
+.card-category {
+  font-size: 1.2rem;
+  color: var(--point-color-01);
+  background: var(--main-color-02);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.card-content {
+  margin-bottom: 1.6rem;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.card-label {
+  font-size: 1.3rem;
+  color: var(--text-color-01);
+  font-weight: 500;
+}
+
+.card-value {
+  font-size: 1.3rem;
+  color: var(--text-color-01);
+  font-weight: 600;
+  text-align: right;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+}
+
+.mobile-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1.4rem;
+  color: var(--text-color-01);
+  background: var(--main-color-02);
+  border-radius: 12px;
+  border: 1px solid var(--main-color-01);
+}
+
+// 반응형
+@include tablet {
+  .list-table {
+    font-size: 1.2rem;
+  }
+
+  .list-th,
+  .list-td {
+    padding: 0.6rem 1rem;
+  }
+
+  .add-buy-btn,
+  .sell-btn {
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
+@include mobile {
+  .list-table {
+    display: none;
+  }
+
+  .mobile-cards {
+    display: flex;
+  }
+
+  .list-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+  }
+
+  .list-title {
+    font-size: 1.8rem;
+  }
+
+  .add-buy-btn {
+    width: auto;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    margin-right: 0;
+  }
+
+  .card-actions {
+    .add-buy-btn,
+    .sell-btn {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+    }
+  }
 }
