@@ -29,7 +29,14 @@ export interface ITradeListData {
   totalItems: number;
 }
 
-export default async function getTotalList(): Promise<ITradeListData> {
+export interface ITradeListParams {
+  limit?: number; // 페이지당 표시할 개수 (기본값: 10)
+  page?: number; // 현재 페이지 (기본값: 1)
+  sortBy?: 'createdAt' | 'company' | 'totalPrice' | 'avgPrice'; // 정렬 기준
+  sortOrder?: 'asc' | 'desc'; // 정렬 순서 (기본값: 'desc')
+}
+
+export default async function getTradeList(params?: ITradeListParams): Promise<ITradeListData> {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -42,6 +49,15 @@ export default async function getTotalList(): Promise<ITradeListData> {
     };
   }
 
+  // 파라미터 기본값 설정
+  const limit = params?.limit || 10;
+  const page = params?.page || 1;
+  const sortBy = params?.sortBy || 'createdAt';
+  const sortOrder = params?.sortOrder || 'desc';
+
+  // 페이지네이션을 위한 offset 계산
+  const offset = (page - 1) * limit;
+
   try {
     const allTradeList = await prisma.tradeList.findMany({
       where: {
@@ -51,8 +67,10 @@ export default async function getTotalList(): Promise<ITradeListData> {
         }
       },
       orderBy: {
-        createdAt: 'desc', // 최신 순으로 정렬 예시
+        [sortBy]: sortOrder, // 동적 정렬
       },
+      skip: offset, // 페이지네이션을 위한 건너뛸 개수
+      take: limit, // 페이지당 표시할 개수 제한
     });
 
     // 날짜 필드를 포함하여 모든 필드를 ISafetradeList 타입에 맞게 직렬화
