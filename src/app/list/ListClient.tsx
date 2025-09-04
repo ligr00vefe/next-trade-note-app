@@ -56,7 +56,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
   const urlLimit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : initialLimit;
   const urlPage = searchParams.get('page') ? parseInt(searchParams.get('page')!) : initialPage;
 
-  // React Query를 사용하여 데이터 가져오기 (limit만 변경)
+  // React Query를 사용하여 데이터 가져오기
   const { data: tradeListData, isLoading, error, refetch } = useQuery<ITradeListData>({
     queryKey: ['tradeList', urlLimit, urlPage],
     queryFn: async () => {
@@ -71,6 +71,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
       if (!response.ok) {
         throw new Error('Failed to fetch trade list');
       }
+      // console.log('response', response);
       return response.json();
     },
     initialData: {
@@ -78,7 +79,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
       currentUser: null,
       totalItems: initialTotalItems
     },
-    enabled: urlLimit !== initialLimit || urlPage !== initialPage, // 초기 데이터와 다를 때만 쿼리 실행
+    enabled: true, // 항상 쿼리 실행하도록 변경
   });
 
   // 컴포넌트 마운트 시 mounted state를 true로 설정
@@ -442,10 +443,10 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
         )}
 
         <Pagination
-          currentPage={currentPage}
+          currentPage={urlPage}
           setCurrentPage={handlePageChange}
           totalProducts={totalItems}
-          productsPerPage={productsPerPage}
+          productsPerPage={urlLimit}
         />
       </div>
     </Container>
