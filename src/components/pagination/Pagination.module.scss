@@ -1,8 +1,5 @@
 .pagination {
-    list-style: none;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 2px solid var(--border-gray);
+    margin: 8rem 0 5rem;
     
     display: flex;
     justify-content: center;
@@ -12,29 +9,24 @@
         display: none;
     }
 
-    li {
-        font-size: 1.4rem;
-        border: 1px solid var(--border-gray);
-        min-width: 3rem;
-        height: 3rem;
-        padding: 3px;
+    li {        
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor: pointer;
-        margin: 0 4px;
+        padding: 1rem;
+
+        span {
+            font-size: 1.4rem;
+            color: var(--text-color-01);  
+            cursor: pointer;     
+        }
     }
 
-    p {
-        margin-left: 1rem;
-
-        .page {
-            color: var(--color-primary)
+    .active {
+        span {
+            font-weight: 600;
+            color: var(--point-color-01);
         }
     }
 }
 
-.active {
-    border: 1px solid var(--color-primary) !important;
-    color: #0073e9;
-}
