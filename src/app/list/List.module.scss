@@ -53,8 +53,8 @@
 .dropdown-trigger {
   background: var(--background);
   color: var(--text-color-01);
-  border: 1px solid var(--main-color-01);
-  border-radius: 6px;
+  border: 1px solid var(--point-color-02);
+  border-radius: .6rem;
   padding: 0.6rem 1rem;
   font-size: 1.2rem;
   font-weight: 500;
@@ -89,12 +89,12 @@
 
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% - 0.1rem);
   right: 0;
   background: var(--background);
   border: 1px solid var(--main-color-01);
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px var(--box-shadow);
   z-index: 1000;
   min-width: 10rem;
   overflow: hidden;
@@ -316,7 +316,7 @@
 
 .mobile-card {
   background: var(--background);
-  border: 1px solid var(--point-color-03);
+  border: 1px solid var(--point-color-02);
   border-radius: 12px;
   padding: 1.6rem;
   box-shadow: none;
@@ -452,7 +452,7 @@
 
   // 모바일에서 정렬 컨트롤 스타일
   .sort-control {
-    justify-content: center;
+    justify-content: flex-end;
     margin-bottom: 1.2rem;
   }
 

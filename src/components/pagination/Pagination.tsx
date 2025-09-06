@@ -55,14 +55,13 @@ const Pagination = ({
     return (
         <>
             <ul className={styles.pagination}>
-                <li
-                    onClick={paginatePrevPage}
+                {/* <li
                     className={
                         currentPage === pageNumbers[0] ? `${styles.hidden}` : ''
                     }
                 >
-                    {'<'}
-                </li>
+                    <span onClick={paginatePrevPage}>{'<'}</span>
+                </li> */}
 
                 {pageNumbers.map((number) => {
                     if (
@@ -71,30 +70,28 @@ const Pagination = ({
                     ) {
                         return (
                             <li
-                                key={number}
-                                onClick={() => paginate(number)}
+                                key={number}                                
                                 className={
                                     currentPage === number
                                         ? `${styles.active}`
                                         : ''
                                 }
                             >
-                                {number}
+                                <span onClick={() => paginate(number)}>{number}</span>
                             </li>
                         );
                     }
                 })}
 
-                <li
-                    onClick={paginateNextPage}
+                {/* <li                    
                     className={
                         currentPage === pageNumbers[pageNumbers.length - 1]
                             ? `${styles.hidden}`
                             : ''
                     }
                 >
-                    {'>'}
-                </li>
+                    <span onClick={paginateNextPage}>{'>'}</span>
+                </li> */}
             </ul>
         </>
     );

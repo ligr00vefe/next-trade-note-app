@@ -16,7 +16,7 @@
         padding: 1rem;
 
         span {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--text-color-01);  
             cursor: pointer;     
         }
@@ -25,7 +25,9 @@
     .active {
         span {
             font-weight: 600;
-            color: var(--point-color-01);
+            font-size: 1.5rem;
+            color: var(--point-color-03);
+            cursor: default;
         }
     }
 }
