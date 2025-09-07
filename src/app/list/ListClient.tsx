@@ -14,7 +14,8 @@ import Pagination from '@/components/pagination/Pagination';
 // @ts-ignore
 import { useQuery } from '@tanstack/react-query';
 import Loader from '@/components/Loader';
-import Sort from '@/components/sorting/Sort';
+import Sort from '@/components/sort/Sort';
+import Filter from '@/components/Filter/Filter';
 
 interface IListClientProps {
   initialData: ITradeListProps[];
@@ -255,7 +256,8 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
         </div>
 
         {/* 필터 박스 */}
-          
+        <Filter onChange={(filters) => console.log('선택된 필터:', filters)} />
+
         {/* 정렬 박스 */}
         <Sort 
           productsPerPage={productsPerPage}
