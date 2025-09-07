@@ -14,6 +14,7 @@ import Pagination from '@/components/pagination/Pagination';
 // @ts-ignore
 import { useQuery } from '@tanstack/react-query';
 import Loader from '@/components/Loader';
+import Sort from '@/components/sorting/Sort';
 
 interface IListClientProps {
   initialData: ITradeListProps[];
@@ -252,46 +253,14 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
             신규 매수
           </button>
         </div>
-        {/* 데스크톱 테이블 정렬 박스 */}
-        <div className={styles['sort-control']}>
-          <div 
-            className={styles['custom-dropdown']}
-            onMouseEnter={() => setIsDropdownOpen(true)}
-            onMouseLeave={() => setIsDropdownOpen(false)}
-          >
-            <div className={styles['dropdown-trigger']}>
-              <span className={styles['dropdown-text']}>
-                {productsPerPage}개씩 보기
-              </span>
-              <span className={styles['dropdown-arrow']}>
-                ▼
-              </span>
-            </div>
-            
-            {isDropdownOpen && (
-              <div className={styles['dropdown-menu']}>
-                <div 
-                  className={clsx(styles['dropdown-item'], productsPerPage === 10 && styles['active'])}
-                  onClick={() => handleProductsPerPageChange(10)}
-                >
-                  10개씩 보기
-                </div>
-                <div 
-                  className={clsx(styles['dropdown-item'], productsPerPage === 20 && styles['active'])}
-                  onClick={() => handleProductsPerPageChange(20)}
-                >
-                  20개씩 보기
-                </div>
-                <div 
-                  className={clsx(styles['dropdown-item'], productsPerPage === 30 && styles['active'])}
-                  onClick={() => handleProductsPerPageChange(30)}
-                >
-                  30개씩 보기
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+
+        {/* 필터 박스 */}
+          
+        {/* 정렬 박스 */}
+        <Sort 
+          productsPerPage={productsPerPage}
+          onChange={handleProductsPerPageChange}
+        />
 
         {/* 데스크톱 테이블 뷰 */}
         <table className={styles['list-table']}>
