@@ -91,9 +91,108 @@
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 4px;
+    position: relative;
+    z-index: 10;
+    flex-wrap: wrap;
   }
   
-  .tilde {
-    margin: 0 8px;
+  .date-picker-wrapper {
+    flex: 1;
+    min-width: 140px;
   }
   
+  .date-label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+  }
+  
+  .date-separator {
+    color: #666;
+    margin: 0 4px;
+    padding-top: 20px;
+  }
+  
+  .date-picker {
+    width: 100%;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    }
+  }
+
+  .react-datepicker {
+    font-family: inherit;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    &-wrapper {
+      width: 100%;
+    }
+
+    &__header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    &__current-month {
+      font-weight: 500;
+      color: #333;
+    }
+
+    &__day {
+      &--selected,
+      &--in-range {
+        background-color: #007bff;
+        color: white;
+      }
+
+      &--keyboard-selected {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  /* Apply button styles */
+  .apply-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+
+  .apply-button {
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover:not(:disabled) {
+      background-color: #0056b3;
+    }
+
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    &.disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }

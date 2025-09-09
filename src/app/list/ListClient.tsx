@@ -8,14 +8,13 @@ import styles from './List.module.scss';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ITradeListProps, ITradeListData } from '@/actions/getTradeList';
 import { formatKRW } from '@/helpers/formatKRW';
-import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 import Pagination from '@/components/pagination/Pagination';
 // @ts-ignore
 import { useQuery } from '@tanstack/react-query';
 import Loader from '@/components/Loader';
 import Sort from '@/components/sort/Sort';
-import Filter from '@/components/Filter/Filter';
+import Filter from '@/components/filter/Filter';
 
 interface IListClientProps {
   initialData: ITradeListProps[];
@@ -47,12 +46,9 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
   // 페이지네이션 관련 state
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(10);
-  // 커스텀 드롭다운 state
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { theme } = useTheme();
 
   // URL 파라미터에서 현재 값들 가져오기
   const urlLimit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : initialLimit;
@@ -73,7 +69,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
       if (!response.ok) {
         throw new Error('Failed to fetch trade list');
       }
-      // console.log('response', response);
+      console.log('response', response);
       return response.json();
     },
     initialData: {

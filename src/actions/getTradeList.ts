@@ -55,10 +55,10 @@ export default async function getTradeList(params?: ITradeListParams): Promise<I
   const sortBy = params?.sortBy || 'createdAt';
   const sortOrder = params?.sortOrder || 'desc';
 
-  console.log('$limit', limit);
-  console.log('$page', page);
-  console.log('$sortBy', sortBy);
-  console.log('$sortOrder', sortOrder);
+  // console.log('$limit', limit);
+  // console.log('$page', page);
+  // console.log('$sortBy', sortBy);
+  // console.log('$sortOrder', sortOrder);
 
   // 페이지네이션을 위한 offset 계산
   const offset = (page - 1) * limit;
