@@ -115,8 +115,8 @@ export default function Filter({ onChange }: FilterProps) {
       {/* 기간 */}
       <div className={styles['filter-section']}>
         <label className={styles['filter-label']}>기간</label>
-        <div className={styles['date-range-container']}>
-          <div className={styles['date-picker-wrapper']}>
+        <div className={styles['date-picker-wrapper']}>
+          <div className={styles['date-picker-box']}>
             <label className={styles['date-label']}>시작일</label>
             <DatePicker
               selected={startDate}
@@ -133,7 +133,7 @@ export default function Filter({ onChange }: FilterProps) {
             />
           </div>
           <span className={styles['date-separator']}>~</span>
-          <div className={styles['date-picker-wrapper']}>
+          <div className={styles['date-picker-box']}>
             <label className={styles['date-label']}>종료일</label>
             <DatePicker
               selected={endDate}
@@ -160,7 +160,7 @@ export default function Filter({ onChange }: FilterProps) {
           onClick={handleApply}
           disabled={!isFilterChanged}
         >
-          적용하기
+          필터 적용하기
         </button>
       </div>
     </div>

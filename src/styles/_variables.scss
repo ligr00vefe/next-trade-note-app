@@ -47,6 +47,8 @@ $light-theme: (
 
   // 텍스트 색상
   text-color-01: #0f172a,
+  text-color-02: #262728, 
+  text-color-03: #0f172a, // light, dark 공통 색상
 
   // 버튼 색상  
   btn-color-01: #d94747,    // 매수 버튼
@@ -62,7 +64,7 @@ $light-theme: (
   btn-point-color-03: #d6b97a,
 
   // 비활성화 색상
-  disabled-color-01: #64748b,
+  disabled-color-01: #cccccc,
 
   // 회원가입 버튼 색상
   auth-btn-color-01: #0f172a,
@@ -88,7 +90,7 @@ $dark-theme: (
   dark-blue-gray: #24292e,  
   light-gray: #e7e7e7,
   dark-gray: #767676,
-  border-gray: #cccccc,
+  border-gray: #334155,
   table-border-gray: #eeeeee,
 
   white: #ffffff,
@@ -108,6 +110,8 @@ $dark-theme: (
 
   // 텍스트 색상
   text-color-01: #f8fafc, 
+  text-color-02: #c7c7c7,
+  text-color-03: #0f172a, // light, dark 공통 색상
 
   // 버튼 색상
   btn-color-01: #d94747,    // 매수 버튼
@@ -123,7 +127,7 @@ $dark-theme: (
   btn-point-color-03: #d6b97a,
 
   // 비활성화 색상
-  disabled-color-01: #475569,
+  disabled-color-01: #cccccc,
 
   // 회원가입 버튼 색상
   auth-btn-color-01: #f8fafc,
