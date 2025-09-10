@@ -1,10 +1,89 @@
-.filter-box {
-    border: 1px solid var(--border-gray);
-    padding: 1.6rem;
-    margin-bottom: 2rem;
-    background: var(--main-color-03);
-    border-radius: .4rem;
+.filter-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 2.5rem;
+}
+
+.filter-container {
+  position: relative;
+  border-radius: 0.4rem;
+  border: 1px solid var(--border-gray);
+  background: var(--main-color-03);
+  overflow: visible;
+  
+  &.open {
+    .filter-toggle {
+      border-bottom: 1px solid var(--border-gray);
+      border-radius: 0.4rem 0.4rem 0 0;
+      
+      .arrow-button::before {
+        transform: rotate(180deg);
+      }
+    }
+    
+    .filter-box {
+      max-height: 100rem;
+      padding: 1.6rem;
+    }
   }
+}
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  padding: 1.2rem 1.6rem;
+  font-size: 1.4rem;
+  color: var(--text-color-01);
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: var(--main-color-02);
+  }
+}
+
+.arrow-button {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--main-color-03);
+  border: 1px solid var(--border-gray);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  cursor: pointer;
+  z-index: 2;
+  
+  &::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--text-color-01);
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover {
+    background: var(--main-color-02);
+  }
+}
+
+.filter-box {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
   
   .filter-section {
     margin-bottom: 1.5rem;
@@ -187,8 +266,9 @@
   /* Apply button styles */
   .apply-button-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-top: 2rem;
+    width: 100%;
   }
 
   .apply-button {
