@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
@@ -43,16 +44,39 @@ export default function Filter({ onChange }: FilterProps) {
     setIsFilterChanged(true);
   };
 
+  const router = useRouter();
+
   const handleApply = () => {
-    const filters = {
-      selectedCategories,
-      keyword,
-      dateRange: {
-        startDate: startDate?.toISOString() || null,
-        endDate: endDate?.toISOString() || null
-      }
-    };
-    onChange?.(filters);
+    const params = new URLSearchParams();
+    
+    // 기존 파라미터 유지
+    const currentParams = new URLSearchParams(window.location.search);
+    const sortBy = currentParams.get('sortBy') || 'createdAt';
+    const sortOrder = currentParams.get('sortOrder') || 'desc';
+    
+    // 필터 파라미터 추가
+    if (selectedCategories.length > 0) {
+      params.set('categories', selectedCategories.join(','));
+    }
+    if (keyword) {
+      params.set('keyword', keyword);
+    }
+    if (startDate) {
+      params.set('startDate', startDate.toISOString().split('T')[0]);
+    }
+    if (endDate) {
+      params.set('endDate', endDate.toISOString().split('T')[0]);
+    }
+    
+    // 기존 정렬 파라미터 유지
+    params.set('sortBy', sortBy);
+    params.set('sortOrder', sortOrder);
+    
+    // 페이지는 항상 1로 초기화
+    params.set('page', '1');
+    
+    // 페이지 이동
+    router.push(`/list?${params.toString()}`);
     setIsFilterChanged(false);
   };
 

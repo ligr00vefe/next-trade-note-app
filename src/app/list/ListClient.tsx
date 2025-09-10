@@ -49,20 +49,33 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
 
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  // URL 파라미터에서 현재 값들 가져오기
+  
+  // URLSearchParams를 문자열로 변환하여 변경 감지
+  const paramsString = searchParams.toString();
+  
+  // URL 파라미터에서 현재 값들 가져오기 (의존성 배열에 paramsString 추가)
   const urlLimit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : initialLimit;
   const urlPage = searchParams.get('page') ? parseInt(searchParams.get('page')!) : initialPage;
 
+  // URL 파라미터에서 필터 값 가져오기 (의존성 배열에 paramsString 추가)
+  const categories = searchParams.get('categories')?.split(',').filter(Boolean) || [];
+  const keyword = searchParams.get('keyword') || '';
+  const startDate = searchParams.get('startDate') || '';
+  const endDate = searchParams.get('endDate') || '';
+
   // React Query를 사용하여 데이터 가져오기
   const { data: tradeListData, isLoading, error, refetch } = useQuery<ITradeListData>({
-    queryKey: ['tradeList', urlLimit, urlPage],
+    queryKey: ['tradeList', urlLimit, urlPage, categories, keyword, startDate, endDate],
     queryFn: async () => {
       const params = new URLSearchParams({
         limit: urlLimit.toString(),
         page: urlPage.toString(),
         sortBy: 'createdAt', // 고정값
         sortOrder: 'desc', // 고정값
+        ...(categories.length > 0 && { categories: categories.join(',') }),
+        ...(keyword && { keyword }),
+        ...(startDate && { startDate }),
+        ...(endDate && { endDate }),
       });
       
       const response = await fetch(`/api/trade-list?${params.toString()}`);
@@ -80,13 +93,15 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
     enabled: true, // 항상 쿼리 실행하도록 변경
   });
 
-  // 컴포넌트 마운트 시 mounted state를 true로 설정
+  // URL 파라미터 변경 감지 및 상태 동기화
   useEffect(() => {
     setMounted(true);
-    // URL 파라미터와 동기화
     setProductsPerPage(urlLimit);
     setCurrentPage(urlPage);
-  }, [urlLimit, urlPage]);
+    
+    // URL 파라미터가 변경될 때마다 refetch 실행
+    refetch();
+  }, [paramsString, urlLimit, urlPage, refetch]);
 
   // React Query에서 가져온 데이터 사용
   const allTradeList = tradeListData?.data || initialData;
@@ -252,7 +267,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
         </div>
 
         {/* 필터 박스 */}
-        <Filter onChange={(filters) => console.log('선택된 필터:', filters)} />
+        <Filter />
 
         {/* 정렬 박스 */}
         <Sort 
@@ -405,7 +420,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
             theme1={selectedProduct.theme1 || ''}
             theme2={selectedProduct.theme2 || ''}
             totalQuantity={selectedProduct.totalQuantity}
-            totalPrice={selectedProduct.avgPrice}
+            totalPrice={selectedProduct.totalPrice}
           />
         )}
 

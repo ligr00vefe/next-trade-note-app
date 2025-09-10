@@ -10,6 +10,12 @@ export async function GET(request: NextRequest) {
     const page = searchParams.get('page') ? parseInt(searchParams.get('page')!) : 1;
     const sortBy = searchParams.get('sortBy') || 'createdAt';
     const sortOrder = searchParams.get('sortOrder') || 'desc';
+    
+    // 필터 파라미터 추출
+    const categories = searchParams.get('categories')?.split(',').filter(Boolean) || [];
+    const keyword = searchParams.get('keyword') || '';
+    const startDate = searchParams.get('startDate') || '';
+    const endDate = searchParams.get('endDate') || '';
 
     // 타입 검증
     const validSortBy = ['createdAt', 'company', 'totalPrice', 'avgPrice'].includes(sortBy) 
@@ -24,9 +30,16 @@ export async function GET(request: NextRequest) {
       limit,
       page,
       sortBy: validSortBy,
-      sortOrder: validSortOrder
+      sortOrder: validSortOrder,
+      filters: {
+        categories,
+        keyword: keyword || undefined,
+        startDate: startDate || undefined,
+        endDate: endDate || undefined
+      }
     });
 
+    console.log('result: ', result);
     return NextResponse.json(result);
   } catch (error) {
     console.error('Error in trade-list API:', error);

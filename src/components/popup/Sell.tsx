@@ -205,7 +205,7 @@ export default function Sell({ open, onClose, category = '', company = '', theme
           </label>
         </div>
         <div className={styles['info-row']}>
-          <span>보유 수량: {totalQuantity}</span>
+          <span>보유 수량: {totalQuantity}</span>{" "}
           <span>총 매수 금액: {totalPrice.toLocaleString()}원</span>
         </div>
         <div className={styles['inline-inputs']}>

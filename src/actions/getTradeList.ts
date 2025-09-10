@@ -29,11 +29,19 @@ export interface ITradeListData {
   totalItems: number;
 }
 
+export interface IFilters {
+  categories?: string[];
+  keyword?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
 export interface ITradeListParams {
   limit?: number; // 페이지당 표시할 개수 (기본값: 10)
   page?: number; // 현재 페이지 (기본값: 1)
   sortBy?: 'createdAt' | 'company' | 'totalPrice' | 'avgPrice'; // 정렬 기준
   sortOrder?: 'asc' | 'desc'; // 정렬 순서 (기본값: 'desc')
+  filters?: IFilters; // 필터 옵션
 }
 
 export default async function getTradeList(params?: ITradeListParams): Promise<ITradeListData> {
@@ -64,13 +72,43 @@ export default async function getTradeList(params?: ITradeListParams): Promise<I
   const offset = (page - 1) * limit;
 
   try {
+    // 필터 조건 구성
+    const whereClause: any = {
+      userId: currentUser.id,
+      totalQuantity: {
+        gt: 0 // totalQuantity가 0보다 큰 데이터만 가져오기
+      }
+    };
+
+    // 카테고리 필터
+    if (params?.filters?.categories?.length) {
+      whereClause.category = {
+        in: params.filters.categories
+      };
+    }
+
+    // 키워드 검색 (회사명 또는 테마에서 검색)
+    if (params?.filters?.keyword) {
+      whereClause.OR = [
+        { company: { contains: params.filters.keyword, mode: 'insensitive' } },
+        { theme1: { contains: params.filters.keyword, mode: 'insensitive' } },
+        { theme2: { contains: params.filters.keyword, mode: 'insensitive' } }
+      ];
+    }
+
+    // 날짜 범위 필터
+    if (params?.filters?.startDate || params?.filters?.endDate) {
+      whereClause.createdAt = {};
+      if (params.filters.startDate) {
+        whereClause.createdAt.gte = new Date(params.filters.startDate);
+      }
+      if (params.filters.endDate) {
+        whereClause.createdAt.lte = new Date(params.filters.endDate);
+      }
+    }
+
     const allTradeList = await prisma.tradeList.findMany({
-      where: {
-        userId: currentUser.id,
-        totalQuantity: {
-          gt: 0 // totalQuantity가 0보다 큰 데이터만 가져오기
-        }
-      },
+      where: whereClause,
       orderBy: {
         [sortBy]: sortOrder, // 동적 정렬
       },
@@ -93,14 +131,9 @@ export default async function getTradeList(params?: ITradeListParams): Promise<I
       theme2: tradeList.theme2,
     }));
 
-    // totalItems 전체 아이템 개수
+    // totalItems 전체 아이템 개수 (필터 조건 적용)
     const totalItems = await prisma.tradeList.count({
-      where: {
-        userId: currentUser.id,
-        totalQuantity: {
-          gt: 0 // totalQuantity가 0보다 큰 데이터만 카운트
-        }
-      }
+      where: whereClause
     });
 
     return {
@@ -108,10 +141,12 @@ export default async function getTradeList(params?: ITradeListParams): Promise<I
       currentUser,
       totalItems
     };
-
-  } catch (error: any) {
-    console.error('Error fetching allTradeList:', error);
-    // 에러 발생 시 빈 배열 또는 에러 throw
-    throw new Error('사용자 주식 정보를 가져오는데 실패했습니다.');
+  } catch (error) {
+    console.error('Error in getTradeList:', error);
+    return {
+      data: [],
+      currentUser: null,
+      totalItems: 0
+    };
   }
 }
