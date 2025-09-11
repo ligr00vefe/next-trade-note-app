@@ -89,7 +89,7 @@ export default function Filter({ onChange }: FilterProps) {
           <span>상세검색</span>
           <div className={styles['arrow-button']} />
         </div>
-        <div className={styles['filter-box']}>
+        <div className={styles['filter-drop-box']}>
           {/* 분류 범위 */}
           <div className={styles['filter-section']}>
             <label className={styles['filter-label']}>분류 범위</label>

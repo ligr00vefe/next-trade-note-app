@@ -14,7 +14,6 @@
   
   &.open {
     .filter-toggle {
-      border-bottom: 1px solid var(--border-gray);
       border-radius: 0.4rem 0.4rem 0 0;
       
       .arrow-button::before {
@@ -22,9 +21,9 @@
       }
     }
     
-    .filter-box {
-      max-height: 100rem;
-      padding: 1.6rem;
+    .filter-drop-box {
+      max-height: 100rem;     
+      padding: 1.6rem; 
     }
   }
 }
@@ -40,11 +39,7 @@
   color: var(--text-color-01);
   cursor: pointer;
   width: 100%;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: var(--main-color-02);
-  }
+  transition: all 0.3s ease;  
 }
 
 .arrow-button {
@@ -79,16 +74,16 @@
   }
 }
 
-.filter-box {
+.filter-drop-box {
   max-height: 0;
   overflow: hidden;
+  padding: 0 1.6rem;
   transition: all 0.3s ease-in-out;
-}
-  
+
   .filter-section {
     margin-bottom: 1.5rem;
   }
-  
+
   .filter-label {
     display: block;
     font-weight: bold;
@@ -96,13 +91,13 @@
     font-size: 1.5rem;
     margin-bottom: .5rem;
   }
-  
+
   .checkbox-group {
     display: flex;
     flex-wrap: wrap;
     gap: 1.2rem;
   }
-  
+
   .custom-checkbox {
     position: relative;
     padding-left: 2.4rem;
@@ -111,14 +106,14 @@
     font-size: 1.4rem;
     color: var(--text-color-02);
   }
-  
+
   .custom-checkbox input {
     position: absolute;
     opacity: 0;
     color: var(--text-color-02);
     cursor: pointer;
   }
-  
+
   .checkmark {
     position: absolute;
     left: 0;
@@ -129,22 +124,22 @@
     border-radius: .3rem;
     background-color: var(--white);
   }
-  
+
   .custom-checkbox input:checked ~ .checkmark {
     background-color: var(--point-color-01);
     border-color: var(--point-color-01);
   }
-  
+
   .custom-checkbox .checkmark:after {
     content: "";
     position: absolute;
     display: none;
   }
-  
+
   .custom-checkbox input:checked ~ .checkmark:after {
     display: block;
   }
-  
+
   .custom-checkbox .checkmark:after {
     left: .4rem;
     top: 0px;
@@ -154,7 +149,7 @@
     border-width: 0 .2rem .2rem 0;
     transform: rotate(45deg);
   }
-  
+
   .input-text {
     width: 100%;
     padding: .6rem .8rem;
@@ -173,7 +168,7 @@
     align-items: center;
     gap: .4rem;
   }
-  
+
   .date-range input {
     width: 6rem;
     padding: .4rem;
@@ -184,7 +179,7 @@
     z-index: 10;
     flex-wrap: wrap;
   }
-  
+
   .date-picker-wrapper {
     display: flex;
     align-items: flex-start;
@@ -196,20 +191,20 @@
     flex-grow: 0;
     min-width: 14rem;
   }
-  
+
   .date-label {
     display: block;
     font-size: 1.2rem;
     color: var(--text-color-01);
     margin-bottom: .4rem;
   }
-  
+
   .date-separator {
     color: var(--text-color-01);
     margin: 0 .4rem;
     padding-top: 2rem;
   }
-  
+
   .date-picker {
     width: 100%;
     padding: .6rem 1.2rem;
@@ -297,3 +292,4 @@
       opacity: 0.7;
     }
   }
+}
