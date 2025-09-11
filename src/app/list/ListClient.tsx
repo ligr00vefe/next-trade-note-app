@@ -15,6 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import Loader from '@/components/Loader';
 import Sort from '@/components/sort/Sort';
 import Filter from '@/components/filter/Filter';
+import Table from '@/components/table/Table';
 
 interface IListClientProps {
   initialData: ITradeListProps[];
@@ -276,59 +277,12 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
         />
 
         {/* 데스크톱 테이블 뷰 */}
-        <table className={styles['list-table']}>
-          <thead className={styles['list-thead']}>
-            <tr className={styles['list-tr']}>
-              <th className={styles['list-th']}>분류</th>
-              <th className={styles['list-th']}>종목명</th>
-              <th className={styles['list-th']}>평균 매수 금액</th>
-              <th className={styles['list-th']}>보유 수량</th>
-              <th className={styles['list-th']}>총 매수 금액</th>
-              <th className={styles['list-th']}>테마</th>
-              <th className={styles['list-th']}>매매</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allTradeList && allTradeList.map((product: ITradeListProps) => (
-              <tr key={product.id} className={styles['list-tr']}>
-                <td className={styles['list-td']}>{product.category}</td>
-                <td className={clsx(styles['list-td'], styles['list-td-company'])}>{product.company}</td>
-                <td className={clsx(styles['list-td'], styles['list-td-price'])}>{formatKRW(product.avgPrice)}</td>
-                <td className={clsx(styles['list-td'], styles['list-td-quantity'])}>{product.totalQuantity}</td>
-                <td className={clsx(styles['list-td'], styles['list-td-total-price'])}>{formatKRW(product.totalPrice)}</td>
-                <td className={styles['list-td']}>{(product.theme1 || '') + (product.theme2 ? ` - ${product.theme2}` : '')}</td>
-                <td className={styles['list-td']}>
-                  <button
-                    className={styles['add-buy-btn']}
-                    tabIndex={0}
-                    aria-label={`${product.company} 추가 매수`}
-                    onClick={() => handleBuyClick(product)}
-                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick(product)}
-                  >
-                    추가 매수
-                  </button>
-                  <button
-                    className={styles['sell-btn']}
-                    tabIndex={0}
-                    aria-label={`${product.company} 매도`}
-                    onClick={() => handleSellClick(product)}
-                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSellClick(product)}
-                  >
-                    매도
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {allTradeList && allTradeList.length === 0 && (
-              <tr className={styles['list-tr']}>
-                <td className={clsx(styles['list-td'], styles['list-td-empty'])} colSpan={8} style={{ textAlign: 'center' }}>
-                  등록된 매매 내역이 없습니다.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-
+        <Table 
+          data={allTradeList} 
+          onBuyClick={handleBuyClick} 
+          onSellClick={handleSellClick} 
+        />
+        
         {/* 모바일 카드 뷰 */}
         <div className={styles['mobile-cards']}>
           {allTradeList && allTradeList.map((product: ITradeListProps) => (
