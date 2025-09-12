@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Buy from '@/components/popup/Buy';
-import Sell from '@/components/popup/Sell';
+import TradePopup from '@/components/popup/TradePopup';
 import Container from '@/components/ui/Container';
 import styles from './List.module.scss';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -27,23 +26,53 @@ interface IListClientProps {
 export default function ListClient({ initialData, initialLimit, initialPage, initialTotalItems }: IListClientProps) {
   // 컴포넌트가 마운트되었는지 확인하는 state
   const [mounted, setMounted] = useState(false);
-  // 매수 팝업 표시 여부
-  const [buyOpen, setBuyOpen] = useState(false);
-  // 매도 팝업 표시 여부
-  const [sellOpen, setSellOpen] = useState(false);
-  // 매도할 상품 정보
-  const [selectedProduct, setSelectedProduct] = useState<ITradeListProps | null>(null);
-  // 매수 팝업에 표시할 데이터
-  const [buyData, setBuyData] = useState({
-    category: '',
-    company: '',
-    totalQuantity: '',
-    totalPrice: '',
-    avgPrice: '',
-    theme1: '',
-    theme2: '',
-    isAdditionalBuy: false,
+  // 거래 팝업 관련 상태
+  const [tradePopup, setTradePopup] = useState({
+    open: false,
+    type: 'buy' as 'buy' | 'sell',
+    mode: 'new' as 'new' | 'add',
   });
+  // 선택된 상품 정보 (매수/매도용)
+  const [selectedProduct, setSelectedProduct] = useState<ITradeListProps | null>(null);
+
+  // 매수 버튼 클릭 핸들러
+  const handleBuyClick = (product?: ITradeListProps) => {
+    if (product) {
+      // 추가 매수
+      setSelectedProduct(product);
+      setTradePopup({
+        open: true,
+        type: 'buy',
+        mode: 'add',
+      });
+    } else {
+      // 신규 매수
+      setSelectedProduct(null);
+      setTradePopup({
+        open: true,
+        type: 'buy',
+        mode: 'new',
+      });
+    }
+  };
+
+  // 매도 버튼 클릭 핸들러
+  const handleSellClick = (product: ITradeListProps) => {
+    setSelectedProduct(product);
+    setTradePopup({
+      open: true,
+      type: 'sell',
+      mode: 'new',
+    });
+  };
+
+  // 거래 팝업 닫기 핸들러
+  const handleTradeClose = () => {
+    setTradePopup(prev => ({
+      ...prev,
+      open: false,
+    }));
+  };
   // 페이지네이션 관련 state
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(10);
@@ -162,95 +191,6 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
     );
   }
 
-  // 추가 매수 버튼 클릭 시 실행되는 함수
-  const handleBuyClick = (row: ITradeListProps) => {
-    // 매도 팝업이 열려있으면 닫고 선택된 상품 정보 초기화
-    if (sellOpen) {
-      setSellOpen(false);
-      setSelectedProduct(null);
-    }
-
-    // 선택된 상품의 정보를 buyData state에 저장
-    setBuyData({
-      ...row,
-      category: row.category,
-      company: row.company,
-      totalQuantity: String(row.totalQuantity),
-      totalPrice: String(row.totalPrice),
-      avgPrice: String(row.avgPrice),
-      theme1: row.theme1 || '',
-      theme2: row.theme2 || '',
-      isAdditionalBuy: true,
-    });
-    // 매수 팝업 열기
-    setBuyOpen(true);
-  };
-
-  // 매수 팝업 닫기
-  const handleBuyClose = () => {
-    setBuyOpen(false);
-    refetch(); // React Query로 데이터 새로고침
-  };
-
-  // 신규 매수 버튼 클릭 시 실행되는 함수
-  const handleAddNewBuy = () => {
-    // 매도 팝업이 열려있으면 닫고 선택된 상품 정보 초기화
-    if (sellOpen) {
-      setSellOpen(false);
-      setSelectedProduct(null);
-    }
-
-    // buyData state 초기화
-    setBuyData({
-      category: '',
-      company: '',
-      totalQuantity: '',
-      totalPrice: '',
-      avgPrice: '',
-      theme1: '',
-      theme2: '',
-      isAdditionalBuy: false,
-    });
-    // 매수 팝업 열기
-    setBuyOpen(true);
-  };
-
-  // 매도 버튼 클릭 시 실행되는 함수
-  const handleSellClick = (product: ITradeListProps) => {
-    // 매수 팝업이 열려있으면 닫기
-    if (buyOpen) {
-      setBuyOpen(false);
-    }
-
-    // 선택된 상품 정보 저장
-    const currentProduct = allTradeList.find((item: ITradeListProps) => item.id === product.id);
-    if (currentProduct) {
-      setSelectedProduct(currentProduct);
-      setSellOpen(true);
-    }
-  };
-
-  // 매도 팝업 닫기
-  const handleSellClose = () => {
-    setSellOpen(false);
-    setSelectedProduct(null);
-    refetch(); // React Query로 데이터 새로고침
-  };
-
-  // 팝업 외부 클릭 시 실행되는 함수
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    console.log('target', target);
-    if (!target.closest(`.${styles['popup']}`)) {
-      if (buyOpen) {
-        handleBuyClose();
-      }
-      if (sellOpen) {
-        handleSellClose();
-      }
-    }
-  };
-
   return (
     <Container>
       <div className={styles['list-wrapper']}>
@@ -260,8 +200,8 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
             className={styles['add-buy-btn']}
             tabIndex={0}
             aria-label="신규 매수"
-            onClick={handleAddNewBuy}
-            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleAddNewBuy()}
+            onClick={() => handleBuyClick()}
+            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick()}
           >
             신규 매수
           </button>
@@ -282,7 +222,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
           onBuyClick={handleBuyClick} 
           onSellClick={handleSellClick} 
         />
-        
+
         {/* 모바일 카드 뷰 */}
         <div className={styles['mobile-cards']}>
           {allTradeList && allTradeList.map((product: ITradeListProps) => (
@@ -345,38 +285,19 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
           )}
         </div>
 
-        {(buyOpen || sellOpen) && (
-          <div 
-            className={styles['popup-overlay']} 
-            onClick={handleBackdropClick}
-            role="presentation"
-          />
-        )}
-
-        <Buy
-          key={buyData.company}
-          open={buyOpen}
-          onClose={handleBuyClose}
-          category={buyData.category}
-          company={buyData.company}
-          theme1={buyData.theme1}
-          theme2={buyData.theme2}
-          isAdditionalBuy={buyData.isAdditionalBuy}
+        {/* 거래 팝업 */}
+        <TradePopup
+          type={tradePopup.type}
+          mode={tradePopup.mode}
+          open={tradePopup.open}
+          onClose={handleTradeClose}
+          category={selectedProduct?.category || ''}
+          company={selectedProduct?.company || ''}
+          theme1={selectedProduct?.theme1 || ''}
+          theme2={selectedProduct?.theme2 || ''}
+          totalQuantity={selectedProduct?.totalQuantity || 0}
+          totalPrice={selectedProduct?.totalPrice || 0}
         />
-
-        {selectedProduct && (
-          <Sell
-            key={selectedProduct.id}
-            open={sellOpen}
-            onClose={handleSellClose}
-            category={selectedProduct.category}
-            company={selectedProduct.company}
-            theme1={selectedProduct.theme1 || ''}
-            theme2={selectedProduct.theme2 || ''}
-            totalQuantity={selectedProduct.totalQuantity}
-            totalPrice={selectedProduct.totalPrice}
-          />
-        )}
 
         <Pagination
           currentPage={urlPage}

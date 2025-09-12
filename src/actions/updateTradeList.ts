@@ -10,8 +10,9 @@ interface TradeData {
   price: number;
   theme1: string;
   theme2: string;
+  memo?: string;
   reason: string;
-  orderType: '매수' | '매도';
+  orderType: 'buy' | 'sell';
   isAdditionalBuy?: boolean;
 }
 
@@ -25,7 +26,7 @@ export async function handleTrade(data: TradeData) {
   try {
     const result = await prisma.$transaction(async (tx) => {
       // 신규 매수인 경우 중복 체크
-      if (data.orderType === '매수' && !data.isAdditionalBuy) {
+      if (data.orderType === 'buy' && !data.isAdditionalBuy) {
         const existingTradeList = await tx.tradeList.findFirst({
           where: {
             userId: currentUser.id,
@@ -52,7 +53,7 @@ export async function handleTrade(data: TradeData) {
           theme1: data.theme1,
           theme2: data.theme2,
           reason: data.reason,
-          orderType: data.orderType,
+          orderType: data.orderType.toUpperCase(),
           createdAt: new Date(),
           userId: currentUser.id,
         },
@@ -67,48 +68,65 @@ export async function handleTrade(data: TradeData) {
         },
       });
 
-      if (!existingTradeList) {
-        // 새로운 거래 정보 생성
-        const newTrade = await tx.tradeList.create({
-          data: {
-            userId: currentUser.id,
-            category: data.category,
-            company: data.company,
-            totalQuantity: data.quantity,
-            totalPrice: data.price * data.quantity,
-            avgPrice: data.price,
-            theme1: data.theme1,
-            theme2: data.theme2,
-          },
-        });
-        return { product, updatedTrade: newTrade };
+      if (data.orderType === 'buy') {
+        if (existingTradeList) {
+          // 기존 종목이 있는 경우 수량과 평균 단가 업데이트
+          const newTotalQuantity = existingTradeList.totalQuantity + data.quantity;
+          const newTotalPrice = existingTradeList.totalPrice + (data.quantity * data.price);
+          const newAvgPrice = Math.round(newTotalPrice / newTotalQuantity);
+
+          await tx.tradeList.update({
+            where: { id: existingTradeList.id },
+            data: {
+              totalQuantity: newTotalQuantity,
+              totalPrice: newTotalPrice,
+              avgPrice: newAvgPrice,
+              theme1: data.theme1,
+              theme2: data.theme2,
+            },
+          });
+        } else {
+          // 신규 종목인 경우 추가
+          await tx.tradeList.create({
+            data: {
+              userId: currentUser.id,
+              category: data.category,
+              company: data.company,
+              totalQuantity: data.quantity,
+              totalPrice: data.quantity * data.price,
+              avgPrice: data.price,
+              theme1: data.theme1,
+              theme2: data.theme2,
+            },
+          });
+        }
+      } else if (data.orderType === 'sell') {
+        if (!existingTradeList || existingTradeList.totalQuantity < data.quantity) {
+          throw new Error('보유 수량이 부족합니다.');
+        }
+
+        // 매도 처리
+        const newTotalQuantity = existingTradeList.totalQuantity - data.quantity;
+        
+        if (newTotalQuantity > 0) {
+          // 일부 매도인 경우
+          await tx.tradeList.update({
+            where: { id: existingTradeList.id },
+            data: {
+              totalQuantity: newTotalQuantity,
+              totalPrice: existingTradeList.totalPrice - (data.quantity * existingTradeList.avgPrice),
+            },
+          });
+        } else {
+          // 전량 매도인 경우
+          await tx.tradeList.delete({
+            where: { id: existingTradeList.id },
+          });
+        }
       }
-
-      const newQuantity = data.orderType === '매수' 
-        ? existingTradeList.totalQuantity + data.quantity
-        : existingTradeList.totalQuantity - data.quantity;
-
-      if (newQuantity < 0) {
-        throw new Error('보유 수량을 초과했습니다.');
-      }
-
-      const newTotalPrice = newQuantity === 0 
-        ? 0 
-        : data.orderType === '매수'
-          ? existingTradeList.totalPrice + (data.price * data.quantity)
-          : existingTradeList.totalPrice - (data.price * data.quantity);
-
-      const updatedTrade = await tx.tradeList.update({
-        where: { id: existingTradeList.id },
-        data: {
-          totalQuantity: newQuantity,
-          totalPrice: newTotalPrice,
-          avgPrice: newQuantity === 0 ? 0 : newTotalPrice / newQuantity,
-        },
-      });
 
       // 3. 매도 시 InvestmentAccount 업데이트
-      if (data.orderType === '매도') {
+      if (data.orderType === 'sell' && existingTradeList) {
         const profitAmount = (data.price - existingTradeList.avgPrice) * data.quantity;
         const profitRate = (data.price / existingTradeList.avgPrice - 1) * 100;
 
@@ -122,36 +140,45 @@ export async function handleTrade(data: TradeData) {
           },
         });
 
-        const existingAccount = await tx.investmentAccount.findFirst({
+        // 계정 조회 시 ID로 조회
+        const accounts = await tx.investmentAccount.findMany({
           where: { userId: currentUser.id },
+          take: 1,
         });
+        const existingAccount = accounts[0];
 
         if (existingAccount) {
           await tx.investmentAccount.update({
             where: { id: existingAccount.id },
             data: {
-              totalProfitAmount: existingAccount.totalProfitAmount + profitAmount,
-              totalProfitRate: existingAccount.totalProfitRate + profitRate,
+              totalProfitAmount: {
+                increment: profitAmount,
+              },
+              totalProfitRate: {
+                // 간단한 수익률 계산 (실제로는 더 복잡한 로직이 필요할 수 있음)
+                set: profitRate,
+              },
             },
           });
         } else {
           await tx.investmentAccount.create({
             data: {
               userId: currentUser.id,
+              name: '기본 계좌',
               totalProfitAmount: profitAmount,
               totalProfitRate: profitRate,
-              riskTolerance: '중립',
+              riskTolerance: '보통',
             },
           });
         }
       }
 
-      return { product, updatedTrade };
+      return { product };
     });
 
     return result;
   } catch (error) {
-    console.error('Trade error:', error);
+    console.error('거래 처리 중 오류 발생:', error);
     throw error;
   }
-} 
+}

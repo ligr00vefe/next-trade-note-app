@@ -148,41 +148,60 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
   const theme1Options = Object.keys(KOREA_STOCK_THEMES);
   const theme2Options = form.theme1 ? KOREA_STOCK_THEMES[form.theme1 as keyof typeof KOREA_STOCK_THEMES] : [];
 
+  if (!open) return null;
+
+  // Add overlay and popup animation classes based on open state
+  const overlayClass = `${styles['popup-overlay']} ${open ? styles['active'] : ''}`;
+  const popupClass = `${styles['popup']} ${open ? styles['active'] : ''}`;
+
   return (
-    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매수 팝업">
-      <div className={styles['popup-content']}>
-        {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
-        <h2 className={styles['title']}>{isAdditionalBuy ? '추가 매수' : '신규 매수'}</h2>
-        <div className={styles['inline-inputs']}>
+    <div className={styles['modal-container']}>
+      <div 
+        className={overlayClass}
+        onClick={onClose}
+        role="presentation"
+        aria-hidden={!open}
+      />
+      <div 
+        className={popupClass} 
+        role="dialog" 
+        aria-modal="true" 
+        aria-label={isAdditionalBuy ? '추가 매수' : '신규 매수'}
+        aria-hidden={!open}
+      >
+        <div className={styles['popup-content']}>
+          {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
+          <h2 className={styles['title']}>{isAdditionalBuy ? '추가 매수' : '신규 매수'}</h2>
+          <div className={styles['inline-inputs']}>
+            <label className={styles['label']}>
+              상품 종류
+              <select
+                name="category"
+                value={form.category}
+                onChange={handleChange}
+                className={styles['input']}
+                aria-label="상품 종류"
+                disabled={isLoading || isAdditionalBuy}
+              >
+                <option value="" disabled>상품 종류</option>
+                {Object.keys(TRADING_CATEGORY_DETAILS).map((category: string) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </label>        
+          </div>
           <label className={styles['label']}>
-            상품 종류
-            <select
-              name="category"
-              value={form.category}
+            종목명
+            <input
+              name="company"
+              type="text"
+              value={form.company}
               onChange={handleChange}
               className={styles['input']}
-              aria-label="상품 종류"
+              aria-label="종목명"
               disabled={isLoading || isAdditionalBuy}
-            >
-              <option value="" disabled>상품 종류</option>
-              {Object.keys(TRADING_CATEGORY_DETAILS).map((category: string) => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-          </label>        
-        </div>
-        <label className={styles['label']}>
-          종목명
-          <input
-            name="company"
-            type="text"
-            value={form.company}
-            onChange={handleChange}
-            className={styles['input']}
-            aria-label="종목명"
-            disabled={isLoading || isAdditionalBuy}
-          />
-        </label>
+            />
+          </label>
         <div className={styles['inline-inputs']}>
           <label className={styles['label']}>
             매수 금액
@@ -260,7 +279,8 @@ export default function Buy({ open, onClose, category = '', company = '', theme1
           <button type="button" className={styles['confirm-btn']} onClick={handleSubmit} tabIndex={0} aria-label="확인" disabled={isLoading}>확인</button>
           <button type="button" className={styles['cancel-btn']} onClick={onClose} tabIndex={0} aria-label="취소" disabled={isLoading}>취소</button>
         </div>
+        </div>
       </div>
     </div>
   );
-} 
+}

@@ -31,6 +31,10 @@ export default function Sell({ open, onClose, category = '', company = '', theme
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  // Add overlay and popup animation classes based on open state
+  const overlayClass = `${styles['popup-overlay']} ${open ? styles['active'] : ''}`;
+  const popupClass = `${styles['popup']} ${open ? styles['active'] : ''}`;
+
   if (!open) return null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -143,16 +147,43 @@ export default function Sell({ open, onClose, category = '', company = '', theme
   const theme2Options = form.theme1 ? KOREA_STOCK_THEMES[form.theme1 as keyof typeof KOREA_STOCK_THEMES] : [];
 
   return (
-    <div className={styles['popup']} role="dialog" aria-modal="true" aria-label="매도 팝업">
-      <div className={styles['popup-content']}>
-        {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
-        <h2 className={styles['title']}>매도 등록</h2>
-        <div className={styles['inline-inputs']}>
+    <div className={styles['modal-container']}>
+      <div 
+        className={overlayClass}
+        onClick={onClose}
+        role="presentation"
+        aria-hidden={!open}
+      />
+      <div 
+        className={popupClass} 
+        role="dialog" 
+        aria-modal="true" 
+        aria-label="매도"
+        aria-hidden={!open}
+      >
+        <div className={styles['popup-content']}>
+          {isLoading && <div className={styles['loading-overlay']}>등록 중...</div>}
+          <h2 className={styles['title']}>매도 등록</h2>
+          <div className={styles['inline-inputs']}>
+            <label className={styles['label']}>
+              상품 종류
+              <select
+                name="category"
+                value={form.category}
+                onChange={handleChange}
+                className={styles['input']}
+                aria-label="상품 종류"
+                disabled={true}
+              >
+                <option value="" disabled>상품 종류</option>
+                {Object.keys(TRADING_CATEGORY_DETAILS).map((category: string) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </label>        
+          </div>
           <label className={styles['label']}>
-            상품 종류
-            <select
-              name="category"
-              value={form.category}
+            종목명
               onChange={handleChange}
               className={styles['input']}
               aria-label="상품 종류"
