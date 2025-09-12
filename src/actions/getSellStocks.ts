@@ -5,7 +5,7 @@ import getCurrentUser from "@/actions/getCurrentUser";
 export default async function getSellStocks(): Promise<FavoritesData> {
 
   const currentUser = await getCurrentUser();
-  console.log('sellStocks_currentUser', currentUser);
+  // console.log('sellStocks_currentUser', currentUser);
 
   try {
     

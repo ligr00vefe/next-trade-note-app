@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    console.log('result: ', result);
     return NextResponse.json(result);
   } catch (error) {
     console.error('Error in trade-list API:', error);

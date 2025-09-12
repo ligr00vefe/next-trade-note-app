@@ -21,7 +21,7 @@ export interface FavoritesData {
 export default async function getFavorites(): Promise<FavoritesData> {
 
   const currentUser = await getCurrentUser();
-  console.log('favorites_currentUser', currentUser);
+  // console.log('favorites_currentUser', currentUser);
   
   try {
      

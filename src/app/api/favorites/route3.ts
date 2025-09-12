@@ -5,7 +5,7 @@ import getCurrentUser from "@/actions/getCurrentUser";
 // GET 요청 핸들러
 export async function GET(request: Request) {
     const currentUser = await getCurrentUser();
-    console.log('favorites_currentUser', currentUser);  
+    // console.log('favorites_currentUser', currentUser);  
     
     let query: any = {};
 
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     //   }
     // }   
 
-    console.log('query', query);
+    // console.log('query', query);
     const favorites = await prisma.favorite.findMany({
       where: query,
       orderBy: {

@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
      // searchParams에서 'userId' 값을 가져옴
      const userId = url.searchParams.get('userId');
  
-     console.log('favorites_userId: ', userId);
+    //  console.log('favorites_userId: ', userId);
     
     let query: any = {};
 
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    console.log('query', query);
+    // console.log('query', query);
     const favorites = await prisma.favorite.findMany({
       where: query,
       orderBy: {

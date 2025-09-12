@@ -16,8 +16,8 @@ const fetchStockData = async (searchTerm: string) => {
     const response = await axios.get(apiUrl);
     const data = response.data;
     
-    console.log('response: ', response);
-    console.log('data: ', data);
+    // console.log('response: ', response);
+    // console.log('data: ', data);
 
     // // API 응답에서 필요한 정보 추출하여 업데이트
     // if (data && Array.isArray(data)) {
