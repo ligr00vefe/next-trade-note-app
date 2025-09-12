@@ -1,3 +1,4 @@
+@use '../../../styles/mixins' as *;
 // 정렬 컨트롤 스타일
 .sort-control {
     display: flex;
@@ -102,3 +103,26 @@
       }
     }
   }
+
+// 반응형
+@include mobile {
+  .sort-control {
+    justify-content: flex-end;
+    margin-bottom: 1.2rem;
+  }
+
+  .dropdown-trigger {
+    font-size: 1.1rem;
+    padding: 0.5rem 0.8rem;
+    min-width: 9rem;
+  }
+
+  .dropdown-menu {
+    min-width: 9rem;
+  }
+
+  .dropdown-item {
+    font-size: 1.1rem;
+    padding: 0.7rem 0.8rem;
+  }
+}

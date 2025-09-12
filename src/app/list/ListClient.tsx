@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import TradeModal from '@/components/modal/TradeModal';
+import TradeModal from '@/components/modal/listTrade/TradeModal';
 import Container from '@/components/ui/Container';
 import styles from './List.module.scss';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -12,9 +12,10 @@ import Pagination from '@/components/pagination/Pagination';
 // @ts-ignore
 import { useQuery } from '@tanstack/react-query';
 import Loader from '@/components/Loader';
-import Sort from '@/components/sort/Sort';
-import Filter from '@/components/filter/Filter';
-import Table from '@/components/table/Table';
+import Sort from '@/components/list/sort/Sort';
+import Filter from '@/components/list/filter/Filter';
+import Table from '@/components/list/ui/Table';
+import MobileCardList from '@/components/list/ui/MobileCardList';
 
 interface IListClientProps {
   initialData: ITradeListProps[];
@@ -112,7 +113,6 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
       if (!response.ok) {
         throw new Error('Failed to fetch trade list');
       }
-      console.log('response', response);
       return response.json();
     },
     initialData: {
@@ -217,73 +217,18 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
         />
 
         {/* 데스크톱 테이블 뷰 */}
-        <Table 
+        <Table
           data={allTradeList} 
           onBuyClick={handleBuyClick} 
           onSellClick={handleSellClick} 
         />
 
         {/* 모바일 카드 뷰 */}
-        <div className={styles['mobile-cards']}>
-          {allTradeList && allTradeList.map((product: ITradeListProps) => (
-            <div key={`mobile-${product.id}`} className={styles['mobile-card']}>
-              <div className={styles['card-header']}>
-                <div className={styles['card-company']}>{product.company}</div>
-                <div className={styles['card-category']}>{product.category}</div>
-              </div>
-              
-              <div className={styles['card-content']}>
-                <div className={styles['card-row']}>
-                  <span className={styles['card-label']}>평균 매수 금액</span>
-                  <span className={styles['card-value']}>{formatKRW(product.avgPrice)}</span>
-                </div>
-                <div className={styles['card-row']}>
-                  <span className={styles['card-label']}>보유 수량</span>
-                  <span className={styles['card-value']}>{product.totalQuantity}</span>
-                </div>
-                <div className={styles['card-row']}>
-                  <span className={styles['card-label']}>총 매수 금액</span>
-                  <span className={styles['card-value']}>{formatKRW(product.totalPrice)}</span>
-                </div>
-                {(product.theme1 || product.theme2) && (
-                  <div className={styles['card-row']}>
-                    <span className={styles['card-label']}>테마</span>
-                    <span className={styles['card-value']}>
-                      {(product.theme1 || '') + (product.theme2 ? ` - ${product.theme2}` : '')}
-                    </span>
-                  </div>
-                )}
-              </div>
-              
-              <div className={styles['card-actions']}>
-                <button
-                  className={styles['add-buy-btn']}
-                  tabIndex={0}
-                  aria-label={`${product.company} 추가 매수`}
-                  onClick={() => handleBuyClick(product)}
-                  onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleBuyClick(product)}
-                >
-                  추가 매수
-                </button>
-                <button
-                  className={styles['sell-btn']}
-                  tabIndex={0}
-                  aria-label={`${product.company} 매도`}
-                  onClick={() => handleSellClick(product)}
-                  onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSellClick(product)}
-                >
-                  매도
-                </button>
-              </div>
-            </div>
-          ))}
-          
-          {allTradeList && allTradeList.length === 0 && (
-            <div className={styles['mobile-empty']}>
-              등록된 매매 내역이 없습니다.
-            </div>
-          )}
-        </div>
+        <MobileCardList
+          data={allTradeList}
+          onBuyClick={handleBuyClick}
+          onSellClick={handleSellClick}
+        />
 
         {/* 거래 팝업 */}
         <TradeModal

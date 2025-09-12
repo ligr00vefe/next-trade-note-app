@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import styles from './Table.module.scss';
+import styles from './ListComponents.module.scss';
 import { ITradeListProps } from '@/actions/getTradeList';
 import { formatKRW } from '@/helpers/formatKRW';
 import clsx from 'clsx';

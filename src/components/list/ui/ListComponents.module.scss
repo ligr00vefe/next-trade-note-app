@@ -1,0 +1,215 @@
+@use '../../../styles/mixins' as *;
+
+// 데스크톱 테이블 스타일
+.list-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1.4rem;
+  color: var(--text-color-01);
+  border-bottom: 2px solid var(--main-color-02);
+}
+
+.list-thead {
+  border-top: 2px solid var(--main-color-02);
+  border-bottom: 2px solid var(--main-color-02);
+}
+
+.list-th {
+  color: var(--text-color-01);
+  font-weight: 600;
+}
+
+.list-td {
+  border: 1px solid var(--main-color-01);
+}
+
+.list-th,
+.list-td {
+  text-align: center;
+  vertical-align: top;
+  padding: .7rem 1.5rem;
+}
+
+.list-th:first-child,
+.list-td:first-child {
+  border-left: none;
+}
+
+.list-th:last-child,
+.list-td:last-child {
+  border-right: none;
+}
+
+.list-td-company {
+  text-align: left;
+}
+
+.list-td-price,
+.list-td-quantity,
+.list-td-total-price {
+  text-align: right;
+}
+
+.list-td-empty {
+  padding: 5rem 0;
+}
+
+.list-td.icons > * {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.list-tr {
+  border-bottom: none;
+}
+
+.list-tr:nth-child(even) {
+  background-color: var(--main-color-02);
+}
+
+// 모바일 카드 스타일
+.mobile-cards {
+  display: none;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.mobile-card {
+  background: var(--background);
+  border: 1px solid var(--point-color-02);
+  border-radius: 12px;
+  padding: 1.6rem;
+  box-shadow: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--main-color-01);
+}
+
+.card-company {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-color-01);
+}
+
+.card-category {
+  font-size: 1.2rem;
+  color: var(--point-color-01);
+  background: var(--main-color-02);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.card-content {
+  margin-bottom: 1.6rem;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.card-label {
+  font-size: 1.3rem;
+  color: var(--text-color-01);
+  font-weight: 500;
+}
+
+.card-value {
+  font-size: 1.3rem;
+  color: var(--text-color-01);
+  font-weight: 600;
+  text-align: right;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+}
+
+.mobile-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1.4rem;
+  color: var(--text-color-01);
+  background: var(--main-color-02);
+  border-radius: 12px;
+  border: 1px solid var(--main-color-01);
+}
+
+// 공통 버튼 스타일
+.add-buy-btn {
+  background: var(--btn-color-01);
+  color: var(--btn-text-color-01);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background: var(--btn-point-color-01);
+    transform: translateY(-1px);
+  }
+}
+
+.sell-btn {
+  background: var(--btn-color-02);
+  color: var(--btn-text-color-01);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background: var(--btn-point-color-02);
+    transform: translateY(-1px);
+  }
+}
+
+// 반응형
+@include mobile {
+  .list-table {
+    display: none;
+  }
+
+  .mobile-cards {
+    display: flex;
+  }
+
+  .card-actions {
+    .add-buy-btn,
+    .sell-btn {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+    }
+  }
+}
