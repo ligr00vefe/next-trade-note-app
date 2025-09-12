@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { handleTrade } from '@/actions/updateTradeList';
-import styles from './BuySell.module.scss';
+import styles from './TradeModal.module.scss';
 import { KOREA_STOCK_THEMES, TRADING_CATEGORY_DETAILS } from '@/data/koreaStockData';
 
 type TradeType = 'buy' | 'sell';
@@ -19,7 +19,7 @@ interface ITradeFormData {
   memo?: string;
 }
 
-interface ITradePopupProps {
+interface ITradeModalProps {
   type: TradeType;
   mode?: BuyMode;
   open: boolean;
@@ -32,7 +32,7 @@ interface ITradePopupProps {
   totalPrice?: number;
 }
 
-export default function TradePopup({
+export default function TradeModal({
   type,
   mode = 'new',
   open,
@@ -43,7 +43,7 @@ export default function TradePopup({
   theme2 = '',
   totalQuantity = 0,
   totalPrice = 0,
-}: ITradePopupProps) {
+}: ITradeModalProps) {
   const router = useRouter();
   const [form, setForm] = useState<ITradeFormData>({
     category,
@@ -130,6 +130,13 @@ export default function TradePopup({
       return;
     }
 
+    const priceNum = Number(form.price);
+    if (priceNum < 100) {
+      alert('금액을 다시 확인해 주세요.');
+      setLoading(false);
+      return;
+    }
+
     if (!form.quantity) {
       alert(`${type === 'buy' ? '매수' : '매도'} 수량을 입력해주세요.`);
       setLoading(false);
@@ -151,7 +158,6 @@ export default function TradePopup({
     }
 
     const quantityNum = Number(form.quantity);
-    const priceNum = Number(form.price);
 
     if (quantityNum <= 0 || priceNum <= 0) {
       alert('수량과 가격은 0보다 커야 합니다.');
@@ -173,7 +179,9 @@ export default function TradePopup({
       });
       
       onClose();
+      // 페이지 새로고침을 확실하게 하기 위해 두 가지 방법 모두 사용
       router.refresh();
+      window.location.reload();
     } catch (err) {
       if (err instanceof Error) {
         alert(err.message);
@@ -187,9 +195,9 @@ export default function TradePopup({
 
   if (!open) return null;
 
-  // Add overlay and popup animation classes based on open state
-  const overlayClass = `${styles['popup-overlay']} ${open ? styles['active'] : ''}`;
-  const popupClass = `${styles['popup']} ${open ? styles['active'] : ''}`;
+  // Add overlay and modal animation classes based on open state
+  const overlayClass = `${styles['modal-overlay']} ${open ? styles['active'] : ''}`;
+  const modalClass = `${styles['modal']} ${open ? styles['active'] : ''}`;
 
   return (
     <div className={styles['modal-container']}>
@@ -200,7 +208,7 @@ export default function TradePopup({
         aria-hidden={!open}
       />
       <div 
-        className={popupClass} 
+        className={modalClass} 
         role="dialog" 
         aria-modal="true" 
         aria-label={type === 'buy' 
@@ -208,7 +216,7 @@ export default function TradePopup({
           : '매도'}
         aria-hidden={!open}
       >
-        <div className={styles['popup-content']}>
+        <div className={styles['modal-content']}>
           {loading && <div className={styles['loading-overlay']}>등록 중...</div>}
           <h2 className={styles['title']}>
             {type === 'buy' 

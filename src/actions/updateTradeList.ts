@@ -68,6 +68,7 @@ export async function handleTrade(data: TradeData) {
         },
       });
 
+      // 추가 매수일 경우
       if (data.orderType === 'buy') {
         if (existingTradeList) {
           // 기존 종목이 있는 경우 수량과 평균 단가 업데이트
@@ -100,6 +101,7 @@ export async function handleTrade(data: TradeData) {
             },
           });
         }
+      // 매도일 경우
       } else if (data.orderType === 'sell') {
         if (!existingTradeList || existingTradeList.totalQuantity < data.quantity) {
           throw new Error('보유 수량이 부족합니다.');
@@ -110,11 +112,15 @@ export async function handleTrade(data: TradeData) {
         
         if (newTotalQuantity > 0) {
           // 일부 매도인 경우
+          const newTotalPrice = existingTradeList.totalPrice - (data.quantity * data.price);
+          const newAvgPrice = Math.round(newTotalPrice / newTotalQuantity);
+          
           await tx.tradeList.update({
             where: { id: existingTradeList.id },
             data: {
               totalQuantity: newTotalQuantity,
-              totalPrice: existingTradeList.totalPrice - (data.quantity * existingTradeList.avgPrice),
+              totalPrice: newTotalPrice,
+              avgPrice: newAvgPrice,
             },
           });
         } else {

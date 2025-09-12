@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import TradePopup from '@/components/popup/TradePopup';
+import TradeModal from '@/components/modal/TradeModal';
 import Container from '@/components/ui/Container';
 import styles from './List.module.scss';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -27,7 +27,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
   // 컴포넌트가 마운트되었는지 확인하는 state
   const [mounted, setMounted] = useState(false);
   // 거래 팝업 관련 상태
-  const [tradePopup, setTradePopup] = useState({
+  const [tradeModal, setTradeModal] = useState({
     open: false,
     type: 'buy' as 'buy' | 'sell',
     mode: 'new' as 'new' | 'add',
@@ -40,7 +40,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
     if (product) {
       // 추가 매수
       setSelectedProduct(product);
-      setTradePopup({
+      setTradeModal({
         open: true,
         type: 'buy',
         mode: 'add',
@@ -48,7 +48,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
     } else {
       // 신규 매수
       setSelectedProduct(null);
-      setTradePopup({
+      setTradeModal({
         open: true,
         type: 'buy',
         mode: 'new',
@@ -59,7 +59,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
   // 매도 버튼 클릭 핸들러
   const handleSellClick = (product: ITradeListProps) => {
     setSelectedProduct(product);
-    setTradePopup({
+    setTradeModal({
       open: true,
       type: 'sell',
       mode: 'new',
@@ -68,7 +68,7 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
 
   // 거래 팝업 닫기 핸들러
   const handleTradeClose = () => {
-    setTradePopup(prev => ({
+    setTradeModal(prev => ({
       ...prev,
       open: false,
     }));
@@ -286,10 +286,10 @@ export default function ListClient({ initialData, initialLimit, initialPage, ini
         </div>
 
         {/* 거래 팝업 */}
-        <TradePopup
-          type={tradePopup.type}
-          mode={tradePopup.mode}
-          open={tradePopup.open}
+        <TradeModal
+          type={tradeModal.type}
+          mode={tradeModal.mode}
+          open={tradeModal.open}
           onClose={handleTradeClose}
           category={selectedProduct?.category || ''}
           company={selectedProduct?.company || ''}
