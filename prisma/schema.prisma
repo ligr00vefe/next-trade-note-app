@@ -64,6 +64,7 @@ model User {
   favorites             Favorite[]
   investmentAccounts    InvestmentAccount[]
   profit                Profit[]
+  notices               Notice[]
 }
 
 model InvestmentAccount {
@@ -150,4 +151,18 @@ model Favorite {
 
   user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   product               Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Notice {
+  id                    String   @id @default(cuid())
+  title                 String
+  content               String   @db.Text
+  isImportant           Boolean  @default(false)
+  isPublished           Boolean  @default(true)
+  authorId              String
+  viewCount             Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  author                User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }

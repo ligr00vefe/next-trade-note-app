@@ -15,6 +15,9 @@ export default async function AdminLayout({
   // if (!currentUser || !currentUser.email?.includes('admin')) {
   //   redirect('/login');
   // }
+  if (!currentUser || currentUser.userType !== 'Admin') {
+    redirect('/login');
+  }
 
   return (
     <div className={styles.adminLayout}>

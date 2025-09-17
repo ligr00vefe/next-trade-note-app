@@ -9,6 +9,7 @@ const navigation = [
   { name: '사용자 관리', href: '/admin/users', icon: '👥' },
   { name: '상품 관리', href: '/admin/products', icon: '📦' },
   { name: '거래 분석', href: '/admin/analytics', icon: '📊' },
+  { name: '공지사항', href: '/admin/notices', icon: '📢' },
   { name: '설정', href: '/admin/settings', icon: '⚙️' },
 ];
 

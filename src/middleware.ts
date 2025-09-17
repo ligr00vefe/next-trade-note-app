@@ -23,9 +23,9 @@ export async function middleware(req: NextRequest) {
   }
 
   // 어드민 유저만 접근 가능 (이메일에 admin이 포함된 사용자)
-  // if (pathname.startsWith("/admin") && (!session?.email?.includes('admin'))) {
-  //   return NextResponse.redirect(new URL("/", req.url));
-  // }
+  if (pathname.startsWith("/admin") && (session?.userType !== "Admin")) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 
   // 로그인된 유저는 로그인, 회원가입 페이지에 접근 X
   if (pathname.startsWith("/auth") && session) {

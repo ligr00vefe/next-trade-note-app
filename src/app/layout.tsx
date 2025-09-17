@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 import './globals.scss'
 
 import Providers from '@/providers'
-import Navbar from '@/layouts/navbar/Navbar'
-import FloatingNav from '@/layouts/footer/FloatingNav'
+import ConditionalLayout from '@/components/ConditionalLayout'
 import getCurrentUser from '@/actions/getCurrentUser'
 
 export const metadata: Metadata = {
@@ -22,9 +21,9 @@ export default async function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body>
         <Providers>
-          <Navbar currentUser={currentUser} />
-          {children}
-          <FloatingNav currentUser={currentUser} />
+          <ConditionalLayout currentUser={currentUser}>
+            {children}
+          </ConditionalLayout>
         </Providers>
       </body>
     </html>
