@@ -27,22 +27,22 @@
   min-height: 320px;
   height: 70%;
 }
-.text-area {
+.textArea {
   flex: 1 1 340px;
 }
-.text-area h1 {
+.textArea h1 {
   font-size: 3.6rem;
   font-weight: 700;
   line-height: 1.18;
   margin-bottom: 1.8rem;
   color: var(--text-color-01);
 }
-.text-area-title {
+.textArea-title {
   font-size: 1.62rem;
   color: var(--text-color-01);
   margin-bottom: 3.3rem;
 }
-.text-area-btn {
+.textArea-btn {
   background: var(--btn-color-03);
   color: var(--btn-text-color-01);
   font-size: 1.62rem;
@@ -54,13 +54,13 @@
   cursor: pointer;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
-.text-area-btn:hover,
-.text-area-btn:focus {
+.textArea-btn:hover,
+.textArea-btn:focus {
   background: var(--btn-point-color-03);
   color: var(--btn-text-color-01);
   box-shadow: 0 4px 18px 0 var(--box-shadow);
 }
-.img-area {
+.imgArea {
   flex: 1 1 320px;
   display: flex;
   align-items: center;
@@ -69,7 +69,7 @@
   max-width: 450px;
   height: 450px;
 }
-.img-area img {
+.imgArea img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -273,7 +273,7 @@
     flex-direction: column;
     gap: 2.2rem;
   }
-  .img-area {
+  .imgArea {
     margin-top: 2.2rem;
   }
   .sec03 {
@@ -292,13 +292,13 @@
     gap: 1.5rem;
     padding: 1.5rem 0 1.2rem 0;
   }
-  .text-area h1 {
+  .textArea h1 {
     font-size: 2.1rem;
   }
-  .text-area-title {
+  .textArea-title {
     font-size: 1rem;
   }
-  .text-area-btn {
+  .textArea-btn {
     font-size: 1.08rem;
     padding: 0.95rem 2rem;
   }

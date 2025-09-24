@@ -218,15 +218,15 @@ export default function HomeClient() {
         {/* sec01: 메인 인트로 */}
         <section className={styles['sec01']} ref={sec01Ref}>
           <div className={styles['sec01-inner']}>
-            <div className={styles['text-area']} ref={sec01TextRef}>
+            <div className={styles['textArea']} ref={sec01TextRef}>
               <h1>
                 개인 투자자를 위한<br />주식 매매 기록<br />관리 도구
               </h1>
-              <p className={styles['text-area-title']}>
+              <p className={styles['textArea-title']}>
                 종목 등록 – 수익률 계산 – 포트폴리오 분석까지 한번에
               </p>
               <button
-                className={styles['text-area-btn']}
+                className={styles['textArea-btn']}
                 tabIndex={0}
                 aria-label="지금 시작하기"
                 onKeyDown={handleCtaKeyDown}
@@ -234,7 +234,7 @@ export default function HomeClient() {
                 지금 시작하기
               </button>
             </div>
-            <div className={styles['img-area']} aria-hidden="true" ref={sec01ImgRef}>
+            <div className={styles['imgArea']} aria-hidden="true" ref={sec01ImgRef}>
               <Image
                 src="/assets/images/main_img_01.png"
                 alt="차트 일러스트"

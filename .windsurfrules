@@ -60,7 +60,8 @@ ext.config.js에서 css-loader.modules.localsConvention = 'camelCaseOnly'
 - 규칙
   - Query Key는 배열 기반 도메인 우선(['trades', params] 등)
   - 변이 후 관련 키 invalidate
-  - 에러는 eact-toastify로 사용자 피드백 제공, 콘솔/로깅 분리
+  - 에러는 
+eact-toastify로 사용자 피드백 제공, 콘솔/로깅 분리
 
 ## 디렉터리 구조 관례(발췌)
 - src/app/(auth)/login, src/app/(auth)/register
@@ -71,7 +72,8 @@ ext.config.js에서 css-loader.modules.localsConvention = 'camelCaseOnly'
 
 ## 커밋 메시지 컨벤션
 - 형식: <type>: <subject> + 본문(변경 이유 중심)
-- 타입: eat, ix, docs, style, efactor, 	est, chore
+- 타입: eat, ix, docs, style, 
+efactor, 	est, chore
 
 ## 품질/빌드
 - 린트: 
@@ -110,3 +112,51 @@ pm run lint
   - 변경 요청서(이슈/티켓) 또는 PR 코멘트로 제안서를 남기고, 승인자와 승인일을 명시합니다.
   - 승인 범위(화면/기능/데이터 영향), 일정, 테스트/롤백 계획을 함께 기록합니다.
 - 예외: 긴급 장애 복구(Hotfix)는 선조치 가능하나, 사후 24시간 이내에 승인/검증 내역을 보완 보고합니다.
+
+### 메인/서브 페이지 CSS 작성 규칙 (.module.scss + kebab-case)
+- 공통 원칙
+  - 모든 페이지는 공통 `Container` 컴포넌트로 감싼다(`src/components/ui/Container.tsx`).
+  - 스타일은 SCSS Modules(`*.module.scss`)만 사용하며, 클래스명은 kebab-case('-' 하이픈)로 작성한다.
+  - TS/TSX에서는 css-loader 설정(`localsConvention = 'camelCaseOnly'`)에 따라 camelCase로 참조한다.
+  - 레이아웃 계층 네이밍: `wrapper > area > box`
+    - wrapper: 최상위/그룹 래퍼(예: `.main-wrapper`, `.list-wrapper`, `.mypage-wrapper`)
+    - area: 의미 단위의 영역(예: `.img-area`, `.content-area`, `.notice-area`)
+    - box: 구체 컴포넌트/블록(예: `.text-box`, `.card-box`, `.badge-box`)
+
+- 메인 페이지 작성 규칙
+  - 페이지 컨테이너: `.main-wrapper` (예: `<main className={styles.mainWrapper}>`)
+  - 섹션 구분: 콘텐츠별 `section` 태그 사용, 루트 클래스는 순번 기반 `.sec01`, `.sec02`, ...
+  - 섹션 하위 요소는 섹션 접두어를 유지해 의미를 명확히 한다
+    - 예: `.sec01-banner`, `.sec01-img-area`, `.sec02-notice`, `.sec02-text-box`
+  - 구조 예시
+    - `.main-wrapper > .sec01 > .img-area > .text-box`
+    - `.main-wrapper > .sec02 > .content-area > .card-box`
+  - 주의: 섹션 내 클래스는 kebab-case만 사용(예: `img-area`, `text-box`)
+
+- 서브 페이지 작성 규칙
+  - 페이지 컨테이너: 페이지별 래퍼 명시(예: `.list-wrapper`, `.mypage-wrapper`, `.detail-wrapper`)
+  - 공통 계층: 메인과 동일하게 `wrapper > area > box` 적용
+    - 예: `.list-wrapper > .filter-area > .control-box`
+  - 페이지 접두어 권장: 충돌 방지(예: `.list-filter-area`, `.list-control-box`, `.mypage-profile-area`, `.detail-info-box`)
+
+- 네이밍 규칙 요약
+  - kebab-case만 사용(예: `img-area`, `text-box`), 숫자/약어 포함 시에도 유지(예: `sec01`, `sec02-notice`)
+  - 메인 섹션: `secNN`(NN은 01부터) + `-하위의미` 유지
+  - 서브 페이지: `페이지키-역할-유형` 패턴 권장(예: `list-filter-area`, `detail-info-box`)
+
+- 기타 연계 규칙(참고)
+  - 반응형: `src/styles/_mixins.scss`의 `@mixin pc/tablet/mobile` 사용
+    - 각 [.module.scss](cci:7://file:///f:/workspace/portfolio/trade-note-app/src/components/list/sort/Sort.module.scss:0:0-0:0)에서 `@include pc { ... }`, `@include tablet { ... }`, `@include mobile { ... }`
+  - 단위/타이포: `html { font-size: 10px; }`(globals) 전제, 크기 단위는 rem만 사용
+    - 반응형 보정에는 `vw`/`vh` 허용
+    - 다른 단위가 필요한 경우, 사전 사용자 확인 후 해당 SCSS에 예외 사유를 주석으로 남긴다
+
+- PR 체크리스트(메인/서브 페이지 전용)
+  - [ ] 페이지를 `Container`로 감쌌는가?
+  - [ ] 메인: `section` + `.secNN`로 구분했는가?
+  - [ ] 섹션 하위 클래스가 `secNN-...` 형태로 일관된가?
+  - [ ] 서브: 페이지 접두어(`list-`, `mypage-`, `detail-` 등)를 사용했는가?
+  - [ ] `wrapper > area > box` 계층이 올바르게 적용되었는가?
+  - [ ] 클래스가 kebab-case이며 TS에서 camelCase로 참조되는가?
+  - [ ] 반응형 mixin(pc/tablet/mobile)을 사용했는가?
+  - [ ] 단위는 rem만 사용했는가? (반응형에서만 vw/vh 허용, 예외 시 주석/승인)
