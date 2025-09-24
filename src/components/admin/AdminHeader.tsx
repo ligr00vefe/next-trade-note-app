@@ -3,14 +3,14 @@
 import { signOut } from 'next-auth/react';
 import styles from './AdminHeader.module.scss';
 
-interface AdminHeaderProps {
+interface IAdminHeaderProps {
   user: {
     name?: string | null;
     email?: string | null;
   };
 }
 
-export default function AdminHeader({ user }: AdminHeaderProps) {
+export default function AdminHeader({ user }: IAdminHeaderProps) {
   const handleSignOut = () => {
     signOut({ callbackUrl: '/login' });
   };

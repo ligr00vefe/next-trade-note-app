@@ -5,13 +5,13 @@ import styles from './ListComponents.module.scss';
 import { ITradeListProps } from '@/actions/getTradeList';
 import { formatKRW } from '@/helpers/formatKRW';
 
-interface MobileCardListProps {
+interface IMobileCardListProps {
   data: ITradeListProps[];
   onBuyClick: (product: ITradeListProps) => void;
   onSellClick: (product: ITradeListProps) => void;
 }
 
-const MobileCardList: React.FC<MobileCardListProps> = ({ data, onBuyClick, onSellClick }) => {
+const MobileCardList: React.FC<IMobileCardListProps> = ({ data, onBuyClick, onSellClick }) => {
   return (
     <div className={styles['mobile-cards']}>
       {data && data.map((product: ITradeListProps) => (

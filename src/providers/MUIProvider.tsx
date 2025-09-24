@@ -3,11 +3,11 @@
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 import { ReactNode } from 'react'
 
-interface MUIProviderProps {
+interface IMUIProviderProps {
   children: ReactNode
 }
 
-const MUIProvider = ({ children }: MUIProviderProps) => {
+const MUIProvider = ({ children }: IMUIProviderProps) => {
   return (
     <StyledEngineProvider injectFirst>
       <CssBaseline />
@@ -16,4 +16,4 @@ const MUIProvider = ({ children }: MUIProviderProps) => {
   )
 }
 
-export default MUIProvider 
+export default MUIProvider

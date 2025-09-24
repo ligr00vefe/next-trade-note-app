@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { MagnifyingGlassIcon, PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import styles from './ProductManagement.module.scss';
 
-interface Product {
+interface IProduct {
   id: string;
   company: string;
   category: string;
@@ -18,7 +18,7 @@ interface Product {
 }
 
 export default function ProductManagement() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);

@@ -2,12 +2,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-interface Stock {
+interface IStock {
   symbol: string;
 }
 
 const useSearch = () => {
-  const [searchResults, setSearchResults] = useState<Stock[]>([]);
+  const [searchResults, setSearchResults] = useState<IStock[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

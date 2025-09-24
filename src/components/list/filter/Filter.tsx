@@ -9,13 +9,13 @@ import styles from './Filter.module.scss';
 import { TRADING_CATEGORY_DETAILS } from '@/data/koreaStockData';
 import { FaChevronDown } from 'react-icons/fa';
 
-interface FilterProps {
+interface IFilterProps {
   onChange?: (filters: any) => void;
 }
 
 const categories = Object.keys(TRADING_CATEGORY_DETAILS);
 
-export default function Filter({ onChange }: FilterProps) {
+export default function Filter({ onChange }: IFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [keyword, setKeyword] = useState('');

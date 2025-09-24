@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import styles from './UserManagement.module.scss';
 
-interface User {
+interface IUser {
   id: string;
   name: string;
   email: string;
@@ -15,7 +15,7 @@ interface User {
 }
 
 export default function UserManagement() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
 

@@ -6,13 +6,13 @@ import { ITradeListProps } from '@/actions/getTradeList';
 import { formatKRW } from '@/helpers/formatKRW';
 import clsx from 'clsx';
 
-interface TableProps {
+interface ITableProps {
   data: ITradeListProps[];
   onBuyClick: (product: ITradeListProps) => void;
   onSellClick: (product: ITradeListProps) => void;
 }
 
-const Table: React.FC<TableProps> = ({ data, onBuyClick, onSellClick }) => {
+const Table: React.FC<ITableProps> = ({ data, onBuyClick, onSellClick }) => {
   return (
     <>
       {/* 데스크톱 테이블 뷰 */}

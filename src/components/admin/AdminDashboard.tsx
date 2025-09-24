@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import styles from './AdminDashboard.module.scss';
 
-interface DashboardStats {
+interface IDashboardStats {
   totalUsers: number;
   totalProducts: number;
   totalTrades: number;
@@ -11,7 +11,7 @@ interface DashboardStats {
 }
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<DashboardStats>({
+  const [stats, setStats] = useState<IDashboardStats>({
     totalUsers: 0,
     totalProducts: 0,
     totalTrades: 0,

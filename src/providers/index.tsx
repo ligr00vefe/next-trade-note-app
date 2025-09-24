@@ -8,12 +8,12 @@ import MUIProvider from './MUIProvider'
 import ToastProvider from './ToastProvider'
 import QueryProvider from './QueryProvider'
 
-interface ProvidersProps {
+interface IProvidersProps {
   children: ReactNode
   session?: Session | null
 }
 
-const Providers = ({ children, session }: ProvidersProps) => {
+const Providers = ({ children, session }: IProvidersProps) => {
   return (
     <QueryProvider>
       <SessionProvider session={session}>

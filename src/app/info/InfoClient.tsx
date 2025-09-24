@@ -12,30 +12,30 @@ import Container from "@/components/ui/Container"
 // (임시로 내부에 작성, 추후 분리)
 
 // props 타입 정의
-interface Issue {
+interface IIssue {
   name: string
   related: string[]
 }
 // stocks 타입 변경
-interface StocksByDate {
+interface IStocksByDate {
   [date: string]: {
     [issueName: string]: {
       [stockName: string]: number
     }
   }
 }
-interface InfoClientProps {
-  issues: StocksByDate
+interface IInfoClientProps {
+  issues: IStocksByDate
 }
 
 const BUBBLE_SIZE = 400
 
-interface IssueWithAveragePrice extends Issue {
+interface IIssueWithAveragePrice extends IIssue {
   averagePrice: number
 }
 
 // IssuesByDate 타입 정의
-interface IssuesByDate {
+interface IIssuesByDate {
   [date: string]: {
     [issueName: string]: {
       [stockName: string]: number
@@ -48,7 +48,7 @@ interface IssuesByDate {
 type LineChartData = { date: string; [stock: string]: number | string }
 const getLineChartData = (
   theme: string,
-  issues: StocksByDate
+  issues: IStocksByDate
 ): LineChartData[] => {
   const dates = Object.keys(issues).sort()
   // 최신 날짜의 이슈에서 종목명 추출
@@ -64,7 +64,7 @@ const getLineChartData = (
   })
 }
 
-const InfoClient: React.FC<InfoClientProps> = ({ issues }) => {
+const InfoClient: React.FC<IInfoClientProps> = ({ issues }) => {
   // 최신 날짜, 이슈명 목록
   const dates = Object.keys(issues).sort()
   const latestDate = dates[dates.length - 1]

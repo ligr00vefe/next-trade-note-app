@@ -12,13 +12,13 @@ export interface IStocksParams {
   stockId?: string;
 }
 
-export interface FavoritesData {
+export interface IFavoritesData {
   data: Favorite[] | null;
   currentUser: User | null;
   totalItems: number;
 }
 
-export default async function getFavorites(): Promise<FavoritesData> {
+export default async function getFavorites(): Promise<IFavoritesData> {
 
   const currentUser = await getCurrentUser();
   // console.log('favorites_currentUser', currentUser);

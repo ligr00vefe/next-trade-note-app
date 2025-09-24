@@ -3,7 +3,7 @@
 import getCurrentUser from '@/actions/getCurrentUser';
 import { prisma } from '@/lib/prisma';
 
-interface TradeData {
+interface ITradeData {
   category: string;
   company: string;
   quantity: number;
@@ -16,7 +16,7 @@ interface TradeData {
   isAdditionalBuy?: boolean;
 }
 
-export async function handleTrade(data: TradeData) {
+export async function handleTrade(data: ITradeData) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
