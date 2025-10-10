@@ -11,11 +11,8 @@ export default async function AdminLayout({
 }) {
   const currentUser = await getCurrentUser();
 
-  // 관리자 권한 체크 (예시: 특정 이메일 도메인 또는 role 필드 체크)
-  // if (!currentUser || !currentUser.email?.includes('admin')) {
-  //   redirect('/login');
-  // }
-  if (!currentUser || currentUser.userType !== 'Admin') {
+  // 관리자 권한 체크
+  if (!currentUser || ((currentUser.userType !== 'Admin') && (currentUser.userType !== 'Super'))) {
     redirect('/login');
   }
 

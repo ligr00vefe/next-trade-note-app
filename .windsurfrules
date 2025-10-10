@@ -17,7 +17,7 @@ ext-auth
 - 미들웨어: src/middleware.ts
   - /list, /mypage는 로그인 필요(미인증 시 /api/auth/signin 리다이렉트)
   - /auth 하위는 로그인 상태에서 접근 시 /로 리다이렉트
-- 환경 변수: JWT_SECRET 필수
+- 환경 변수: NEXTAUTH_SECRET 필수
 
 ## 서버 로직: Route Handler 우선
 - 복잡한 서버 로직(데이터베이스, 외부 API, 보안 연산)은 App Router Route Handler(src/app/api/.../route.ts)로 구현
@@ -79,7 +79,7 @@ efactor, 	est, chore
 - 린트: 
 pm run lint
 - 타입 체크: 	sc --noEmit 권장(로컬/CI)
-- 보안: JWT_SECRET, DB URL 등 비밀은 서버 환경에서만 사용되도록 주의
+- 보안: NEXTAUTH_SECRET, DB URL 등 비밀은 서버 환경에서만 사용되도록 주의
 
 ## 변경 관리 및 사용자 확인
 - 원본 기능을 수정하거나 삭제하기 전에 반드시 사용자(요청자) 사전 확인을 받습니다.

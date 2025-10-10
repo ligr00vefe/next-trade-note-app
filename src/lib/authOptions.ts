@@ -73,7 +73,7 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt' as const,
   },
   jwt: {
-    secret: process.env.JWT_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     maxAge: 30 * 24 * 60 * 60 // 30 days (유효기간)
   },
   pages: {

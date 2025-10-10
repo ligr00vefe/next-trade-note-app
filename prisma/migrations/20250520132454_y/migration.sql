@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "UserType" AS ENUM ('User', 'Admin');
+CREATE TYPE "UserType" AS ENUM ('User', 'Admin', 'Super');
 
 -- CreateTable
 CREATE TABLE "Account" (

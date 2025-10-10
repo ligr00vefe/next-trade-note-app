@@ -9,21 +9,21 @@ export { default } from 'next-auth/middleware';
 
 export async function middleware(req: NextRequest) {
   // secret 값은 /pages/api/auth/[...next-auth].tsx 파일의 jwt: secret 값과 일치해야 함.
-  const session = await getToken({ req, secret: process.env.JWT_SECRET });
-  // console.log('middleware_session: ', session);
+  const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  console.log('middleware_session: ', session);
 
   // URL 경로 값
   const pathname = req.nextUrl.pathname;
 	// console.log('pathname: ', req.nextUrl.pathname);
   
 
-  // 로그인된 유저만 접근 가능
+  // 로그인된 유저만 접근 가능한 페이지
   if ((pathname.startsWith("/list") || pathname.startsWith("/mypage")) && !session) {
     return NextResponse.redirect(new URL("/api/auth/signin", req.url));
   }
 
-  // 어드민 유저만 접근 가능 (이메일에 admin이 포함된 사용자)
-  if (pathname.startsWith("/admin") && (session?.userType !== "Admin")) {
+  // 관리자 페이지 접근 권한 
+  if (pathname.startsWith("/admin") && !(session?.userType === "Admin" || session?.userType === "Super")) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
