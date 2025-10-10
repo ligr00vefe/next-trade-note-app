@@ -1,11 +1,9 @@
-﻿"use client";
+"use client";
 
 import styles from "./Home.module.scss";
 import Container from "@/components/ui/Container";
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
-import Button from "@mui/material/Button";
-import SearchIcon from "@mui/icons-material/Search";
 // @ts-ignore
 import gsap from "gsap";
 // @ts-ignore
@@ -43,7 +41,7 @@ export default function HomeClient() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // sec01: 텍스트 좌우, 이미지 우좌, stagger
+    // sec01: 텍스트 좌→우, 이미지 우→좌, stagger
     if (sec01TextRef.current && sec01ImgRef.current) {
       gsap.fromTo(
         sec01TextRef.current,
@@ -53,7 +51,6 @@ export default function HomeClient() {
           x: 0,
           duration: 1.1,
           ease: "power3.out",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec01Ref.current,
             start: "top 80%",
@@ -70,7 +67,6 @@ export default function HomeClient() {
           duration: 1.1,
           delay: 0.2,
           ease: "power3.out",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec01Ref.current,
             start: "top 80%",
@@ -92,7 +88,6 @@ export default function HomeClient() {
           duration: 0.8,
           stagger: 0.15,
           ease: "back.out(1.7)",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec02Ref.current,
             start: "top 85%",
@@ -102,7 +97,7 @@ export default function HomeClient() {
       );
     }
 
-    // sec03: step-list 아래위 stagger
+    // sec03: step-list 아래→위 stagger
     if (sec03StepsRef.current.length) {
       gsap.fromTo(
         sec03StepsRef.current,
@@ -113,7 +108,6 @@ export default function HomeClient() {
           duration: 0.8,
           stagger: 0.18,
           ease: "power3.out",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec03Ref.current,
             start: "top 85%",
@@ -123,7 +117,7 @@ export default function HomeClient() {
       );
     }
 
-    // sec04: 텍스트 좌우, 이미지 우좌, 세부 설명 fade-in stagger
+    // sec04: 텍스트 좌→우, 이미지 우→좌, 세부 설명 fade-in stagger
     if (sec04TextRef.current && sec04ImgRef.current) {
       gsap.fromTo(
         sec04TextRef.current,
@@ -133,7 +127,6 @@ export default function HomeClient() {
           x: 0,
           duration: 1,
           ease: "power3.out",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec04Ref.current,
             start: "top 85%",
@@ -150,7 +143,6 @@ export default function HomeClient() {
           duration: 1,
           delay: 0.2,
           ease: "power3.out",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec04Ref.current,
             start: "top 85%",
@@ -170,7 +162,6 @@ export default function HomeClient() {
           stagger: 0.15,
           delay: 0.3,
           ease: "power2.out",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec04Ref.current,
             start: "top 85%",
@@ -190,7 +181,6 @@ export default function HomeClient() {
           scale: 1,
           duration: 1,
           ease: "power2.out",
-          immediateRender: false,
           scrollTrigger: {
             trigger: sec05Ref.current,
             start: "top 90%",
@@ -219,48 +209,15 @@ export default function HomeClient() {
 
   return (
     <Container
+      backgroundImage="/assets/images/main_bg_img.png"
       backgroundSize="100% auto"
       backgroundPosition="top center"
       backgroundRepeat="no-repeat"
     >
       <div className={styles['main-wrapper']}>
-        {/* sec01: 검색 섹션 (신규) */}
-        <section className={styles['sec01']}>
-          <div className={styles['search-wrap']}>
-            <div className={styles['search-header']}>
-              {/* <h1>[작업중입니다.]</h1> */}
-              <h2 className={styles['search-title']}>종목을 검색해 주세요.</h2>
-              <h5 className={styles['search-sub']}>(나스닥에 상장된 주식만 검색이 가능합니다.)</h5>
-              <p className={styles['search-example']}>
-                예시) 애플: apple, 넷플릭스: netflix, 쿠팡: coupang
-              </p>
-            </div>
-            <div className={styles['search-bar']}>
-              <input
-                type="text"
-                placeholder="영어로 검색해주세요"
-                className={styles['search-input']}
-              />
-              <Button
-                variant="outlined"
-                size="medium"
-                color="secondary"
-                startIcon={<SearchIcon />}
-                className={styles['search-btn']}
-              >
-                검색
-              </Button>
-            </div>
-          </div>
-          <div className={styles['scroll-down']}>
-            <span>scroll down</span>
-            <i className={styles['arrow-down']} aria-hidden="true" />
-          </div>
-        </section>
-
-        {/* sec02: 메인 인트로 */}
-        <section className={styles['sec02']} ref={sec01Ref}>
-          <div className={styles['sec02-inner']}>
+        {/* sec01: 메인 인트로 */}
+        <section className={styles['sec01']} ref={sec01Ref}>
+          <div className={styles['sec01-inner']}>
             <div className={styles['textArea']} ref={sec01TextRef}>
               <h1>
                 개인 투자자를 위한<br />주식 매매 기록<br />관리 도구
@@ -289,8 +246,8 @@ export default function HomeClient() {
           </div>
         </section>
 
-        {/* sec03: 카드 리스트 */}
-        <section className={styles['sec03']} ref={sec02Ref}>
+        {/* sec02: 카드 리스트 */}
+        <section className={styles['sec02']} ref={sec02Ref}>
           <div className={styles['card-list']}>
             {[
               { icon: "📄", title: "거래 내역 정리", desc: "매수/매도 진행 공수익률, 물량 정량, 총대수익 계산" },
@@ -310,8 +267,8 @@ export default function HomeClient() {
           </div>
         </section>
 
-        {/* sec04: 단계별 설명 */}
-        <section className={styles['sec04']} ref={sec03Ref}>
+        {/* sec03: 단계별 설명 */}
+        <section className={styles['sec03']} ref={sec03Ref}>
           {[
             { num: 1, title: "종목 등록", desc: "종목명, 가격, 수량, 시유 입력" },
             { num: 2, title: "수익 확인", desc: "보유수익률, 실현 수익, 총 수익 확인" },
@@ -331,10 +288,10 @@ export default function HomeClient() {
           ))}
         </section>
 
-        {/* sec05: 매매 일지 작성 */}
-        <section className={styles['sec05']} ref={sec04Ref}>
-          <div className={styles['sec05-inner']} style={{ display: 'flex', alignItems: 'center', gap: '4rem', flexWrap: 'wrap' }}>
-            <div className={styles['sec05-text']} ref={sec04TextRef} style={{ flex: 1, minWidth: 280 }}>
+        {/* sec04: 매매 일지 작성 */}
+        <section className={styles['sec04']} ref={sec04Ref}>
+          <div className={styles['sec04-inner']} style={{ display: 'flex', alignItems: 'center', gap: '4rem', flexWrap: 'wrap' }}>
+            <div className={styles['sec04-text']} ref={sec04TextRef} style={{ flex: 1, minWidth: 280 }}>
               <h2>매매 일지 작성</h2>
               <p>매매 내역을 쉽고 체계적으로 기록하고, 복기할 수 있습니다.</p>
               <ul className={styles['sec04-details']} style={{ marginTop: '2rem' }}>
@@ -353,7 +310,7 @@ export default function HomeClient() {
                 ))}
               </ul>
             </div>
-            <div className={styles['sec05-img']} ref={sec04ImgRef} style={{ flex: 1, minWidth: 220, textAlign: 'center' }}>
+            <div className={styles['sec04-img']} ref={sec04ImgRef} style={{ flex: 1, minWidth: 220, textAlign: 'center' }}>
               <Image
                 src="/assets/images/main_bg_img4.png"
                 alt="매매 일지 일러스트"
@@ -365,8 +322,8 @@ export default function HomeClient() {
           </div>
         </section>
 
-        {/* sec06: 가이드 */}
-        <section className={styles['sec06']} ref={sec05Ref}>
+        {/* sec05: 가이드 */}
+        <section className={styles['sec05']} ref={sec05Ref}>
           <p className={styles['guide-text']}>
             초보자 중심으로 시작, 장투 지원, 리밸런스, 알림 기능 추가 예정
           </p>
