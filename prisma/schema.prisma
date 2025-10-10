@@ -17,13 +17,13 @@ model Account {
   type               String
   provider           String
   providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
+  refreshToken       String?  @db.Text @map("refresh_token")
+  accessToken        String?  @db.Text @map("access_token")
+  expiresAt          Int?     @map("expires_at")
+  tokenType          String?  @map("token_type")
   scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  idToken            String?  @db.Text @map("id_token")
+  sessionState       String?  @map("session_state")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -32,9 +32,10 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
   expires      DateTime
+  
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -46,18 +47,18 @@ enum UserType {
 model User {
   id                    String    @id @default(cuid())
   name                  String?
-  hashedPassword        String?
+  hashedPassword        String?   @map("hashed_password")
   email                 String?   @unique
-  emailVerified         DateTime?
+  emailVerified         DateTime? @map("email_verified")
   image                 String?
   accounts              Account[]
   sessions              Session[]
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
 
-  userType              UserType  @default(User)
+  userType              UserType  @default(User) @map("user_type")
 
-  favoriteIds           String[]
+  favoriteIds           String[]  @map("favorite_ids")
 
   products              Product[]
   tradeLists            TradeList[]
@@ -69,25 +70,25 @@ model User {
 
 model InvestmentAccount {
   id                   String   @id @default(cuid())
-  userId               String
+  userId               String   @map("user_id")
   name                 String
-  totalProfitAmount    Float
-  totalProfitRate      Float
-  riskTolerance        String
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  totalProfitAmount    Float    @map("total_profit_amount")
+  totalProfitRate      Float    @map("total_profit_rate")
+  riskTolerance        String   @map("risk_tolerance")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
 
   user                 User     @relation(fields: [userId], references: [id])
 }
 
 model Profit {
   id                   String   @id @default(cuid())
-  userId               String
+  userId               String   @map("user_id")
   company              String
   category             String
-  profitAmount         Float
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  profitAmount         Float    @map("profit_amount")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
 
   user                 User     @relation(fields: [userId], references: [id])
 }
@@ -100,6 +101,23 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Stock {
+  id            Int      @id @default(autoincrement())
+  isinCode      String   @map("isin_code")
+  ticker        String
+  shortName     String   @map("short_name")
+  englishName   String   @map("english_name")
+  listingDate   DateTime @map("listing_date")
+  marketType    String   @map("market_type")
+  securityType  String   @map("security_type")
+  sector        String
+  stockCategory String   @map("stock_category")
+  parValue      Int      @map("par_value")
+  listedShares  Int      @map("listed_shares")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+}
+
 model Product {
   id                    String   @id @default(cuid())
   category              String
@@ -108,14 +126,16 @@ model Product {
   currency              String?
   quantity              Float
   price                 Float
-  userId                String
+  userId                String   @map("user_id")
   theme1                String?
   theme2                String?
   reason                String?
-  orderType             String   @default("매수")
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  orderType             String   @default("BUY") @map("order_type")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+  
   Favorites             Favorite[]
+
   user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -125,15 +145,16 @@ model TradeList {
   symbol                String?
   company               String
   currency              String?
-  totalQuantity         Float
-  totalPrice            Float
-  avgPrice              Float
-  desiredSellingPrice   Float?
-  userId                String
+  totalQuantity         Float    @map("total_quantity")
+  totalPrice            Float    @map("total_price")
+  avgPrice              Float    @map("avg_price")
+  desiredSellingPrice   Float?   @map("desired_selling_price")
+  userId                String   @map("user_id")
   theme1                String?
   theme2                String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
   user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -143,11 +164,11 @@ model Favorite {
   company               String
   currency              String
   price                 Int?
-  desiredSellingPrice   Int?
-  userId                String
-  productId             String
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  desiredSellingPrice   Int?     @map("desired_selling_price")
+  userId                String   @map("user_id")
+  productId             String   @map("product_id")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
 
   user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   product               Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -157,12 +178,12 @@ model Notice {
   id                    String   @id @default(cuid())
   title                 String
   content               String   @db.Text
-  isImportant           Boolean  @default(false)
-  isPublished           Boolean  @default(true)
-  authorId              String
-  viewCount             Int      @default(0)
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  isImportant           Boolean  @default(false) @map("is_important")
+  isPublished           Boolean  @default(true)  @map("is_published")
+  authorId              String   @map("author_id")
+  viewCount             Int      @default(0)     @map("view_count")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt      @map("updated_at")
 
   author                User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
