@@ -7,6 +7,7 @@ import styles from './AdminSidebar.module.scss';
 const navigation = [
   { name: '대시보드', href: '/admin', icon: '🏠' },
   { name: '사용자 관리', href: '/admin/users', icon: '👥' },
+  { name: '종목 관리', href: '/admin/stocks', icon: '📈' },
   { name: '상품 관리', href: '/admin/products', icon: '📦' },
   { name: '거래 분석', href: '/admin/analytics', icon: '📊' },
   { name: '공지사항', href: '/admin/notices', icon: '📢' },

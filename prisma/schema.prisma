@@ -102,21 +102,28 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum Status {
+  ACTIVE
+  DELISTED
+}
+
 model Stock {
-  id            Int      @id @default(autoincrement())
-  isinCode      String   @map("isin_code")
-  ticker        String
-  shortName     String   @map("short_name")
-  englishName   String   @map("english_name")
-  listingDate   DateTime @map("listing_date")
-  marketType    String   @map("market_type")
-  securityType  String   @map("security_type")
-  sector        String
-  stockCategory String   @map("stock_category")
-  parValue      Int      @map("par_value")
-  listedShares  Int      @map("listed_shares")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  id            Int       @id @default(autoincrement())
+  isinCode      String    @unique @map("isin_code")       // 표준코드
+  ticker        String?   @unique                         // 단축코드
+  name          String    @unique @map("name")            // 한글 종목명
+  shortName     String    @unique @map("short_name")      // 한글 종목약명
+  englishName   String?   @unique @map("english_name")    // 영문 종목
+  listingDate   DateTime? @map("listing_date")            // 상장일
+  marketType    String?   @map("market_type")             // 시장구분
+  securityType  String    @map("security_type")           // 증권구분
+  sector        String?                                   // 소속부
+  stockType     String    @map("stock_type")              // 주식종류
+  parValue      Int?      @map("par_value")               // 액면가
+  listedShares  BigInt?  @map("listed_shares")           // 상장주식수
+  status        Status    @default(ACTIVE)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
 }
 
 model Product {

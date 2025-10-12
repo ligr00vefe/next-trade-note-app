@@ -10,7 +10,7 @@ export { default } from 'next-auth/middleware';
 export async function middleware(req: NextRequest) {
   // secret 값은 /pages/api/auth/[...next-auth].tsx 파일의 jwt: secret 값과 일치해야 함.
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  console.log('middleware_session: ', session);
+  // console.log('middleware_session: ', session);
 
   // URL 경로 값
   const pathname = req.nextUrl.pathname;

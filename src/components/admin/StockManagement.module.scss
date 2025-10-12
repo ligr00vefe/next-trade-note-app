@@ -1,0 +1,84 @@
+.stock-management {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.upload-btn,
+.delist-btn {
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-input {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.6rem;
+  min-width: 26rem;
+}
+
+.table-container {
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid #eee;
+  padding: 0.8rem 1rem;
+  text-align: left;
+}
+
+.pagination {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.page-btn {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 0.6rem;
+}
+
+.loading,
+.no-results {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+}
