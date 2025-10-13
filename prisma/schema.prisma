@@ -120,7 +120,7 @@ model Stock {
   sector        String?                                   // 소속부
   stockType     String    @map("stock_type")              // 주식종류
   parValue      Int?      @map("par_value")               // 액면가
-  listedShares  BigInt?  @map("listed_shares")           // 상장주식수
+  listedShares  BigInt?   @map("listed_shares")           // 상장주식수
   status        Status    @default(ACTIVE)
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")

@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Loader from "@/components/loader/Loader";
 
-interface IStock {
+interface IStockProps {
   id: number;
   isinCode: string;
   ticker: string | null;
@@ -24,13 +24,13 @@ interface IStock {
 }
 
 interface IListResponse {
-  items: IStock[];
+  items: IStockProps[];
   total: number;
   page: number;
   pageSize: number;
 }
 
-const sortables = ["shortName", "ticker", "isinCode"] as const;
+const sortables = ["shortName", "ticker"] as const;
 
 type SortKey = (typeof sortables)[number];
 
@@ -52,14 +52,83 @@ function StockManagement() {
     [q, sort, order, page, pageSize]
   );
 
-  const { data, isLoading, isFetching } = useQuery<IListResponse, Error>({
+  // Define default data to prevent undefined errors
+  const defaultData: IListResponse = {
+    items: [],
+    total: 0,
+    page: 1,
+    pageSize: 20
+  };
+
+  const { 
+    data = defaultData, 
+    isLoading, 
+    isFetching, 
+    error 
+  } = useQuery<IListResponse, Error>({
     queryKey,
     queryFn: async (): Promise<IListResponse> => {
       const params = { q, sort, order, page, pageSize };
-      const res = await axios.get<IListResponse>("/api/admin/stocks", { params });
-      return res.data;
+      console.log('Fetching data with params:', params);
+      
+      try {
+        const res = await axios.get<IListResponse>("/api/admin/stocks", { params });
+        console.log('API Response:', {
+          status: res.status,
+          data: res.data
+        });
+        return res.data;
+      } catch (error) {
+        const err = error as Error & {
+          response?: {
+            status: number;
+            data: any;
+          };
+          config?: {
+            url?: string;
+            method?: string;
+            params?: any;
+          };
+        };
+
+        console.error('API Error:', {
+          message: err.message,
+          response: err.response ? {
+            status: err.response.status,
+            data: err.response.data
+          } : 'No response',
+          config: {
+            url: err.config?.url,
+            method: err.config?.method,
+            params: err.config?.params
+          }
+        });
+        throw err;
+      }
     },
+    retry: 1,
+    refetchOnWindowFocus: false
   });
+
+  // Handle query errors with useEffect
+  useEffect(() => {
+    if (error) {
+      console.error('Query Error:', error);
+      toast.error(`데이터를 불러오는 중 오류가 발생했습니다: ${error.message}`);
+    }
+  }, [error]);
+
+  // Log successful data fetches
+  useEffect(() => {
+    if (data && data.items) {
+      console.log('Query Success - Data received:', {
+        itemsCount: data.items.length,
+        total: data.total,
+        page: data.page,
+        pageSize: data.pageSize
+      });
+    }
+  }, [data]);
 
   const toggleSelect = (id: number) => {
     setSelected((prev) => {
@@ -121,6 +190,8 @@ function StockManagement() {
   const total = data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
+  console.log('data', data);
+  console.log('items', items);
   useEffect(() => {
     // 검색어 변경 시 페이지 초기화
     setPage(1);
@@ -212,7 +283,7 @@ function StockManagement() {
               </tr>
             </thead>
             <tbody>
-              {items.map((s: IStock) => (
+              {items.map((s: IStockProps) => (
                 <tr key={s.id}>
                   <td>
                     <input

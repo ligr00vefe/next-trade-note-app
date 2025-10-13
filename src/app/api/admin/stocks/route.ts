@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-const SORTABLE = new Set(['shortName', 'ticker', 'isinCode']);
+const SORTABLE = new Set(['shortName', 'ticker']);
 
 export async function GET(req: NextRequest) {
   try {
@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
               OR: [
                 { shortName: { contains: q } },
                 { ticker: { contains: q } },
-                { isinCode: { contains: q } },
               ],
             },
           ]
@@ -38,7 +37,17 @@ export async function GET(req: NextRequest) {
       take: pageSize,
     });
 
-    return NextResponse.json({ items, total, page, pageSize });
+    // console.log('items', items);
+
+    const serializedItems = items.map(item => ({
+      ...item,
+      listedShares: item.listedShares ? item.listedShares.toString() : null,
+      createdAt: item.createdAt.toISOString(),
+      updatedAt: item.updatedAt.toISOString(),
+      listingDate: item.listingDate ? item.listingDate.toISOString() : null
+    }));
+    
+    return NextResponse.json({ items: serializedItems, total, page, pageSize });
   } catch (err: any) {
     console.error('GET /api/admin/stocks error', err);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
