@@ -40,7 +40,7 @@ px prisma migrate dev --name <message>
 ## TypeScript 가이드
 - strict: true 유지
 - 경로 별칭: @/*  ./src/*
-- 인터페이스는 반드시 I 접두사를 사용 (예: IUser, ITradeListProps)
+- 인터페이스는 반드시 I 접두사, Props 접미사를 사용 (예: IUserProps, ITradeListProps)
 - 컴포넌트/훅/유틸 공개 API에 명시적 타입 부여
 - 인터페이스/타입 네이밍은 의미 중심으로, 팀 컨벤션에 맞춤
 

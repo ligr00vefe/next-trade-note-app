@@ -111,6 +111,7 @@ model Stock {
   id            Int       @id @default(autoincrement())
   isinCode      String    @unique @map("isin_code")       // 표준코드
   ticker        String?   @unique                         // 단축코드
+  corpCode      String?   @unique @map("corp_code")            // DART API 검색용 corp_code
   name          String    @unique @map("name")            // 한글 종목명
   shortName     String    @unique @map("short_name")      // 한글 종목약명
   englishName   String?   @unique @map("english_name")    // 영문 종목

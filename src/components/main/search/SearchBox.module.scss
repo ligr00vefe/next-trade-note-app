@@ -1,0 +1,42 @@
+.search-box-container {
+  position: absolute;
+  top: 100%; /* 검색 입력창 바로 아래에 위치 */
+  left: 0;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 0.8rem; /* 입력창과의 간격 */
+
+  .loading-indicator,
+  .no-results {
+    padding: 1.2rem;
+    color: var(--text-color-01);
+    text-align: center;
+    font-size: 1.4rem;
+  }
+
+  .search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .search-result-item {
+      padding: 1.2rem;
+      font-size: 1.5rem;
+      color: var(--text-color-01);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover,
+      &[aria-selected="true"] {
+        background-color: var(--color-primary-600); /* 호버 또는 선택 시 배경색 */
+      }
+
+      &:focus {
+        outline: none;
+        background-color: var(--color-primary-600); /* 포커스 시 배경색 */
+      }
+    }
+  }
+}
+
+

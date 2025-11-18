@@ -1,0 +1,176 @@
+---
+alwaysApply: true
+---
+
+# Project Rules — trade-note-app (Next.js 14 + App Router + TypeScript)
+
+These rules define the exact development standards, coding conventions, and workflow guidelines 
+for the **trade-note-app** project.  
+All AI-assisted or automated code generations must strictly follow these rules unless explicitly overridden.
+
+---
+
+## 🧭 Architecture & Routing
+
+- The project uses **Next.js 14 App Router**, located under `src/app`.
+- Route groups:
+  - Public: `/ (home)`, `/info`
+  - Auth required: `/list`, `/mypage`
+  - Auth flow: `/(auth)/login`, `/(auth)/register`
+- Follow these conventions:
+  - Page files → `page.tsx`
+  - Loading UI → `loading.tsx`
+  - Root layout → `src/app/layout.tsx`
+  - Route group folders (e.g., `(auth)`, `(home)`) must not appear in URLs.
+
+---
+
+## 🔐 Authentication & Access Control
+
+- Auth stack: **NextAuth**
+- Middleware: `src/middleware.ts`
+  - `/list`, `/mypage` → require login (redirect unauthenticated users to `/api/auth/signin`)
+  - `/auth/*` → redirect to `/` if user is already logged in
+- Required env var: `NEXTAUTH_SECRET`
+
+---
+
+## ⚙️ Server Logic — Route Handlers Only
+
+- All DB, API, and business logic must be inside **App Router Route Handlers**  
+  (`src/app/api/.../route.ts`).
+- Example structure:
+  - `src/app/api/trades/route.ts` (GET/POST)
+  - `src/app/api/trades/[id]/route.ts` (GET/PATCH/DELETE)
+
+---
+
+## 🧱 Data Layer — Prisma + @vercel/postgres
+
+- Packages: `@prisma/client`, `prisma`, `@vercel/postgres`
+- Schema: `prisma/schema.prisma`
+- Scripts:
+  - Generate: `npm run prisma:generate`
+  - Migrate: `npx prisma migrate dev --name <message>`
+- Usage:
+  - Use Prisma Client **only on the server** (Route Handlers or Server Components).
+  - Database URLs must remain server-only (never exposed to client).
+
+---
+
+## 🧩 TypeScript Rules
+
+- `strict: true`
+- Path alias: `@/*` → `./src/*`
+- Interfaces use `I` prefix and `Props` suffix (`IUserProps`, `ITradeListProps`, etc.)
+- All public APIs (components/hooks/utils) must have explicit types.
+- Naming should prioritize semantic clarity over brevity.
+
+---
+
+## 🎨 UI & Styling
+
+- UI Framework: **MUI** (`@mui/material`, `@mui/lab`, `@mui/icons-material`)
+- Global theme: `next-themes`
+- Style system: **SCSS Modules + Global SCSS** (`src/app/globals.scss`)
+- Config:
+  - `next.config.js`: `css-loader.modules.localsConvention = 'camelCaseOnly'`
+- Rules:
+  - SCSS file naming: `*.module.scss`
+  - Class names in kebab-case
+  - Use camelCase when imported into TS/TSX
+- Layout hierarchy: `wrapper > area > box`
+  - e.g. `.main-wrapper > .sec01 > .img-area > .text-box`
+
+---
+
+## 🔁 Data Fetching & State Management
+
+- Fetching: `@tanstack/react-query`, `axios`
+- Query Keys: array-based (e.g., `['trades', params]`)
+- After mutation: invalidate related keys
+- Errors:
+  - Display user feedback via `react-toastify`
+  - Log to console or separate logger
+
+---
+
+## 📂 Directory Conventions
+
+src/app/(auth)/login
+src/app/(auth)/register
+src/app/(home)
+src/app/list
+src/app/mypage
+src/app/info
+src/components/**
+src/styles/**
+
+---
+
+## 🧾 Commit & QA Standards
+
+- Commit format: `<type>: <subject>`  
+  - Types: feat, fix, docs, style, refactor, test, chore
+- Run before PR:
+  - `npm run lint`
+  - `tsc --noEmit` (type check)
+- Keep secrets (`NEXTAUTH_SECRET`, DB URLs) in server env only.
+
+---
+
+## 🧩 Page CSS Rules (.module.scss + kebab-case)
+
+### Main Pages
+- Wrapper: `.main-wrapper`
+- Section: `<section>` with `.sec01`, `.sec02`, etc.
+- Use section-based naming: `.sec01-banner`, `.sec01-img-area`, etc.
+
+### Sub Pages
+- Wrapper: `.list-wrapper`, `.mypage-wrapper`, `.detail-wrapper`
+- Prefix classes with page key: `.list-filter-area`, `.detail-info-box`
+- Hierarchy: `wrapper > area > box`
+
+### Responsive Mixins
+- Use from `src/styles/_mixins.scss`
+@include pc { ... }
+@include tablet { ... }
+@include mobile { ... }
+
+yaml
+코드 복사
+- Unit rules:
+- Base font: `html { font-size: 10px }`
+- Use `rem` only (allow `vw/vh` for responsive)
+- Add a comment if using other units
+
+---
+
+## ✅ Change & Approval Policy
+
+- Never modify or delete existing functionality without requester approval.
+- Before applying changes:
+- Confirm purpose, scope, expected impact, rollback plan, and test coverage.
+- Document approvals in issue/ticket or PR comments.
+- Exceptions:
+- Emergency hotfixes allowed but must be reported within 24 hours.
+
+---
+
+## 🔒 Scope Adherence
+
+- Do not:
+- Add new features, change flows, refactor architecture without prior approval.
+- If needed:
+- Propose changes in issue/PR comments with approval record and rollback plan.
+- Emergency fixes follow same post-reporting rule (within 24h).
+
+---
+
+## 🧠 AI Behavior Directive
+
+- Always follow these project rules **before generating code or explanations**.
+- Prefer strict consistency over creativity for structure, naming, and styling.
+- When unsure, ask the user before making assumptions.
+
+---

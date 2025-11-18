@@ -69,14 +69,14 @@ function StockManagement() {
     queryKey,
     queryFn: async (): Promise<IListResponse> => {
       const params = { q, sort, order, page, pageSize };
-      console.log('Fetching data with params:', params);
+      // console.log('Fetching data with params:', params);
       
       try {
         const res = await axios.get<IListResponse>("/api/admin/stocks", { params });
-        console.log('API Response:', {
-          status: res.status,
-          data: res.data
-        });
+        // console.log('API Response:', {
+        //   status: res.status,
+        //   data: res.data
+        // });
         return res.data;
       } catch (error) {
         const err = error as Error & {
@@ -119,16 +119,16 @@ function StockManagement() {
   }, [error]);
 
   // Log successful data fetches
-  useEffect(() => {
-    if (data && data.items) {
-      console.log('Query Success - Data received:', {
-        itemsCount: data.items.length,
-        total: data.total,
-        page: data.page,
-        pageSize: data.pageSize
-      });
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data && data.items) {
+  //     console.log('Query Success - Data received:', {
+  //       itemsCount: data.items.length,
+  //       total: data.total,
+  //       page: data.page,
+  //       pageSize: data.pageSize
+  //     });
+  //   }
+  // }, [data]);
 
   const toggleSelect = (id: number) => {
     setSelected((prev) => {
@@ -190,8 +190,8 @@ function StockManagement() {
   const total = data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  console.log('data', data);
-  console.log('items', items);
+  // console.log('data', data);
+  // console.log('items', items);
   useEffect(() => {
     // 검색어 변경 시 페이지 초기화
     setPage(1);
