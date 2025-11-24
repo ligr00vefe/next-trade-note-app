@@ -21,7 +21,6 @@ export async function GET(request: Request) {
         id: true,
         shortName: true,
         ticker: true,
-        corpCode: true,
       },
       take: 10, // 최대 10개의 결과만 반환
     });

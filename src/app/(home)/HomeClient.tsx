@@ -21,7 +21,6 @@ export interface IStockProps {
   id: string;
   shortName: string;
   ticker: string;
-  corpCode: string;
 }
 
 export default function HomeClient() {
@@ -44,7 +43,7 @@ export default function HomeClient() {
   // console.log('isSearching: ', isSearching);
   // console.log('showResults: ', showResults);
   // console.log('debouncedSearchTerm: ', debouncedSearchTerm);
-  // Next.js 라우터 인스턴스 (주식 상세 페이지 이동에 사용)
+
   const router = useRouter();
 
   // 검색어 입력 변경 핸들러 (검색 기능에 사용)
@@ -68,7 +67,7 @@ export default function HomeClient() {
     try {
       const response = await fetch(`/api/stocks/search?query=${debouncedSearchTerm}`);
       const data: IStockProps[] = await response.json();
-      console.log('search api results data: ', data);
+      // console.log('search api results data: ', data);
       setSearchResults(data);
       setShowResults(true);
     } catch (error) {
@@ -84,12 +83,12 @@ export default function HomeClient() {
   const handleSelectStock = useCallback(async (stock: IStockProps) => {
     setIsSearching(true); // API 호출 시작 시 로딩 상태 활성화
     try {
-      const response = await fetch(`/api/stocks/${stock.corpCode}`);
+      const response = await fetch(`/api/stocks/${stock.id}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch stock details: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log('Stock details from API:', data); // 가져온 데이터 콘솔에 로깅
+      // console.log('Stock details from API:', data); // 가져온 데이터 콘솔에 로깅
 
       setSelectedStock(stock);
       setSearchTerm(stock.shortName); // 선택된 주식의 이름으로 검색어 업데이트
