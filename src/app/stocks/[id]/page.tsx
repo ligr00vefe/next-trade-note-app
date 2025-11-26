@@ -1,10 +1,14 @@
-import StockClient from "./StockClient"
+import StockClient from "./StockClient";
 
-const StockPage = () => {
-
-  return (
-    <StockClient />
-  )
+interface IStockPageProps {
+  params: { id: string };
 }
 
-export default StockPage
+const StockPage = ({ params }: IStockPageProps) => {
+  const { id } = params;
+  return (
+    <StockClient id={id} />
+  );
+};
+
+export default StockPage;

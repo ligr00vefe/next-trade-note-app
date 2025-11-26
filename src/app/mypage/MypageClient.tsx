@@ -1,14 +1,56 @@
 "use client";
 
 import styles from './Mypage.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AccountContent from '@/components/mypage/AccountContent';
 import PortfolioContent from '@/components/mypage/PortfolioContent';
 import SidebarInfo from '@/components/mypage/SidebarInfo';
 import Container from '@/components/ui/Container';
+import { IKiwoomAccountEvaluationResponse } from '@/lib/type/kiwoom';
 
 export default function MypageClient() {
   const [activeTab, setActiveTab] = useState('account');
+  const [evaluation, setEvaluation] = useState<IKiwoomAccountEvaluationResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchAccountData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const response = await fetch(
+          `/api/kiwoom/account`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || '서버 응답 오류');
+        }
+
+        const data: IKiwoomAccountEvaluationResponse = await response.json();
+
+        if (data.return_code !== 0) {
+          throw new Error(data.return_msg);
+        }
+        setEvaluation(data);
+      } catch (err: any) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAccountData();
+  }, []);
+
+  if (isLoading) return <div>계좌 정보를 불러오는 중...</div>;
+  if (error) return <div>오류 발생: {error?.message}</div>;
+
+  console.log('account evaluation data: ', evaluation);
 
   const renderTabContent = () => {
     switch (activeTab) {

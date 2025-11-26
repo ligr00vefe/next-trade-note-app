@@ -11,14 +11,13 @@ import gsap from "gsap";
 // @ts-ignore
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter } from "next/navigation";
-import useDebounce from "@/hooks/useDebounce";
 import SearchBox from "@/components/main/search/SearchBox";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // 주식 데이터의 인터페이스 정의
 export interface IStockProps {
-  id: string;
+  id: number;
   shortName: string;
   ticker: string;
 }
@@ -35,89 +34,55 @@ export default function HomeClient() {
   // 검색 결과 표시 여부 상태 (SearchBox 렌더링 제어)
   const [showResults, setShowResults] = useState<boolean>(false);
 
-  // 검색어 디바운스를 위한 훅 (검색 API 호출 최적화에 사용)
-  const debouncedSearchTerm = useDebounce<string>(searchTerm, 500); // 500ms 디바운스
-  // console.log('searchTerm: ', searchTerm);
-  // console.log('searchResults: ', searchResults);
-  // console.log('selectedStock: ', selectedStock);
-  // console.log('isSearching: ', isSearching);
-  // console.log('showResults: ', showResults);
-  // console.log('debouncedSearchTerm: ', debouncedSearchTerm);
-
   const router = useRouter();
 
-  // 검색어 입력 변경 핸들러 (검색 기능에 사용)
+  // 검색어 입력 변경 핸들러
   const handleSearchInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    setShowResults(true); // 입력 시 검색 결과 표시
+    // setShowResults(true); // 즉시 검색 결과 표시 X
     setSelectedStock(null); // 새로운 검색이 시작되면 기존에 선택된 종목 초기화
   }, []);
 
-  // 검색 버튼 클릭 또는 Enter 키 입력 시 검색을 실행하는 핸들러 (검색 API 호출 및 결과 상태 업데이트)
+  // 검색 실행 핸들러 (버튼 클릭/엔터 입력)
   const handleSearchSubmit = useCallback(async () => {
     // 검색어가 없을 경우
-    if (!debouncedSearchTerm.trim()) {
+    if (!searchTerm.trim()) {
       setSearchResults([]);
       setShowResults(false);
       return;
     }
-    // 검색 진행 중 on
     setIsSearching(true);
-    // 검색 API 호출
     try {
-      const response = await fetch(`/api/stocks/search?query=${debouncedSearchTerm}`);
+      const response = await fetch(`/api/stocks/search?query=${searchTerm}`);
       const data: IStockProps[] = await response.json();
-      // console.log('search api results data: ', data);
       setSearchResults(data);
       setShowResults(true);
     } catch (error) {
       console.error("검색 오류:", error);
       setSearchResults([]);
     } finally {
-      // 검색 진행중 표시 off
       setIsSearching(false);
     }
-  }, [debouncedSearchTerm]);
+  }, [searchTerm]);
 
   // 검색 결과에서 주식을 선택했을 때 호출되는 핸들러 (선택된 주식 상태 업데이트 및 라우팅)
-  const handleSelectStock = useCallback(async (stock: IStockProps) => {
-    setIsSearching(true); // API 호출 시작 시 로딩 상태 활성화
-    try {
-      const response = await fetch(`/api/stocks/${stock.id}`);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch stock details: ${response.statusText}`);
-      }
-      const data = await response.json();
-      // console.log('Stock details from API:', data); // 가져온 데이터 콘솔에 로깅
-
-      setSelectedStock(stock);
-      setSearchTerm(stock.shortName); // 선택된 주식의 이름으로 검색어 업데이트
-      setShowResults(false); // 선택 후 검색 결과 숨기기
-      setSearchResults([]); // 검색 결과 초기화
-      router.push(`/stocks/${stock.id}`); // 주식 상세 페이지로 이동
-    } catch (error) {
-      console.error("주식 상세 정보 가져오기 오류:", error);
-      // 에러 발생 시 검색 관련 상태를 초기화하거나 사용자에게 알림
-      setSelectedStock(null);
-      setSearchTerm("");
-      setShowResults(false);
-      setSearchResults([]);
-    } finally {
-      setIsSearching(false); // API 호출 완료 시 로딩 상태 비활성화
-    }
+  const handleSelectStock = useCallback((stock: IStockProps) => {
+    setIsSearching(true);
+    setSelectedStock(stock);
+    setSearchTerm(stock.shortName);
+    setShowResults(false);
+    setSearchResults([]);
+    router.push(`/stocks/${stock.id}`);
   }, [router]);
 
-  // 디바운스된 검색어가 변경될 때 검색을 자동으로 실행하는 useEffect 훅 (검색 기능에 사용)
-  useEffect(() => {
-    if (debouncedSearchTerm) {
+  // Enter 입력 시 검색 (onKeyDown)
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
       handleSearchSubmit();
-    } else {
-      setSearchResults([]);
-      setShowResults(false);
     }
-  }, [debouncedSearchTerm, handleSearchSubmit]);
+  };
 
-  // CTA 버튼의 키보드 접근성(Enter/Space)을 처리하는 핸들러 (UI 접근성에 사용)
+  // CTA 버튼의 키보드 접근성(Enter/Space) 처리
   const handleCtaKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === "Enter" || e.key === " ") {
       e.currentTarget.click();
@@ -345,11 +310,7 @@ export default function HomeClient() {
                 className={styles['search-input']}
                 value={searchTerm}
                 onChange={handleSearchInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleSearchSubmit();
-                  }
-                }}
+                onKeyDown={handleInputKeyDown}
               />
               <Button
                 variant="outlined"

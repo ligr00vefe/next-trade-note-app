@@ -1,6 +1,6 @@
 export const KIWOOM_API = {
-    baseUrl: process.env.KIWOOM_BASE_URL!, 
-    clientId: process.env.KIWOOM_CLIENT_ID!,
-    clientSecret: process.env.KIWOOM_CLIENT_SECRET!,
+    baseUrl: process.env.NEXT_PUBLIC_KIWOOM_BASE_URL!, 
+    clientId: process.env.NEXT_PUBLIC_KIWOOM_CLIENT_ID!,
+    clientSecret: process.env.NEXT_PUBLIC_KIWOOM_CLIENT_SECRET!,
   };
   
