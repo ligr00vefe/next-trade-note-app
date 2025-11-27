@@ -1,6 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import React, { useEffect, useMemo, useState } from 'react';
 import { IKiwoomStockBasicInfoResponse } from '@/lib/type/kiwoom';
+import styles from "./Stock.module.scss";
 
 interface IStockClientProps {
   id: string;
@@ -10,6 +12,40 @@ const StockClient = ({ id }: IStockClientProps) => {
   const [stockInfo, setStockInfo] = useState<IKiwoomStockBasicInfoResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [expanded, setExpanded] = useState(false);
+
+  
+  // 가독성 있게 숫자 포맷 (간단 버전)
+  const fmt = (v?: number | string) => {
+    if (v === undefined || v === null || v === "") return "-";
+    const n = typeof v === "string" ? Number(v.replace(/[, ]+/g, "")) : Number(v);
+    if (Number.isNaN(n)) return String(v);
+    // 1,234,567 형태
+    return n.toLocaleString();
+  };
+
+  const pct = (v?: number | string) => {
+    if (v === undefined || v === null || v === "") return "-";
+    const n = typeof v === "string" ? Number(v) : Number(v);
+    if (Number.isNaN(n)) return String(v);
+    return `${n}%`;
+  };
+  
+  const mainFields = useMemo(
+    () => [
+      { label: "시가총액", value: fmt(stockInfo?.mac) },
+      { label: "PER", value: stockInfo?.per ?? "-" },
+      { label: "PBR", value: stockInfo?.pbr ?? "-" },
+      { label: "ROE", value: stockInfo?.roe ? `${stockInfo?.roe}%` : "-" },
+      { label: "EPS", value: fmt(stockInfo?.eps) },
+      { label: "BPS", value: fmt(stockInfo?.bps) },
+      { label: "연중 최고", value: fmt(stockInfo?.oyr_hgst) },
+      { label: "연중 최저", value: fmt(stockInfo?.oyr_lwst) },
+      { label: "외인 보유비율", value: pct(stockInfo?.for_exh_rt) },
+      { label: "유통비율", value: pct(stockInfo?.dstr_rt) },
+    ],
+    [stockInfo]
+  );
 
   useEffect(() => {
     const fetchStockData = async () => {
@@ -56,18 +92,112 @@ const StockClient = ({ id }: IStockClientProps) => {
   console.log('stock basic information data: ', stockInfo);
 
   return (
-    <div>
-      <h1>주식 상세 정보 (ID: {id})</h1>
-      {stockInfo ? (
-        <div>
-          <p>종목 코드: {stockInfo.stk_cd}</p>
-          <p>종목명: {stockInfo.stk_nm}</p>
-          {/* 필요한 다른 정보들을 여기에 렌더링 */}
+    <section className={styles.container} aria-labelledby="stock-title">
+      <header className={styles.header}>
+        <div className={styles.titleWrap}>
+          <h1 id="stock-title" className={styles.title}>
+            {stockInfo?.stk_nm ?? "종목명 없음"}
+          </h1>
+          <div className={styles.code}>{stockInfo?.stk_cd ?? "-"}</div>
         </div>
-      ) : (
-        <p>데이터가 없습니다.</p>
-      )}
-    </div>
+      </header>
+
+      <div className={styles.grid}>
+        {mainFields.slice(0, 3).map((f) => (
+          <div key={f.label} className={styles.card}>
+            <div className={styles.cardLabel}>{f.label}</div>
+            <div className={styles.cardValue}>{f.value}</div>
+          </div>
+        ))}
+
+        <div className={styles.cardLarge}>
+          <div className={styles.cardLabel}>밸류에이션</div>
+          <div className={styles.flexRow}>
+            <div className={styles.metric}>
+              <div className={styles.metricLabel}>PER</div>
+              <div className={styles.metricValue}>{stockInfo?.per ?? "-"}</div>
+            </div>
+            <div className={styles.metric}>
+              <div className={styles.metricLabel}>PBR</div>
+              <div className={styles.metricValue}>{stockInfo?.pbr ?? "-"}</div>
+            </div>
+            <div className={styles.metric}>
+              <div className={styles.metricLabel}>ROE</div>
+              <div className={styles.metricValue}>{stockInfo?.roe ? `${stockInfo?.roe}%` : "-"}</div>
+            </div>
+          </div>
+
+          <div className={styles.flexRow} style={{ marginTop: 10 }}>
+            <div className={styles.metricSmall}>
+              <div className={styles.metricLabel}>EPS</div>
+              <div className={styles.metricValue}>{fmt(stockInfo?.eps)}</div>
+            </div>
+            <div className={styles.metricSmall}>
+              <div className={styles.metricLabel}>BPS</div>
+              <div className={styles.metricValue}>{fmt(stockInfo?.bps)}</div>
+            </div>
+            <div className={styles.metricSmall}>
+              <div className={styles.metricLabel}>시가총액</div>
+              <div className={styles.metricValue}>{fmt(stockInfo?.mac)}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.card}>
+          <div className={styles.cardLabel}>연중 고저</div>
+          <div className={styles.cardValue}>
+            최고: {fmt(stockInfo?.oyr_hgst)} / 최저: {fmt(stockInfo?.oyr_lwst)}
+          </div>
+        </div>
+
+        <div className={styles.card}>
+          <div className={styles.cardLabel}>수급 / 유통</div>
+          <div className={styles.cardValue}>
+            외인: {pct(stockInfo?.for_exh_rt)} / 유통: {pct(stockInfo?.dstr_rt)}
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.expandWrap}>
+        <button
+          className={styles.expandBtn}
+          onClick={() => setExpanded((s) => !s)}
+          aria-expanded={expanded}
+        >
+          {expanded ? "접기" : "재무정보 더보기"}
+        </button>
+
+        {expanded && (
+          <div className={styles.expandPanel}>
+            <div className={styles.row}>
+              <div className={styles.panelItem}>
+                <div className={styles.panelLabel}>매출액</div>
+                <div className={styles.panelValue}>{fmt(stockInfo?.sale_amt)}</div>
+              </div>
+              <div className={styles.panelItem}>
+                <div className={styles.panelLabel}>영업이익</div>
+                <div className={styles.panelValue}>{fmt(stockInfo?.bus_pro)}</div>
+              </div>
+              <div className={styles.panelItem}>
+                <div className={styles.panelLabel}>당기순이익</div>
+                <div className={styles.panelValue}>{fmt(stockInfo?.cup_nga)}</div>
+              </div>
+            </div>
+
+            <div className={styles.row}>
+              <div className={styles.panelItem}>
+                <div className={styles.panelLabel}>EV</div>
+                <div className={styles.panelValue}>{fmt(stockInfo?.ev)}</div>
+              </div>
+              <div className={styles.panelItem}>
+                <div className={styles.panelLabel}>상장주식수</div>
+                <div className={styles.panelValue}>{fmt(stockInfo?.flo_stk)}</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 

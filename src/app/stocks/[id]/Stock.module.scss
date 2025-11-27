@@ -1,0 +1,166 @@
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #111;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+      Arial;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  
+  .titleWrap {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+  .code {
+    font-size: 13px;
+    color: #666;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 12px;
+  }
+  
+  /* 카드 공통 */
+  .card {
+    grid-column: span 3;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03);
+  }
+  
+  .cardLarge {
+    grid-column: span 6;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 14px;
+  }
+  
+  .cardLabel {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 6px;
+  }
+  
+  .cardValue {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  /* 밸류에이션 내부 레이아웃 */
+  .flexRow {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .metric {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .metricSmall {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .metricLabel {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  .metricValue {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  /* 확장 섹션 */
+  .expandWrap {
+    margin-top: 16px;
+  }
+  
+  .expandBtn {
+    background: transparent;
+    border: 1px solid #d1d5db;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .expandPanel {
+    margin-top: 12px;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px dashed #e5e7eb;
+  }
+  
+  .row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .panelItem {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .panelLabel {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  .panelValue {
+    font-size: 15px;
+    font-weight: 700;
+  }
+  
+  /* 반응형: 모바일에서 1열로 */
+  @media (max-width: 720px) {
+    .container {
+      padding: 12px;
+    }
+    .grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .card {
+      grid-column: span 6;
+    }
+    .cardLarge {
+      grid-column: span 6;
+    }
+    .flexRow {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .row {
+      flex-direction: column;
+    }
+    .title {
+      font-size: 18px;
+    }
+  }
+  
