@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { kiwoomFetch } from "@/lib/kiwoom/kiwoomClient";
-import { IAccountEvaluationResponse } from "@/lib/type/accountEval";
+import { IKiwoomAccountEvaluationResponse } from "@/lib/type/kiwoom";
 
 export async function POST(req: NextRequest) {
     try {
-        const { data } = await kiwoomFetch<IAccountEvaluationResponse>(
+        const { data } = await kiwoomFetch<IKiwoomAccountEvaluationResponse>(
             `/api/dostk/acnt`, {
                 method: "POST",
                 data: {

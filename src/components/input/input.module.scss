@@ -6,13 +6,14 @@
     position: relative;
     display: flex;
     min-width: 30rem;
+    height: 4rem;
     border: 1px solid var(--border-gray);
     border-radius: 0.5rem;
     overflow: hidden;
 
     &-error {
       border: 1px solid var(--light-red);
-    }
+    } 
   }
   
   .label {
@@ -43,7 +44,6 @@
   .input {
     width: 100%;
     height: 100%;
-    min-height: 4rem;
     padding: 0 0.875rem;
     font-size: 1.25rem;
     line-height: 1.2;
@@ -87,13 +87,13 @@
     display: flex;
     align-items: center;
     padding: 0 0 0 0.1rem;
-    height: 100%;
 
     &[disabled] {
       cursor: not-allowed;
     }
 
     img {
+      height: 100%;
       vertical-align: middle;
     }
   }
